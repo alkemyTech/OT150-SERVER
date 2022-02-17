@@ -1,12 +1,12 @@
-﻿using System;
+﻿using OngProject.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace OngProject.Core.Models
 {
-    public class TestimonialsModel
+    public class TestimonialsModel: EntityBase
     {
-        [Key]
-        public int Id { get; set; }
+       
         [MaxLength(255)]
         [Required]
         public string Name { get; set; }
@@ -15,7 +15,6 @@ namespace OngProject.Core.Models
         [MaxLength(255)]
         public string Image { get; set; }
 
-        [DataType(DataType.Date)]
-        public DateTime DeletedAt { get; set; }
+        
     }
 }
