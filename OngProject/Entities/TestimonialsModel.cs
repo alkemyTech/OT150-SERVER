@@ -1,8 +1,6 @@
-﻿using OngProject.Entities;
-using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace OngProject.Core.Models
+namespace OngProject.Entities
 {
     public class TestimonialsModel: EntityBase
     {

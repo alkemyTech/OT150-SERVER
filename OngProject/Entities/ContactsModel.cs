@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using OngProject.Entities;
+using System.ComponentModel.DataAnnotations;
 
-namespace OngProject.Core.Models
+namespace OngProject.Entities
 {
     public class ContactsModel : EntityBase
     {
