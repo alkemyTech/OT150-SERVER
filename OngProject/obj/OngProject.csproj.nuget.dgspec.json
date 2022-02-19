@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Emmanuel\\Source\\Repos\\OT150-SERVER\\OngProject\\OngProject.csproj": {}
+    "C:\\Users\\pc\\Desktop\\Aceleración\\34\\OT150-SERVER\\OngProject\\OngProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Emmanuel\\Source\\Repos\\OT150-SERVER\\OngProject\\OngProject.csproj": {
+    "C:\\Users\\pc\\Desktop\\Aceleración\\34\\OT150-SERVER\\OngProject\\OngProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Emmanuel\\Source\\Repos\\OT150-SERVER\\OngProject\\OngProject.csproj",
+        "projectUniqueName": "C:\\Users\\pc\\Desktop\\Aceleración\\34\\OT150-SERVER\\OngProject\\OngProject.csproj",
         "projectName": "OngProject",
-        "projectPath": "C:\\Users\\Emmanuel\\Source\\Repos\\OT150-SERVER\\OngProject\\OngProject.csproj",
-        "packagesPath": "C:\\Users\\Emmanuel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Emmanuel\\Source\\Repos\\OT150-SERVER\\OngProject\\obj\\",
+        "projectPath": "C:\\Users\\pc\\Desktop\\Aceleración\\34\\OT150-SERVER\\OngProject\\OngProject.csproj",
+        "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pc\\Desktop\\Aceleración\\34\\OT150-SERVER\\OngProject\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Emmanuel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -43,6 +44,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "SendGrid": {
+              "target": "Package",
+              "version": "[9.25.3, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.6.3, )"
@@ -58,6 +63,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[5.0.13, 5.0.13]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -66,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.303\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
