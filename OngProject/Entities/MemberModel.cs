@@ -1,8 +1,7 @@
-﻿using OngProject.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OngProject.Core.Models
+namespace OngProject.Entities
 {
     public class MemberModel : EntityBase
     {
