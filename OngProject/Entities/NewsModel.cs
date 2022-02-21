@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OngProject.Core.Models
+namespace OngProject.Entities
 {
     public class NewsModel : EntityBase
     {
@@ -18,7 +18,7 @@ namespace OngProject.Core.Models
 
         [ForeignKey("CategoriesModels")]
         public int Categories_Id { get; set; }
-        public virtual CategoriesModels Categories { get; set; }
+        public virtual CategoriesModel Categories { get; set; }
 
     }
 }
