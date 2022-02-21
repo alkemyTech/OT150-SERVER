@@ -23,5 +23,6 @@ namespace OngProject.Core.Models
         [ForeignKey("RolModel")]
         public int RoleId { get; set; }
         
+        
     }
 }
