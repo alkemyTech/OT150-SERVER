@@ -22,4 +22,3 @@ namespace OngProject.Core.Models
 
     }
 }
-//para 20:16 pa pa' comer volvi a las 21:01 -termine los models a las 22:02
