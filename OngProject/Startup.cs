@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using OngProject.Data;
+using OngProject.DataAccess;
 using OngProject.Entities.Jwt;
 using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
@@ -100,8 +101,8 @@ namespace OngProject
                     ValidateIssuerSigningKey = true,
                     ClockSkew = TimeSpan.FromMinutes(1),
 
-                    ValidIssuer = "https://localhost:5001",
-                    ValidAudience = "https://localhost:5001",
+                    ValidIssuer = Configuration.GetValue<String>("Jwt:issuer"),
+                    ValidAudience = Configuration.GetValue<String>("Jwt:audience"),
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("Jwt:JwtKey")))
                 };
             });
