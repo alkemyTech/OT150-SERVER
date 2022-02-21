@@ -22,5 +22,6 @@ namespace OngProject.Core.Models
         public string Photo { get; set; }
         [ForeignKey("RolModel")]
         public int RoleId { get; set; }
+        
     }
 }
