@@ -8,6 +8,7 @@ namespace OngProject.Repositories.Interfaces
     {
 
         IRepository<TestimonialsModel> TestimonialsModelRepository { get; }
+        IRepository<MemberModel> MemberModelRepository { get; }
 
         void SaveChanges();
 
