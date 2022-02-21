@@ -16,6 +16,5 @@ namespace OngProject.Core.Models
         [Required]
         public string Image{ get; set; }
        
-        
     }
 }
