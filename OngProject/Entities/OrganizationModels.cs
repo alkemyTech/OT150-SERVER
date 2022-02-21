@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using OngProject.Entities;
 
-namespace OngProject.Core.Models
+namespace OngProject.Entities
 {
     public class OrganizationModels : EntityBase
     {
