@@ -1,4 +1,4 @@
-﻿namespace OngProject.Configuration
+﻿namespace OngProject.Core.Models
 {
     public class JwtConfig
     {
