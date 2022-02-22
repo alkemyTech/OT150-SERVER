@@ -14,7 +14,7 @@ namespace OngProject.Entities
         
         [ForeignKey("OrganizationModel")]
         public int Organization_Id { get; set; }
-        public virtual OrganizationModel Organization { get; set; }
+        public virtual OrganizationModels Organization { get; set; }
 
     }
 }
