@@ -18,8 +18,8 @@ namespace OngProject.DataAccess
             //optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:Challenge"]);
         }
 
-        public DbSet<ContactsModel> ContactsModels { get; set; }
-        public DbSet<TestimonialsModel> TestimonialsModels { get; set; }
+        public DbSet<ContactsModel> ContactsModel { get; set; }
+        public DbSet<TestimonialsModel> TestimonialsModel { get; set; }
         public DbSet<SlideModel> SlidesModels { get; set; }
         public DbSet<RoleModel> RoleModels { get; set; }
         public DbSet<UserModel> UserModels { get; set; }
