@@ -1,5 +1,4 @@
-﻿using OngProject.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace OngProject.Entities
 {
