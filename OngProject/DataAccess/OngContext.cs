@@ -20,6 +20,7 @@ namespace OngProject.DataAccess
 
         public DbSet<ContactsModel> ContactsModel { get; set; }
         public DbSet<TestimonialsModel> TestimonialsModel { get; set; }
+        public DbSet<SlideModel> SlidesModels { get; set; }
 
     }
 }
