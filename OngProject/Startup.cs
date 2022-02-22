@@ -1,4 +1,8 @@
+
+using Amazon.S3;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +30,11 @@ namespace OngProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddAWSService<IAmazonS3>();
+
             services.Configure<JwtConfig>(Configuration.GetSection("JWT"));
+
             services.AddControllers();
             services.AddDbContext<OngContext>();
             var key = Encoding.ASCII.GetBytes(Configuration["JWT:Secret"]);
