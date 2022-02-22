@@ -10,6 +10,7 @@ namespace OngProject.Repositories.Interfaces
         IRepository<TestimonialsModel> TestimonialsModelRepository { get; }
         IRepository<MemberModel> MemberModelRepository { get; }
         IRepository<ActivityModel> ActivityModelRepository { get; }
+        IRepository<NewsModel> NewsModelRepository { get; }
         IRepository<OrganizationModels> OrganizationModelsRepository { get; }
         IRepository<RoleModel> RoleModelRepository { get; }
 
