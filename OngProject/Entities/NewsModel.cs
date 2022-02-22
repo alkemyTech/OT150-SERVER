@@ -18,7 +18,7 @@ namespace OngProject.Entities
 
         [ForeignKey("CategoriesModels")]
         public int Categories_Id { get; set; }
-        public virtual CategoriesModel Categories { get; set; }
+        public virtual CategorieModel Categories { get; set; }
 
     }
 }
