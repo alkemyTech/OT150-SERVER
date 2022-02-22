@@ -17,12 +17,12 @@ namespace OngProject.Core.Business
             _configuration = configuration;
         }
 
-        public async Task<bool> UploadFileAsync(IFormFile image)
+        public async Task<PutObjectResponse> UploadFileAsync(IFormFile image)
         {
             var credentials = new BasicAWSCredentials(_configuration["S3Config:AccessKey"], _configuration["S3Config:SecretKey"]);
 
 
-            IAmazonS3 client = new AmazonS3Client(credentials, RegionEndpoint.SAEast1);
+            IAmazonS3 client = new AmazonS3Client(credentials, RegionEndpoint.USEast1);
             var request = new PutObjectRequest
             {
                 BucketName = _configuration["S3Config:BucketName"],
@@ -32,16 +32,9 @@ namespace OngProject.Core.Business
             };
 
             var response = await client.PutObjectAsync(request);
-            if (response.HttpStatusCode == System.Net.HttpStatusCode.OK)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
 
+            return response;
+        }
 
     }
 }
