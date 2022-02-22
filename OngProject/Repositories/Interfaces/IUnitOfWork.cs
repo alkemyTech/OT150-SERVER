@@ -13,6 +13,7 @@ namespace OngProject.Repositories.Interfaces
         IRepository<NewsModel> NewsModelRepository { get; }
         IRepository<OrganizationModels> OrganizationModelsRepository { get; }
         IRepository<RoleModel> RoleModelRepository { get; }
+        IRepository<CategorieModel> CategorieModelRepository { get; }
         IRepository<UserModel> UserRepository { get; }
 
         void SaveChanges();
