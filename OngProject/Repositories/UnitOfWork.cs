@@ -10,6 +10,8 @@ namespace OngProject.Repositories
     {
         private readonly OngContext _context;
         private readonly IRepository<TestimonialsModel> _testimonialsModelRepository;
+        private readonly IRepository<MemberModel> _memberModelRepository;
+
         private readonly IRepository<ActivityModel> _activityModelRepository;
 
         public UnitOfWork(OngContext context)
@@ -18,6 +20,7 @@ namespace OngProject.Repositories
         }
 
         public IRepository<TestimonialsModel> TestimonialsModelRepository => _testimonialsModelRepository ?? new Repository<TestimonialsModel>(_context);
+        public IRepository<MemberModel> MemberModelRepository => _memberModelRepository ?? new Repository<MemberModel>(_context);
         public IRepository<ActivityModel> ActivityModelRepository => _activityModelRepository ?? new Repository<ActivityModel>(_context);
 
         public void Dispose()
