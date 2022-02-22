@@ -15,6 +15,7 @@ namespace OngProject.Repositories
         private readonly IRepository<NewsModel> _newsModelRepository;
         private readonly IRepository<OrganizationModels> _organizationModelsRepository;
         private readonly IRepository<RoleModel> _roleModelRepository;
+        private readonly IRepository<CategorieModel> _categorieModelRepository;
 
         public UnitOfWork(OngContext context)
         {
@@ -27,6 +28,7 @@ namespace OngProject.Repositories
         public IRepository<NewsModel> NewsModelRepository => _newsModelRepository ?? new Repository<NewsModel>(_context);
         public IRepository<OrganizationModels> OrganizationModelsRepository => _organizationModelsRepository ?? new Repository<OrganizationModels>(_context);
         public IRepository<RoleModel> RoleModelRepository => _roleModelRepository ?? new Repository<RoleModel>(_context);
+        public IRepository<CategorieModel> CategorieModelRepository => _categorieModelRepository ?? new Repository<CategorieModel>(_context);
 
         public void Dispose()
         {
