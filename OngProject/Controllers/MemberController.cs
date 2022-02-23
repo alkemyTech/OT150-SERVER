@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,11 +9,11 @@ namespace OngProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class MemberController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public UserController(IUnitOfWork unitOfWork)
+        public MemberController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
