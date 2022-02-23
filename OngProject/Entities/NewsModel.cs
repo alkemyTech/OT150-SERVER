@@ -16,9 +16,9 @@ namespace OngProject.Entities
         [Required]
         public string Image { get; set; }
 
-        [ForeignKey("CategoriesModels")]
-        public int Categories_Id { get; set; }
-        public virtual CategorieModel Categories { get; set; }
+        [ForeignKey("CategorieModel")]
+        public int Categorie_Id { get; set; }
+        public virtual CategorieModel Categorie { get; set; }
 
     }
 }

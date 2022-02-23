@@ -2,7 +2,7 @@
 
 namespace OngProject.Entities
 {
-    public class OrganizationModels : EntityBase
+    public class OrganizationModel : EntityBase
     {
         [Required(ErrorMessage = "Entered a name")]
         [Display(Name = "Name")]

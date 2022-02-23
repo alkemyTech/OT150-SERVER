@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OngProject.Entities
 {
-    public class SlideModel
+    public class SlideModel : EntityBase
     {
         public string ImageUrl { get; set; }
         public string Text { get; set; }
@@ -14,7 +14,7 @@ namespace OngProject.Entities
         
         [ForeignKey("OrganizationModel")]
         public int Organization_Id { get; set; }
-        public virtual OrganizationModels Organization { get; set; }
+        public virtual OrganizationModel Organization { get; set; }
 
     }
 }
