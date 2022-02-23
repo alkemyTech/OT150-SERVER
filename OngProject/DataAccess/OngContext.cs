@@ -25,7 +25,7 @@ namespace OngProject.DataAccess
         public DbSet<UserModel> UserModels { get; set; }
         public DbSet<CategorieModel> CategoriesModels { get; set; }
         public DbSet<NewsModel> NewsModels { get; set; }
-        public DbSet<OrganizationModels> OrganizationModels { get; set; }
+        public DbSet<OrganizationModel> OrganizationModels { get; set; }
         public DbSet<MemberModel> MemberModels { get; set; }
         public DbSet<ActivityModel> ActivityModels { get; set; }
         public DbSet<CommentModel> CommentModels { get; set; }
