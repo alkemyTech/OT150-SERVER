@@ -17,7 +17,7 @@ namespace OngProject.Entities
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
-        [Required]
+  
         public string Photo { get; set; }
         [ForeignKey("RolModel")]
         public int RoleId { get; set; }
