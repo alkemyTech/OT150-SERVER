@@ -12,7 +12,7 @@ namespace OngProject.Controllers
     public class AuthController : Controller
     {
         private readonly IUserBusiness _userBusiness;
-        private readonly EntityMapper entityMapper = new EntityMapper();
+       
 
         private readonly IEmailBusiness _emailBusiness;
 
@@ -26,23 +26,22 @@ namespace OngProject.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody]UserRegisterDto userRegisterDto)
         {
-            try
-            {
+            
 
                 if (ModelState.IsValid)
                 {
 
-                    if (_userBusiness.Register(userRegisterDto))
+                    if (_userBusiness.ValidationEmail(userRegisterDto.Email))
                     {
-
+                        var userToDisplay= _userBusiness.Register(userRegisterDto); 
                         await _emailBusiness.SendEmail(userRegisterDto.Email);
-                        return Ok(entityMapper.UserRegisterDtoToUserRegisterToDisplayDto(userRegisterDto));
+                        return Ok(userToDisplay);
                     }
                     else
                     {
-                        return BadRequest("Error: The email already exists");
+                        return BadRequest("Error:The email already exists");
                     }
-                    
+                  
                 }
                 else 
                 {
@@ -51,11 +50,8 @@ namespace OngProject.Controllers
                 }
                 
 
-            }
-            catch (Exception e)
-            {
-                return StatusCode(400,e);
-            }
+           
+         
             
 
 
