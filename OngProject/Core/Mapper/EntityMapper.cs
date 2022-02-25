@@ -33,8 +33,20 @@ namespace OngProject.Core.Mapper
                 Name = userRegisterDto.Name,
                LastName = userRegisterDto.LastName,
                Email = userRegisterDto.Email
-                    };
+                    
+            };
         
-    }
+        }
+
+        public UserLoginToDisplayDto UserModelToUserLoginToDisplayDto(UserModel user)
+        {
+            return new UserLoginToDisplayDto()
+            {
+                Name = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email
+
+            };
+        }
     }
 }
