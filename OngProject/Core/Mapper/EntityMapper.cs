@@ -36,5 +36,22 @@ namespace OngProject.Core.Mapper
                     };
         
     }
+
+        public UserDto UserListDtoUserModel(UserModel userDto)
+
+        {
+
+
+            return new UserDto()
+            {
+
+                FirstName = userDto.FirstName,
+                Email = userDto.Email,
+                LastName = userDto.LastName
+
+            };
+
+        }
+
     }
 }

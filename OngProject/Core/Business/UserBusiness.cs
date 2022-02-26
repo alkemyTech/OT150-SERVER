@@ -7,6 +7,7 @@ using OngProject.DataAccess;
 using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using SendGrid.Helpers.Mail;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -57,6 +58,22 @@ namespace OngProject.Core.Business
 
             return true;
         }
+
+        public List<UserDto> GetUsuarios()
+        {
+            var usuarios = _unitOfWork.UserModelRepository.GetAll();
+            var usuariosDto = new List<UserDto>();
+            foreach (var user in usuarios)
+            {
+                usuariosDto.Add(entityMapper.UserListDtoUserModel(user));
+            }
+
+            return usuariosDto;
+
+
+
+        }
+
     }
 
 }
