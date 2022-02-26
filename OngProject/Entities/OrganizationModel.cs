@@ -27,5 +27,9 @@ namespace OngProject.Entities
         [Required(ErrorMessage = "Entered text")]
         [Display(Name = "About Us Text")]
         public string AboutUsText { get; set; }
+
+        public string FacebooK { get; set; }
+        public string Linkedin { get; set; }
+        public string Instagram { get; set; }
     }
 }
