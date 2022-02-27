@@ -21,10 +21,7 @@ namespace OngProject.Core.Mapper
                Password=userRegisterDTO.Password,
                LastModified=DateTime.Today,
                SoftDelete=false,
-             
-
-            };
-            
+            };       
         }
 
         public UserRegisterToDisplayDto UserRegisterDtoToUserRegisterToDisplayDto(UserRegisterDto userRegisterDto)
@@ -36,5 +33,17 @@ namespace OngProject.Core.Mapper
                     };
         
     }
+        public MemberDto MemberListDtoMemberModel(MemberModel MemberDto)
+        {
+            return new MemberDto()
+            {
+                Name = MemberDto.Name,
+                Image = MemberDto.Image,
+                InstagramUrl= MemberDto.InstagramUrl,
+                LinkedinUrl = MemberDto.LinkedinUrl,
+                FacebookUrl = MemberDto.FacebookUrl,
+                Description = MemberDto.Description
+            };
+        }
     }
 }
