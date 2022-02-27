@@ -29,12 +29,26 @@ namespace OngProject.Core.Mapper
 
         public UserRegisterToDisplayDto UserRegisterDtoToUserRegisterToDisplayDto(UserRegisterDto userRegisterDto)
         {
-            return new UserRegisterToDisplayDto(){
+            return new UserRegisterToDisplayDto()
+            {
                 Name = userRegisterDto.Name,
                LastName = userRegisterDto.LastName,
                Email = userRegisterDto.Email
-                    };
+            };
         
-    }
+        }
+        public ContactDto ConctactListDtoContactModel(ContactsModel ContactDto)
+        {
+            return new ContactDto()
+            {
+                
+                Name = ContactDto.Name,
+                Email = ContactDto.Email,
+                Phone = ContactDto.Phone,
+                Message = ContactDto.Message,
+                
+            };            
+        }
+        
     }
 }
