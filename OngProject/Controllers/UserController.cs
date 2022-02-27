@@ -31,7 +31,15 @@ namespace OngProject.Controllers
         {
 
 
+            try{
+
             return Ok(_userBusiness.GetUsuarios());
+
+           }
+
+           catch{
+             return BadRequest();
+           }
 
 
 
