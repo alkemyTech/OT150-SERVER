@@ -26,10 +26,10 @@ namespace OngProject.Controllers
                 {
 
                     if (_userBusiness.ValidationEmail(userRegisterDto.Email))
-                    {
-                        var userToDisplay= _userBusiness.Register(userRegisterDto); 
-                        await _emailBusiness.SendEmail(userRegisterDto.Email);
-                        return Ok(userToDisplay);
+                    { 
+                        
+                        return Ok(
+                        await _userBusiness.Register(userRegisterDto));
                     }
                     else
                     {
