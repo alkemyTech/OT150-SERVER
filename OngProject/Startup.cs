@@ -18,6 +18,7 @@ using OngProject.Core.Models;
 using OngProject.DataAccess;
 using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
+using System.Linq;
 using System.Text;
 
 namespace OngProject
@@ -37,6 +38,7 @@ namespace OngProject
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OngProject", Version = "v1" });
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
 
             services.AddAWSService<IAmazonS3>();
@@ -45,6 +47,7 @@ namespace OngProject
             services.AddScoped<IUnitOfWork, UnitOfWork>();
          
             services.AddScoped<IUserBusiness, UserBusiness>();
+            services.AddScoped<ICategorieBussines, CategorieBussines>();
             services.AddTransient<IEmailBusiness, EmailBusiness>();
             services.AddScoped<IEncryptHelper, EncryptHelper>();
             services.AddScoped<IJwtHelper, JwtHelper>();
@@ -52,25 +55,25 @@ namespace OngProject
             services.AddControllers();
             services.AddDbContext<OngContext>();
             services.Configure<JwtConfig>(Configuration.GetSection("JWT"));
-            var key = Encoding.ASCII.GetBytes(Configuration["JWT:Secret"]);
-            services
-            .AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateAudience = false,
-                    ValidateIssuerSigningKey = true,
-                    ValidateIssuer = false
-                };
-            });
+            //var key = Encoding.ASCII.GetBytes(Configuration["JWT:Secret"]);
+            //services
+            //.AddAuthentication(x =>
+            //{
+            //    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //})
+            //.AddJwtBearer(x =>
+            //{
+            //    x.RequireHttpsMetadata = false;
+            //    x.SaveToken = true;
+            //    x.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        IssuerSigningKey = new SymmetricSecurityKey(key),
+            //        ValidateAudience = false,
+            //        ValidateIssuerSigningKey = true,
+            //        ValidateIssuer = false
+            //    };
+            //});
         
       
            
@@ -87,6 +90,7 @@ namespace OngProject
             }
 
             app.UseHttpsRedirection();
+          
 
             app.UseRouting();
             app.UseAuthentication();
