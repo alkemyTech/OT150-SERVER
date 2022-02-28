@@ -48,7 +48,10 @@ namespace OngProject
             services.AddTransient<IEmailBusiness, EmailBusiness>();
             services.AddScoped<IEncryptHelper, EncryptHelper>();
             services.AddScoped<IJwtHelper, JwtHelper>();
-        
+
+            services.AddScoped<EntityMapper>();
+            services.AddScoped<OrganizationBusiness>();
+
             services.AddControllers();
             services.AddDbContext<OngContext>();
             services.Configure<JwtConfig>(Configuration.GetSection("JWT"));
@@ -71,9 +74,6 @@ namespace OngProject
                     ValidateIssuer = false
                 };
             });
-        
-      
-           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
