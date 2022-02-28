@@ -33,8 +33,19 @@ namespace OngProject.Core.Mapper
                 Name = userRegisterDto.Name,
                LastName = userRegisterDto.LastName,
                Email = userRegisterDto.Email
-                    };
+            };
         
-    }
+        }
+
+        public SlideDto SlideModelToSlideDtoDetail(SlideModel slideModel)
+        {
+            return new SlideDto()
+            {
+                ImageUrl = slideModel.ImageUrl,
+                Text = slideModel.Text,
+                Order = slideModel.Order,
+                Organization_Id = slideModel.Organization_Id
+            };
+        }
     }
 }

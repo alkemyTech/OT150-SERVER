@@ -15,6 +15,7 @@ namespace OngProject.Repositories.Interfaces
         IRepository<RoleModel> RoleModelRepository { get; }
         IRepository<CategorieModel> CategorieModelRepository { get; }
         IRepository<UserModel> UserModelRepository { get; }
+        IRepository<SlideModel> SlideModelRepository { get; }
 
         void SaveChanges();
 

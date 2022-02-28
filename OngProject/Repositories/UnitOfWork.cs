@@ -17,6 +17,7 @@ namespace OngProject.Repositories
         private readonly IRepository<RoleModel> _roleModelRepository;
         private readonly IRepository<CategorieModel> _categorieModelRepository;
         private readonly IRepository<UserModel> _userModelRepository;
+        private readonly IRepository<SlideModel> _slideModelRepository;
 
         public UnitOfWork(OngContext context)
         {
@@ -31,6 +32,7 @@ namespace OngProject.Repositories
         public IRepository<RoleModel> RoleModelRepository => _roleModelRepository ?? new Repository<RoleModel>(_context);
         public IRepository<CategorieModel> CategorieModelRepository => _categorieModelRepository ?? new Repository<CategorieModel>(_context);
         public IRepository<UserModel> UserModelRepository => _userModelRepository ?? new Repository<UserModel>(_context);
+        public IRepository<SlideModel> SlideModelRepository => _slideModelRepository ?? new Repository<SlideModel>(_context);
 
         public void Dispose()
         {
