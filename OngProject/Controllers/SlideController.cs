@@ -1,16 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using OngProject.Core.Interfaces;
 
 namespace OngProject.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class SlideController : Controller
     {
-        public IActionResult Index()
+        private readonly ISlide _slide;
+        public SlideController(ISlide slide)
         {
-            return View();
+            _slide = slide;
+        }
+
+        [Authorize(Roles = "Administrador")]
+        [HttpGet("Slides")]
+        public IActionResult GetSlides()
+        {
+            return Ok(_slide.GetSlides());
         }
     }
 }

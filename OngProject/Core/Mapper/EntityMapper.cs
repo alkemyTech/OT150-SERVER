@@ -49,6 +49,14 @@ namespace OngProject.Core.Mapper
                 
             };            
         }
+        public SlideDto SlideListDtoSlideModel(SlideModel slideDto)
+        {
+            return new SlideDto()
+            {
+                ImageUrl = slideDto.ImageUrl,
+                Order = slideDto.Order               
+            };
+        }
         
     }
 }
