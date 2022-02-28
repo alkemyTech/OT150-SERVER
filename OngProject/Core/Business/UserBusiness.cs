@@ -30,6 +30,21 @@ namespace OngProject.Core.Business
             _encryptHelper = encryptHelper;
         }
 
+        public UserLoginToDisplayDto Login(string email, string password)
+        {
+            var encrypted = _encryptHelper.EncryptPassSha256(password);
+
+            var users = _unitOfWork.UserModelRepository.GetAll();
+
+            var user = users.Where(user => user.Email.Equals(email) && user.Password.Equals(encrypted)).FirstOrDefault();
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return entityMapper.UserModelToUserLoginToDisplayDto(user);
+        }
 
         public UserRegisterToDisplayDto Register(UserRegisterDto userRegisterDto)
         {

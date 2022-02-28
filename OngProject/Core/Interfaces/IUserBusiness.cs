@@ -10,5 +10,6 @@ namespace OngProject.Core.Interfaces
         UserRegisterToDisplayDto Register(UserRegisterDto userRegisterDto);
         bool ValidationEmail(string emailAddress);
 
+        UserLoginToDisplayDto Login(string email, string password);
     }
 }
