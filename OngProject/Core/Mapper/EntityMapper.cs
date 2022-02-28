@@ -20,11 +20,9 @@ namespace OngProject.Core.Mapper
                Email=userRegisterDTO.Email,
                Password=userRegisterDTO.Password,
                LastModified=DateTime.Today,
-               SoftDelete=false,
-             
+               SoftDelete=false,        
 
-            };
-            
+            };            
         }
 
         public UserRegisterToDisplayDto UserRegisterDtoToUserRegisterToDisplayDto(UserRegisterDto userRegisterDto)
@@ -36,7 +34,6 @@ namespace OngProject.Core.Mapper
             };
         
         }
-
         public SlideDto SlideModelToSlideDtoDetail(SlideModel slideModel)
         {
             return new SlideDto()
@@ -45,6 +42,14 @@ namespace OngProject.Core.Mapper
                 Text = slideModel.Text,
                 Order = slideModel.Order,
                 Organization_Id = slideModel.Organization_Id
+                  
+        public UserLoginToDisplayDto UserModelToUserLoginToDisplayDto(UserModel user)
+        {
+            return new UserLoginToDisplayDto()
+            {
+                Name = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email
             };
         }
     }
