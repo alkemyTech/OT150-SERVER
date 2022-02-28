@@ -8,9 +8,10 @@ namespace OngProject.Core.Interfaces
 {
     public interface IUserBusiness
     {
-        UserRegisterToDisplayDto Register(UserRegisterDto userRegisterDto);
+        Task<UserRegisterToDisplayDto> Register(UserRegisterDto userRegisterDto);
         bool ValidationEmail(string emailAddress);
         List<UserDto> GetUsuarios();
 
+        UserLoginToDisplayDto Login(string email, string password);
     }
 }

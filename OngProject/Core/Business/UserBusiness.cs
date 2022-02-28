@@ -19,6 +19,7 @@ namespace OngProject.Core.Business
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly EntityMapper entityMapper = new EntityMapper();
+        private readonly IEmailBusiness _emailBusiness;
 
 
 
@@ -26,13 +27,28 @@ namespace OngProject.Core.Business
         public UserBusiness(IUnitOfWork unitOfWork, IEmailBusiness emailBusiness, IEncryptHelper encryptHelper)
         {
             _unitOfWork = unitOfWork;
-
+            _emailBusiness = emailBusiness;
 
             _encryptHelper = encryptHelper;
         }
 
+        public UserLoginToDisplayDto Login(string email, string password)
+        {
+            var encrypted = _encryptHelper.EncryptPassSha256(password);
 
-        public UserRegisterToDisplayDto Register(UserRegisterDto userRegisterDto)
+            var users = _unitOfWork.UserModelRepository.GetAll();
+
+            var user = users.Where(user => user.Email.Equals(email) && user.Password.Equals(encrypted)).FirstOrDefault();
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return entityMapper.UserModelToUserLoginToDisplayDto(user);
+        }
+
+        public async Task<UserRegisterToDisplayDto> Register(UserRegisterDto userRegisterDto)
         {
 
             var user = entityMapper.UserRegisterDtoToUserModel(userRegisterDto);
@@ -44,7 +60,7 @@ namespace OngProject.Core.Business
             _unitOfWork.UserModelRepository.Add(user);
             _unitOfWork.SaveChanges();
 
-
+            await _emailBusiness.SendEmailWithTemplateAsync(userRegisterDto.Email,$"Bienvenido a esta gran comunidad",$"Gracias por registrarte {user.FirstName}","Ong Somos Más");
             return entityMapper.UserRegisterDtoToUserRegisterToDisplayDto(userRegisterDto);
         }
        

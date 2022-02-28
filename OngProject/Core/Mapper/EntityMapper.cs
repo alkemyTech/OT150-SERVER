@@ -33,8 +33,10 @@ namespace OngProject.Core.Mapper
                 Name = userRegisterDto.Name,
                LastName = userRegisterDto.LastName,
                Email = userRegisterDto.Email
-                    };
+                    
+            };
         
+
     }
 
       public UserDto UserListDtoUserModel(UserModel userDto)
@@ -54,5 +56,9 @@ namespace OngProject.Core.Mapper
         }
 
 
+
+        }
+
+      
     }
 }

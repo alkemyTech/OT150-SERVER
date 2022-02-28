@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
-using OngProject.Core.Mapper;
 using OngProject.Core.Models.DTOs;
-using System;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace OngProject.Controllers
@@ -12,8 +8,6 @@ namespace OngProject.Controllers
     public class AuthController : Controller
     {
         private readonly IUserBusiness _userBusiness;
-       
-
         private readonly IEmailBusiness _emailBusiness;
 
 
@@ -32,10 +26,10 @@ namespace OngProject.Controllers
                 {
 
                     if (_userBusiness.ValidationEmail(userRegisterDto.Email))
-                    {
-                        var userToDisplay= _userBusiness.Register(userRegisterDto); 
-                        await _emailBusiness.SendEmail(userRegisterDto.Email);
-                        return Ok(userToDisplay);
+                    { 
+                        
+                        return Ok(
+                        await _userBusiness.Register(userRegisterDto));
                     }
                     else
                     {
@@ -48,17 +42,28 @@ namespace OngProject.Controllers
                     return BadRequest(ModelState);
 
                 }
-                
-
-           
-         
-            
-
-
-
-
         }
 
+        [HttpPost("Login")]
+        public IActionResult Login([FromBody] UserLoginDto login)
+        {
+            if (ModelState.IsValid)
+            {
 
+                var user = _userBusiness.Login(login.Email, login.Password);
+
+                if (user == null)
+                {
+                    return BadRequest("Error: Email or password are incorrect");
+                }
+                return Ok(user);
+                
+            }
+            else
+            {
+                return BadRequest(ModelState);
+
+            }
+        }
     }
 }
