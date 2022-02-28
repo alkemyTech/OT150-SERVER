@@ -10,7 +10,6 @@ namespace OngProject.Core.Mapper
 {
     public class EntityMapper
     {
-
         public UserModel UserRegisterDtoToUserModel(UserRegisterDto userRegisterDTO)
         {
             return new UserModel()
@@ -20,41 +19,43 @@ namespace OngProject.Core.Mapper
                Email=userRegisterDTO.Email,
                Password=userRegisterDTO.Password,
                LastModified=DateTime.Today,
-               SoftDelete=false,
-             
-
+               SoftDelete=false
             };
-            
         }
 
         public UserRegisterToDisplayDto UserRegisterDtoToUserRegisterToDisplayDto(UserRegisterDto userRegisterDto)
         {
-            return new UserRegisterToDisplayDto(){
-                Name = userRegisterDto.Name,
+            return new UserRegisterToDisplayDto()
+            {
+               Name = userRegisterDto.Name,
                LastName = userRegisterDto.LastName,
                Email = userRegisterDto.Email
-                    
             };
-        
+        }
 
-    }
-
-      public UserDto UserListDtoUserModel(UserModel userDto)
-
+        public UserDto UserListDtoUserModel(UserModel userDto)
         { 
-  
-        
             return new UserDto()
             {
-
                 FirstName = userDto.FirstName,
                 Email = userDto.Email,
                 LastName = userDto.LastName
-
             };
-
         }
 
+        public OrganizationGetDto OrganizationModeltoOrganizationGetDto(OrganizationModel organizationModel)
+        {
+            return new OrganizationGetDto()
+            {
+                Name = organizationModel.Name,
+                Address = organizationModel.Address,
+                Phone = organizationModel.Phone,
+                Image = organizationModel.Image,
+            };
+        }
+    }
+      
+}
         public UserLoginToDisplayDto UserModelToUserLoginToDisplayDto(UserModel user)
         {
             return new UserLoginToDisplayDto()
@@ -84,4 +85,3 @@ namespace OngProject.Core.Mapper
 
       
     }
-

@@ -51,10 +51,34 @@ namespace OngProject
             services.AddTransient<IEmailBusiness, EmailBusiness>();
             services.AddScoped<IEncryptHelper, EncryptHelper>();
             services.AddScoped<IJwtHelper, JwtHelper>();
-        
+
+            services.AddScoped<EntityMapper>();
+            services.AddScoped<OrganizationBusiness>();
+
             services.AddControllers();
             services.AddDbContext<OngContext>();
             services.Configure<JwtConfig>(Configuration.GetSection("JWT"));
+
+            var key = Encoding.ASCII.GetBytes(Configuration["JWT:Secret"]);
+            services
+            .AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateAudience = false,
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = false
+                };
+            });
+
             //var key = Encoding.ASCII.GetBytes(Configuration["JWT:Secret"]);
             //services
             //.AddAuthentication(x =>
@@ -77,6 +101,7 @@ namespace OngProject
         
       
            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
