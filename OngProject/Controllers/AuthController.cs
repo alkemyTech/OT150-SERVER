@@ -32,7 +32,7 @@ namespace OngProject.Controllers
                 {
 
                     if (_userBusiness.ValidationEmail(userRegisterDto.Email))
-                    {; 
+                    { 
                         
                         return Ok(
                         await _userBusiness.Register(userRegisterDto));
