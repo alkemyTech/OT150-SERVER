@@ -14,9 +14,8 @@ namespace OngProject.Controllers
 
         }
         
-
-        [Authorize(Roles = "Administrador")]
-        [HttpGet("members")]
+        //[Authorize(Roles = "Administrador")]
+        [HttpGet("Members")]
         public IActionResult GetMembers()
         {
             return Ok(_members.GetMembers());

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -48,7 +49,9 @@ namespace OngProject
             services.AddTransient<IEmailBusiness, EmailBusiness>();
             services.AddScoped<IEncryptHelper, EncryptHelper>();
             services.AddScoped<IJwtHelper, JwtHelper>();
-        
+            services.AddScoped<IMembers, MemberBusiness>();
+            services.AddScoped<EntityMapper>();
+
             services.AddControllers();
             services.AddDbContext<OngContext>();
             services.Configure<JwtConfig>(Configuration.GetSection("JWT"));

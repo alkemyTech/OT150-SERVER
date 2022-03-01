@@ -30,19 +30,19 @@ namespace OngProject.Core.Mapper
                 Name = userRegisterDto.Name,
                LastName = userRegisterDto.LastName,
                Email = userRegisterDto.Email
-                    };
+            };
         
     }
-        public MemberDto MemberListDtoMemberModel(MemberModel MemberDto)
+        public MemberDto MemberListDtoMemberModel(MemberModel memberDto)
         {
             return new MemberDto()
             {
-                Name = MemberDto.Name,
-                Image = MemberDto.Image,
-                InstagramUrl= MemberDto.InstagramUrl,
-                LinkedinUrl = MemberDto.LinkedinUrl,
-                FacebookUrl = MemberDto.FacebookUrl,
-                Description = MemberDto.Description
+                Name = memberDto.Name,
+                Image = memberDto.Image,
+                InstagramUrl= memberDto.InstagramUrl,
+                LinkedinUrl = memberDto.LinkedinUrl,
+                FacebookUrl = memberDto.FacebookUrl,
+                Description = memberDto.Description
             };
         }
     }

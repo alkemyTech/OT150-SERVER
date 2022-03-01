@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using MySqlX.XDevAPI.Common;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models.DTOs;
@@ -20,16 +18,15 @@ namespace OngProject.Core.Business
         }
         public IEnumerable<MemberDto> GetMembers()
         {
-            var Members = _unitOfWork.MemberModelRepository.GetAll();
-            
-            var MembersDto = new List<MemberDto>();
+            var members = _unitOfWork.MemberModelRepository.GetAll();
+            var membersDto = new List<MemberDto>();
 
-            foreach (var AMember in Members)
+            foreach (var member in members)
             {
-                MembersDto.Add(entityMapper.MemberListDtoMemberModel(AMember));
+                membersDto.Add(entityMapper.MemberListDtoMemberModel(member));
             }
-
-            return MembersDto;
+            
+            return membersDto;
         }
 
     }
