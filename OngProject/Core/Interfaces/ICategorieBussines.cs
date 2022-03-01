@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace OngProject.Core.Interfaces
 {
-   public interface ICategorieBussines
+    public interface ICategorieBussines
     {
         List<CategorieDto> GetCategories();
+        CategoryGetDto GetCategory(int id);
     }
 }
