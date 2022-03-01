@@ -87,6 +87,16 @@ namespace OngProject.Core.Mapper
                 User_Id = comment.User_Id
             };
         }
+
+        public NewsDto NewsModeltoNewsDto(NewsModel newsModel)
+        {
+            return new NewsDto()
+            {
+                Name = newsModel.Name,
+                Content = newsModel.Content,
+                Image = newsModel.Image
+            };
+        }
     }
       
 }
