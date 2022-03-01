@@ -4,7 +4,6 @@ using OngProject.Core.Interfaces;
 
 namespace OngProject.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class ContactController : ControllerBase
     {

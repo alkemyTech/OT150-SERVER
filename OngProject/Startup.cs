@@ -48,6 +48,8 @@ namespace OngProject
             services.AddTransient<IEmailBusiness, EmailBusiness>();
             services.AddScoped<IEncryptHelper, EncryptHelper>();
             services.AddScoped<IJwtHelper, JwtHelper>();
+            services.AddScoped<EntityMapper>();
+            services.AddScoped<IContact, ContactBusiness>();
         
             services.AddControllers();
             services.AddDbContext<OngContext>();

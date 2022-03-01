@@ -17,15 +17,15 @@ namespace OngProject.Core.Business
         }
         public IEnumerable<ContactDto> GetContacts()
         {
-            var Contacts = _unitOfWork.ContactsModelRepository.GetAll();
-            var ContactsDto = new List<ContactDto>();
+            var contacts = _unitOfWork.ContactsModelRepository.GetAll();
+            var contactsDto = new List<ContactDto>();
 
-            foreach (var AContact in Contacts)
+            foreach (var contact in contacts)
             {
-                ContactsDto.Add(_entityMapper.ConctactListDtoContactModel(AContact));
+                contactsDto.Add(_entityMapper.ConctactListDtoContactModel(contact));
             }
 
-            return ContactsDto;
+            return contactsDto;
         }
     }
 }

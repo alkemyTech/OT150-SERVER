@@ -1,10 +1,6 @@
-﻿using OngProject.Core.Interfaces;
-using OngProject.Core.Models.DTOs;
+﻿using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OngProject.Core.Mapper
 {
@@ -37,16 +33,14 @@ namespace OngProject.Core.Mapper
             };
         
         }
-        public ContactDto ConctactListDtoContactModel(ContactsModel ContactDto)
+        public ContactDto ConctactListDtoContactModel(ContactsModel contactDto)
         {
             return new ContactDto()
             {
-                
-                Name = ContactDto.Name,
-                Email = ContactDto.Email,
-                Phone = ContactDto.Phone,
-                Message = ContactDto.Message,
-                
+                Name = contactDto.Name,
+                Email = contactDto.Email,
+                Phone = contactDto.Phone,
+                Message = contactDto.Message                
             };            
         }
         
