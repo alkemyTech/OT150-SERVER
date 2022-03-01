@@ -53,9 +53,7 @@ namespace OngProject.Core.Mapper
                 Image = organizationModel.Image,
             };
         }
-    }
-      
-}
+
         public UserLoginToDisplayDto UserModelToUserLoginToDisplayDto(UserModel user)
         {
             return new UserLoginToDisplayDto()
@@ -76,12 +74,22 @@ namespace OngProject.Core.Mapper
             {
 
                 NameCategorie = categorieDto.NameCategorie,
-         
+
             };
 
         }
 
+        public CommentDto CommentModelToCommentDto(CommentModel comment)
+        {
+            return new CommentDto()
+            {
+                Body = comment.Body,
+                User_Id = comment.User_Id
+            };
+        }
     }
-
       
-    }
+}
+        
+
+
