@@ -37,18 +37,7 @@ namespace OngProject.Core.Mapper
             };
         
         }
-        public ContactDto ConctactListDtoContactModel(ContactsModel ContactDto)
-        {
-            return new ContactDto()
-            {
-                
-                Name = ContactDto.Name,
-                Email = ContactDto.Email,
-                Phone = ContactDto.Phone,
-                Message = ContactDto.Message,
-                
-            };            
-        }
+        
         public SlideDto SlideListDtoSlideModel(SlideModel slideDto)
         {
             return new SlideDto()

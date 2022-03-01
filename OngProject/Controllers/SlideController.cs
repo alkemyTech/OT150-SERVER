@@ -4,8 +4,6 @@ using OngProject.Core.Interfaces;
 
 namespace OngProject.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class SlideController : Controller
     {
         private readonly ISlide _slide;
@@ -14,7 +12,7 @@ namespace OngProject.Controllers
             _slide = slide;
         }
 
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         [HttpGet("Slides")]
         public IActionResult GetSlides()
         {

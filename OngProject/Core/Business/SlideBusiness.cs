@@ -18,13 +18,13 @@ namespace OngProject.Core.Business
         }
         public IEnumerable<SlideDto> GetSlides()
         {
-            var Slides = _unitOfWork.SlideModelRepository.GetAll();
-            var SlidesDto = new List<SlideDto>();
-            foreach (var ASlide in Slides)
+            var slides = _unitOfWork.SlideModelRepository.GetAll();
+            var slidesDto = new List<SlideDto>();
+            foreach (var slide in slides)
             {
-                SlidesDto.Add(_entityMapper.SlideListDtoSlideModel(ASlide));
+                slidesDto.Add(_entityMapper.SlideListDtoSlideModel(slide));
             }
-            return SlidesDto;
+            return slidesDto;
         }
     }
 }
