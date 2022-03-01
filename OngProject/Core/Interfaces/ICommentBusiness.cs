@@ -6,5 +6,6 @@ namespace OngProject.Core.Interfaces
     public interface ICommentBusiness
     {
         List<CommentDto> showListCommentDto(int id);
+        List<CommentDto> GetComments();
     }
 }
