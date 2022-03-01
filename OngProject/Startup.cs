@@ -54,6 +54,7 @@ namespace OngProject
 
             services.AddScoped<EntityMapper>();
             services.AddScoped<OrganizationBusiness>();
+            services.AddTransient<ICommentBusiness, CommentBusiness>();
 
             services.AddControllers();
             services.AddDbContext<OngContext>();
