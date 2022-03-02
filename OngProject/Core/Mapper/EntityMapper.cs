@@ -1,10 +1,6 @@
-﻿using OngProject.Core.Interfaces;
-using OngProject.Core.Models.DTOs;
+﻿using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OngProject.Core.Mapper
 {
@@ -19,6 +15,8 @@ namespace OngProject.Core.Mapper
                Email=userRegisterDTO.Email,
                Password=userRegisterDTO.Password,
                LastModified=DateTime.Today,
+               SoftDelete=false,
+            };       
                SoftDelete=false
             };
         }
@@ -27,10 +25,42 @@ namespace OngProject.Core.Mapper
         {
             return new UserRegisterToDisplayDto()
             {
+
+                Name = userRegisterDto.Name,
+               LastName = userRegisterDto.LastName,
+               Email = userRegisterDto.Email
+            };
+        
+        }
+        public ContactDto ConctactListDtoContactModel(ContactsModel contactDto)
+        {
+            return new ContactDto()
+            {
+                Name = contactDto.Name,
+                Email = contactDto.Email,
+                Phone = contactDto.Phone,
+                Message = contactDto.Message                
+            };            
+        }
+        
+
                Name = userRegisterDto.Name,
                LastName = userRegisterDto.LastName,
                Email = userRegisterDto.Email
             };
+        
+    }
+        public MemberDto MemberListDtoMemberModel(MemberModel memberDto)
+        {
+            return new MemberDto()
+            {
+                Name = memberDto.Name,
+                Image = memberDto.Image,
+                InstagramUrl= memberDto.InstagramUrl,
+                LinkedinUrl = memberDto.LinkedinUrl,
+                FacebookUrl = memberDto.FacebookUrl,
+                Description = memberDto.Description
+
         }
 
         public UserDto UserListDtoUserModel(UserModel userDto)
@@ -85,8 +115,10 @@ namespace OngProject.Core.Mapper
             {
                 Body = comment.Body,
                 User_Id = comment.User_Id
+
             };
         }
+
 
         public SlideDto SlideModelToSlideDto(SlideModel mono)
         {
@@ -98,6 +130,7 @@ namespace OngProject.Core.Mapper
                 Organization_Id = mono.Organization_Id
             };
         }
+
     }
       
 }

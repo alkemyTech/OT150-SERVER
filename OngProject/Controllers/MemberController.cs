@@ -1,21 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using OngProject.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using OngProject.Core.Interfaces;
 
 namespace OngProject.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class MemberController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMembers _members;
 
-        public MemberController(IUnitOfWork unitOfWork)
+        public MemberController(IMembers member)
         {
-            _unitOfWork = unitOfWork;
+            _members = member;
+
         }
+        
+        //[Authorize(Roles = "Administrador")]
+        [HttpGet("Members")]
+        public IActionResult GetMembers()
+        {
+            return Ok(_members.GetMembers());
+        }
+
     }
 }
