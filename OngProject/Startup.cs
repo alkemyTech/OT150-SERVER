@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -52,9 +53,14 @@ namespace OngProject
             services.AddScoped<IEncryptHelper, EncryptHelper>();
             services.AddScoped<IJwtHelper, JwtHelper>();
 
+            services.AddScoped<IMembers, MemberBusiness>();
+            services.AddScoped<EntityMapper>();
+
+
             services.AddScoped<EntityMapper>();
             services.AddScoped<OrganizationBusiness>();
             services.AddTransient<ICommentBusiness, CommentBusiness>();
+
 
             services.AddControllers();
             services.AddDbContext<OngContext>();

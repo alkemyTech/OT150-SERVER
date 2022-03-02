@@ -19,6 +19,8 @@ namespace OngProject.Core.Mapper
                Email=userRegisterDTO.Email,
                Password=userRegisterDTO.Password,
                LastModified=DateTime.Today,
+               SoftDelete=false,
+            };       
                SoftDelete=false
             };
         }
@@ -31,6 +33,19 @@ namespace OngProject.Core.Mapper
                LastName = userRegisterDto.LastName,
                Email = userRegisterDto.Email
             };
+        
+    }
+        public MemberDto MemberListDtoMemberModel(MemberModel memberDto)
+        {
+            return new MemberDto()
+            {
+                Name = memberDto.Name,
+                Image = memberDto.Image,
+                InstagramUrl= memberDto.InstagramUrl,
+                LinkedinUrl = memberDto.LinkedinUrl,
+                FacebookUrl = memberDto.FacebookUrl,
+                Description = memberDto.Description
+
         }
 
         public UserDto UserListDtoUserModel(UserModel userDto)
@@ -85,6 +100,7 @@ namespace OngProject.Core.Mapper
             {
                 Body = comment.Body,
                 User_Id = comment.User_Id
+
             };
         }
     }
