@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using OngProject.Core.Helper;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
@@ -18,19 +20,23 @@ namespace OngProject.Core.Business
     public class UserBusiness : IUserBusiness
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly EntityMapper entityMapper = new EntityMapper();
+       
         private readonly IEmailBusiness _emailBusiness;
-
-
-
+        private readonly IConfiguration _configuration;
         private readonly IEncryptHelper _encryptHelper;
-        public UserBusiness(IUnitOfWork unitOfWork, IEmailBusiness emailBusiness, IEncryptHelper encryptHelper)
+        private readonly EntityMapper entityMapper=new EntityMapper();
+        public UserBusiness(IUnitOfWork unitOfWork, IEmailBusiness emailBusiness, IEncryptHelper encryptHelper, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
             _emailBusiness = emailBusiness;
 
             _encryptHelper = encryptHelper;
+            _configuration = configuration;
         }
+
+       
+
+
 
         public UserLoginToDisplayDto Login(string email, string password)
         {
@@ -50,19 +56,35 @@ namespace OngProject.Core.Business
 
         public async Task<UserRegisterToDisplayDto> Register(UserRegisterDto userRegisterDto)
         {
+            var imagesBusiness = new ImagesBusiness(_configuration);
 
-            var user = entityMapper.UserRegisterDtoToUserModel(userRegisterDto);
+            userRegisterDto.Password = _encryptHelper.EncryptPassSha256(userRegisterDto.Password);
+
+            
            
 
+            if(userRegisterDto.Role!=1 && userRegisterDto.Role != 2)
+            {
+                userRegisterDto.Role = 2;
+            }
+            var user = entityMapper.UserRegisterDtoToUserModel(userRegisterDto);
+            if (userRegisterDto.Photo != null)
+            {
+                user.Photo = await imagesBusiness.UploadFileAsync(userRegisterDto.Photo);
+            }
 
-            user.Password = _encryptHelper.EncryptPassSha256(user.Password);
+
+            
+            
 
             _unitOfWork.UserModelRepository.Add(user);
             _unitOfWork.SaveChanges();
-
             await _emailBusiness.SendEmailWithTemplateAsync(userRegisterDto.Email,$"Bienvenido a esta gran comunidad",$"Gracias por registrarte {user.FirstName}","Ong Somos Más");
             return entityMapper.UserRegisterDtoToUserRegisterToDisplayDto(userRegisterDto);
         }
+
+       
+        
        
         public bool ValidationEmail(string emailAddress)
         {

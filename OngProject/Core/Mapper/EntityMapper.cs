@@ -1,4 +1,6 @@
-﻿using OngProject.Core.Models.DTOs;
+﻿using Microsoft.Extensions.Configuration;
+using OngProject.Core.Business;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using System;
 
@@ -6,18 +8,29 @@ namespace OngProject.Core.Mapper
 {
     public class EntityMapper
     {
+
+
+
         public UserModel UserRegisterDtoToUserModel(UserRegisterDto userRegisterDTO)
         {
+
+
+
+
             return new UserModel()
             {
                 FirstName = userRegisterDTO.Name,
                 LastName = userRegisterDTO.LastName,
                 Email = userRegisterDTO.Email,
                 Password = userRegisterDTO.Password,
-                LastModified = DateTime.Today,
-                SoftDelete = false
+                LastModified = DateTime.Now,
+                SoftDelete = true,
+                RoleId=userRegisterDTO.Role
+             
             };
+
         }
+        
 
         public UserRegisterToDisplayDto UserRegisterDtoToUserRegisterToDisplayDto(UserRegisterDto userRegisterDto)
         {
