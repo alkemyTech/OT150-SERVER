@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OngProject.Core.Interfaces;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,15 +10,40 @@ using System.Threading.Tasks;
 
 namespace OngProject.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : ControllerBase
+    [Authorize(Roles = "Admin")]
+    public class UserController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
 
-        public UserController(IUnitOfWork unitOfWork)
+
+
+        private readonly IUserBusiness _userBusiness;
+
+
+        public UserController(IUserBusiness userBusiness)
         {
-            _unitOfWork = unitOfWork;
+
+            _userBusiness = userBusiness;
+
+        }
+
+        [HttpGet("Lista")]
+        public async Task<IActionResult> Lista()
+        {
+
+            try
+            {
+
+                return Ok(_userBusiness.GetUsuarios());
+
+            }
+
+            catch
+            {
+                return BadRequest();
+            }
+
+
+
         }
     }
 }
