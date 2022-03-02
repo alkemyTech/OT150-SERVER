@@ -131,6 +131,15 @@ namespace OngProject.Core.Mapper
             };
         }
 
+        public NewsDto NewsModeltoNewsDto(NewsModel newsModel)
+        {
+            return new NewsDto()
+            {
+                Name = newsModel.Name,
+                Content = newsModel.Content,
+                Image = newsModel.Image
+            };
+        }
     }
 
 }
