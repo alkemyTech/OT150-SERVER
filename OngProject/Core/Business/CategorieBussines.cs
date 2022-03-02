@@ -33,5 +33,11 @@ namespace OngProject.Core.Business
 
 
         }
+
+        public CategoryGetDto GetCategory(int id)
+        {
+            var category = _unitOfWork.CategorieModelRepository.GetById(id);
+            return entityMapper.CategorieModelToCategorieGetDto(category);
+        }
     }
 }

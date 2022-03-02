@@ -10,6 +10,14 @@ namespace OngProject.Core.Mapper
         {
             return new UserModel()
             {
+
+                FirstName = userRegisterDTO.Name,
+                LastName = userRegisterDTO.LastName,
+                Email = userRegisterDTO.Email,
+                Password = userRegisterDTO.Password,
+                LastModified = DateTime.Today,
+                SoftDelete = false
+
                FirstName=userRegisterDTO.Name,
                LastName=userRegisterDTO.LastName,
                Email=userRegisterDTO.Email,
@@ -18,6 +26,7 @@ namespace OngProject.Core.Mapper
                SoftDelete=false,
             };       
                SoftDelete=false
+
             };
         }
 
@@ -25,6 +34,11 @@ namespace OngProject.Core.Mapper
         {
             return new UserRegisterToDisplayDto()
             {
+
+                Name = userRegisterDto.Name,
+                LastName = userRegisterDto.LastName,
+                Email = userRegisterDto.Email
+
 
                 Name = userRegisterDto.Name,
                LastName = userRegisterDto.LastName,
@@ -47,6 +61,7 @@ namespace OngProject.Core.Mapper
                Name = userRegisterDto.Name,
                LastName = userRegisterDto.LastName,
                Email = userRegisterDto.Email
+
             };
         
     }
@@ -64,7 +79,7 @@ namespace OngProject.Core.Mapper
         }
 
         public UserDto UserListDtoUserModel(UserModel userDto)
-        { 
+        {
             return new UserDto()
             {
                 FirstName = userDto.FirstName,
@@ -131,9 +146,20 @@ namespace OngProject.Core.Mapper
             };
         }
 
+
+        public CategoryGetDto CategorieModelToCategorieGetDto(CategorieModel categorieModel)
+        {
+            return new CategoryGetDto()
+            {
+                NameCategorie = categorieModel.NameCategorie,
+                DescriptionCategorie = categorieModel.DescriptionCategorie,
+                Image = categorieModel.Image
+            };
+        }
+
     }
-      
+
 }
-        
+
 
 

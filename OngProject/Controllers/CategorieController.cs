@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
 using OngProject.Repositories.Interfaces;
 using System.Threading.Tasks;
@@ -31,5 +32,20 @@ namespace OngProject.Controllers
                 return BadRequest();
             }
         }
+
+        [Authorize(Roles = "Administrador")]
+        [HttpGet("{id:int}")]
+        public IActionResult GetCategory(int id)
+        {
+            try
+            {
+                return Ok(_categorieBusiness.GetCategory(id));
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
+
     }
 }
