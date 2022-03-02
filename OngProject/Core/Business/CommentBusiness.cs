@@ -32,15 +32,20 @@ namespace OngProject.Core.Business
 
         public List<CommentDto> showListCommentDto(int id)
         {
-            var lista = _unitOfWork.CommentModelRepository.GetAll();
             List<CommentDto> listaFiltrada = new List<CommentDto>();
-            foreach (var item in lista)
+            var lista = _unitOfWork.CommentModelRepository.GetAll();
+            if (lista != null)
             {
-                if (item.News_Id == id)
+                foreach (var item in lista)
                 {
-                    listaFiltrada.Add(_entityMapper.CommentModelToCommentDto(item));
+                    if (item.News_Id == id)
+                    {
+                        listaFiltrada.Add(_entityMapper.CommentModelToCommentDto(item));
+                    }
                 }
             }
+            else listaFiltrada = null;
+
             return listaFiltrada;
         }
     }
