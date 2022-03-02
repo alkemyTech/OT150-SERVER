@@ -53,6 +53,11 @@ namespace OngProject
             services.AddScoped<IEncryptHelper, EncryptHelper>();
             services.AddScoped<IJwtHelper, JwtHelper>();
 
+            services.AddScoped<EntityMapper>();
+            services.AddScoped<IContact, ContactBusiness>();
+        
+
+
             services.AddScoped<IMembers, MemberBusiness>();
             services.AddScoped<EntityMapper>();
 
@@ -60,6 +65,7 @@ namespace OngProject
             services.AddScoped<EntityMapper>();
             services.AddScoped<OrganizationBusiness>();
             services.AddTransient<ICommentBusiness, CommentBusiness>();
+
 
 
             services.AddControllers();

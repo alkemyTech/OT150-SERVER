@@ -14,6 +14,7 @@ namespace OngProject.Repositories.Interfaces
         IRepository<OrganizationModel> OrganizationModelRepository { get; }
         IRepository<RoleModel> RoleModelRepository { get; }
         IRepository<CategorieModel> CategorieModelRepository { get; }
+        IRepository<ContactsModel> ContactsModelRepository { get; }
         IRepository<UserModel> UserModelRepository { get; }
         IRepository<CommentModel> CommentModelRepository { get; }
 
