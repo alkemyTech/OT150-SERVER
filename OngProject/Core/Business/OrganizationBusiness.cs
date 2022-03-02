@@ -1,7 +1,7 @@
 ﻿using OngProject.Core.Mapper;
 using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace OngProject.Core.Business
@@ -17,13 +17,17 @@ namespace OngProject.Core.Business
             this.entityMapper = entityMapper;
         }
 
-        public List<OrganizationGetDto> GetOrganization()
+        public OrganizationGetDto GetOrganization()
         {
-            int max = (unitOfWork.OrganizationModelRepository.GetAll()).Max(i => i.Id);
-            var organization = (unitOfWork.OrganizationModelRepository.GetAll()).First(a => a.Id == max);
-            var organizationDto = new List<OrganizationGetDto>();
-            organizationDto.Add(entityMapper.OrganizationModeltoOrganizationGetDto(organization));
+            var organizationlist = unitOfWork.OrganizationModelRepository.GetAll();
+            OrganizationModel organization = new OrganizationModel();
+            var organizationDto = new OrganizationGetDto();
+            if (organizationlist.Any()){
+                int max = organizationlist.Max(i => i.Id);
+                organization = organizationlist.First(a => a.Id == max);
+                organizationDto = entityMapper.OrganizationModeltoOrganizationGetDto(organization);
+            }
             return organizationDto;
-        }
+	 }
     }
 }
