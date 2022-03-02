@@ -17,6 +17,19 @@ namespace OngProject.Core.Business
             _entityMapper = entityMapper;
         }
 
+        public List<CommentDto> GetComments()
+        {
+            var comments = _unitOfWork.CommentModelRepository.GetAll();
+            var commentsDto = new List<CommentDto>();
+
+            foreach (var comment in comments)
+            {
+                commentsDto.Add(_entityMapper.CommentModelToCommentDto(comment));
+            }
+
+            return commentsDto;
+        }
+
         public List<CommentDto> showListCommentDto(int id)
         {
             var lista = _unitOfWork.CommentModelRepository.GetAll();
