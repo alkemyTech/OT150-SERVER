@@ -10,23 +10,12 @@ namespace OngProject.Core.Mapper
         {
             return new UserModel()
             {
-
                 FirstName = userRegisterDTO.Name,
                 LastName = userRegisterDTO.LastName,
                 Email = userRegisterDTO.Email,
                 Password = userRegisterDTO.Password,
                 LastModified = DateTime.Today,
                 SoftDelete = false
-
-               FirstName=userRegisterDTO.Name,
-               LastName=userRegisterDTO.LastName,
-               Email=userRegisterDTO.Email,
-               Password=userRegisterDTO.Password,
-               LastModified=DateTime.Today,
-               SoftDelete=false,
-            };       
-               SoftDelete=false
-
             };
         }
 
@@ -38,13 +27,8 @@ namespace OngProject.Core.Mapper
                 Name = userRegisterDto.Name,
                 LastName = userRegisterDto.LastName,
                 Email = userRegisterDto.Email
-
-
-                Name = userRegisterDto.Name,
-               LastName = userRegisterDto.LastName,
-               Email = userRegisterDto.Email
             };
-        
+
         }
         public ContactDto ConctactListDtoContactModel(ContactsModel contactDto)
         {
@@ -53,29 +37,22 @@ namespace OngProject.Core.Mapper
                 Name = contactDto.Name,
                 Email = contactDto.Email,
                 Phone = contactDto.Phone,
-                Message = contactDto.Message                
-            };            
-        }
-        
-
-               Name = userRegisterDto.Name,
-               LastName = userRegisterDto.LastName,
-               Email = userRegisterDto.Email
-
+                Message = contactDto.Message
             };
-        
-    }
+        }
+
         public MemberDto MemberListDtoMemberModel(MemberModel memberDto)
         {
             return new MemberDto()
             {
                 Name = memberDto.Name,
                 Image = memberDto.Image,
-                InstagramUrl= memberDto.InstagramUrl,
+                InstagramUrl = memberDto.InstagramUrl,
                 LinkedinUrl = memberDto.LinkedinUrl,
                 FacebookUrl = memberDto.FacebookUrl,
                 Description = memberDto.Description
 
+            };
         }
 
         public UserDto UserListDtoUserModel(UserModel userDto)
@@ -111,10 +88,7 @@ namespace OngProject.Core.Mapper
         }
 
         public CategorieDto CategorieListDtoCategorieModel(CategorieModel categorieDto)
-
         {
-
-
             return new CategorieDto()
             {
 
