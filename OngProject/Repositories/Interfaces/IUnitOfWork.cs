@@ -17,6 +17,7 @@ namespace OngProject.Repositories.Interfaces
         IRepository<ContactsModel> ContactsModelRepository { get; }
         IRepository<UserModel> UserModelRepository { get; }
         IRepository<CommentModel> CommentModelRepository { get; }
+        IRepository<SlideModel> SlideModelRepository { get; }
 
         void SaveChanges();
 

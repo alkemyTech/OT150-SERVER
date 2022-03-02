@@ -119,6 +119,18 @@ namespace OngProject.Core.Mapper
             };
         }
 
+
+        public SlideDto SlideModelToSlideDto(SlideModel mono)
+        {
+            return new SlideDto()
+            {
+                ImageUrl = mono.ImageUrl,
+                Text = mono.Text,
+                Order = mono.Order,
+                Organization_Id = mono.Organization_Id
+            };
+        }
+
     }
       
 }
