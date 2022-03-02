@@ -2,6 +2,7 @@
 using OngProject.Core.Mapper;
 using OngProject.Core.Models.DTOs;
 using OngProject.Repositories.Interfaces;
+using System.Collections.Generic;
 
 namespace OngProject.Core.Business
 {
@@ -25,5 +26,16 @@ namespace OngProject.Core.Business
             else detalleDto = _entityMapper.SlideModelToSlideDto(detalle);
             return detalleDto;
         }
+        public IEnumerable<SlideDto> GetSlides()
+        {
+            var slides = _unitOfWork.SlideModelRepository.GetAll();
+            var slidesDto = new List<SlideDto>();
+            foreach (var slide in slides)
+            {
+                slidesDto.Add(_entityMapper.SlideListDtoSlideModelImageOrder(slide));
+            }
+            return slidesDto;
+        }
     }
 }
+

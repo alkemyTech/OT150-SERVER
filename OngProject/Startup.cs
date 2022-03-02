@@ -1,8 +1,6 @@
 
 using Amazon.S3;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -30,9 +28,7 @@ namespace OngProject
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -43,36 +39,23 @@ namespace OngProject
             });
 
             services.AddAWSService<IAmazonS3>();
-
-           
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-         
             services.AddScoped<IUserBusiness, UserBusiness>();
             services.AddScoped<ICategorieBussines, CategorieBussines>();
             services.AddTransient<IEmailBusiness, EmailBusiness>();
             services.AddScoped<IEncryptHelper, EncryptHelper>();
             services.AddScoped<IJwtHelper, JwtHelper>();
-
             services.AddScoped<EntityMapper>();
             services.AddScoped<IContact, ContactBusiness>();
-        
-
-
             services.AddScoped<IMembers, MemberBusiness>();
             services.AddScoped<EntityMapper>();
-
-
             services.AddScoped<EntityMapper>();
             services.AddScoped<OrganizationBusiness>();
             services.AddTransient<ICommentBusiness, CommentBusiness>();
             services.AddTransient<ISlideBusiness, SlideBusiness>();
-
-
-
             services.AddControllers();
             services.AddDbContext<OngContext>();
             services.Configure<JwtConfig>(Configuration.GetSection("JWT"));
-
             var key = Encoding.ASCII.GetBytes(Configuration["JWT:Secret"]);
             services
             .AddAuthentication(x =>
@@ -127,15 +110,10 @@ namespace OngProject
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OngProject v1"));
             }
-
             app.UseHttpsRedirection();
-          
-
             app.UseRouting();
             app.UseAuthentication();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -18,7 +18,6 @@ namespace OngProject.Core.Mapper
                 SoftDelete = false
             };
         }
-
         public UserRegisterToDisplayDto UserRegisterDtoToUserRegisterToDisplayDto(UserRegisterDto userRegisterDto)
         {
             return new UserRegisterToDisplayDto()
@@ -40,7 +39,6 @@ namespace OngProject.Core.Mapper
                 Message = contactDto.Message
             };
         }
-
         public MemberDto MemberListDtoMemberModel(MemberModel memberDto)
         {
             return new MemberDto()
@@ -54,7 +52,6 @@ namespace OngProject.Core.Mapper
 
             };
         }
-
         public UserDto UserListDtoUserModel(UserModel userDto)
         {
             return new UserDto()
@@ -75,7 +72,6 @@ namespace OngProject.Core.Mapper
                 Image = organizationModel.Image,
             };
         }
-
         public UserLoginToDisplayDto UserModelToUserLoginToDisplayDto(UserModel user)
         {
             return new UserLoginToDisplayDto()
@@ -86,7 +82,6 @@ namespace OngProject.Core.Mapper
 
             };
         }
-
         public CategorieDto CategorieListDtoCategorieModel(CategorieModel categorieDto)
         {
             return new CategorieDto()
@@ -97,7 +92,6 @@ namespace OngProject.Core.Mapper
             };
 
         }
-
         public CommentDto CommentModelToCommentDto(CommentModel comment)
         {
             return new CommentDto()
@@ -107,8 +101,6 @@ namespace OngProject.Core.Mapper
 
             };
         }
-
-
         public SlideDto SlideModelToSlideDto(SlideModel mono)
         {
             return new SlideDto()
@@ -119,8 +111,15 @@ namespace OngProject.Core.Mapper
                 Organization_Id = mono.Organization_Id
             };
         }
+        public SlideDto SlideListDtoSlideModelImageOrder(SlideModel slideDto)
+        {
+            return new SlideDto()
+            {
+                ImageUrl = slideDto.ImageUrl,
+                Order = slideDto.Order
+            };
 
-
+        }
         public CategoryGetDto CategorieModelToCategorieGetDto(CategorieModel categorieModel)
         {
             return new CategoryGetDto()
@@ -130,7 +129,6 @@ namespace OngProject.Core.Mapper
                 Image = categorieModel.Image
             };
         }
-
         public NewsDto NewsModeltoNewsDto(NewsModel newsModel)
         {
             return new NewsDto()
