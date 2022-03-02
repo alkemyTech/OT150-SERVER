@@ -34,6 +34,10 @@ namespace OngProject.Core.Models.DTOs
         [MaxLength(20, ErrorMessage = "The maximum length is 20 letters")]
         public string Password { get; set; }
         [Required]
+
+        [Range(1, 2,
+        ErrorMessage = "Value for {0} must be between {1} and {2}.")]
+
         public int Role{ get; set; }
 
       
