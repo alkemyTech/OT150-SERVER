@@ -18,6 +18,21 @@ namespace OngProject.DataAccess
             //optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:Challenge"]);
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new SeedTestimonials());
+            modelBuilder.ApplyConfiguration(new SeedActivities());
+            modelBuilder.ApplyConfiguration(new SeedCategories());
+            modelBuilder.ApplyConfiguration(new SeedMembers());
+            modelBuilder.ApplyConfiguration(new SeedNews());
+            modelBuilder.ApplyConfiguration(new SeedOrganization());
+            modelBuilder.ApplyConfiguration(new SeedContacts());
+            modelBuilder.ApplyConfiguration(new SeedSlides());
+            modelBuilder.ApplyConfiguration(new SeedRoles());
+            modelBuilder.ApplyConfiguration(new SeedUsers());
+            modelBuilder.ApplyConfiguration(new SeedComments());//
+        }
+
         public DbSet<ContactsModel> ContactsModel { get; set; }
         public DbSet<TestimonialsModel> TestimonialsModel { get; set; }
         public DbSet<SlideModel> SlidesModels { get; set; }
