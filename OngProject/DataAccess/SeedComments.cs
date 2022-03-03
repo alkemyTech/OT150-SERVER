@@ -14,8 +14,8 @@ namespace OngProject.DataAccess
 					{
 						Id = 1,
 						Body = "Comment Nro " + 1,
-						News_Id = 1,
-						User_Id = 1,
+						NewsId = 1,
+						UserId = 1,
 						LastModified = DateTime.Now,
 						SoftDelete = true
 					}
@@ -26,8 +26,8 @@ namespace OngProject.DataAccess
 					{
 						Id = 2,
 						Body = "Comment Nro " + 2,
-						News_Id = 2,
-						User_Id = 11,
+						NewsId = 2,
+						UserId = 11,
 						LastModified = DateTime.Now,
 						SoftDelete = true
 					}
@@ -40,8 +40,8 @@ namespace OngProject.DataAccess
 					{
 						Id = i,
 						Body = "Comment Nro " + i,
-						News_Id = new Random().Next(1,11),
-						User_Id = new Random().Next(1,21),
+						NewsId = new Random().Next(1,11),
+						UserId = new Random().Next(1,21),
 						LastModified = DateTime.Now,
 						SoftDelete = true
 					}

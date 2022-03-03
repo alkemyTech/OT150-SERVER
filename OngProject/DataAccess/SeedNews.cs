@@ -21,6 +21,7 @@ namespace OngProject.DataAccess
 						Name = "News " + i,
 						Content = "Content from news " + i,
 						Image = "Image from news " + i,
+						CategorieId = new Random().Next(1, 11),
 						LastModified = DateTime.Now,
 						SoftDelete = true
 					}

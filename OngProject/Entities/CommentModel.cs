@@ -10,11 +10,11 @@ namespace OngProject.Entities
         public string Body { get; set; }
 
         [ForeignKey("NewsModel")]
-        public int News_Id { get; set; }
+        public int NewsId { get; set; }
         public virtual NewsModel News { get; set; }
 
         [ForeignKey("UserModel")]
-        public int User_Id { get; set; }
+        public int UserId { get; set; }
         public virtual UserModel User { get; set; }
     }
 }

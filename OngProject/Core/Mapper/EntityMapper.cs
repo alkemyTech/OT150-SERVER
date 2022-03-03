@@ -13,10 +13,6 @@ namespace OngProject.Core.Mapper
 
         public UserModel UserRegisterDtoToUserModel(UserRegisterDto userRegisterDTO)
         {
-
-
-
-
             return new UserModel()
             {
                 FirstName = userRegisterDTO.Name,
@@ -28,7 +24,6 @@ namespace OngProject.Core.Mapper
                 RoleId=userRegisterDTO.Role
              
             };
-
         }
 
         
@@ -114,7 +109,7 @@ namespace OngProject.Core.Mapper
             return new CommentDto()
             {
                 Body = comment.Body,
-                User_Id = comment.User_Id
+                User_Id = comment.UserId
 
             };
         }
@@ -125,7 +120,7 @@ namespace OngProject.Core.Mapper
                 ImageUrl = mono.ImageUrl,
                 Text = mono.Text,
                 Order = mono.Order,
-                Organization_Id = mono.Organization_Id
+                Organization_Id = mono.OrganizationId
             };
         }
         public SlideDto SlideListDtoSlideModelImageOrder(SlideModel slideDto)

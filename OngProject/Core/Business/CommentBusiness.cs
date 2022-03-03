@@ -38,7 +38,7 @@ namespace OngProject.Core.Business
             {
                 foreach (var item in lista)
                 {
-                    if (item.News_Id == id)
+                    if (item.NewsId == id)
                     {
                         listaFiltrada.Add(_entityMapper.CommentModelToCommentDto(item));
                     }
