@@ -18,7 +18,7 @@ namespace OngProject.DataAccess
 						ImageUrl = "ImageUrl to Slide " + i,
 						Text = "Text to Slide " + i,
 						Order = i,
-						Organization_Id = 1,
+						OrganizationId = 1,
 						LastModified = DateTime.Now,
 						SoftDelete = true
 					}
