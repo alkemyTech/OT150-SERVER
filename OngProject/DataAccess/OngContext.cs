@@ -38,7 +38,7 @@ namespace OngProject.DataAccess
         public DbSet<SlideModel> SlidesModels { get; set; }
         public DbSet<RoleModel> RoleModels { get; set; }
         public DbSet<UserModel> UserModels { get; set; }
-        public DbSet<CategoryModel> CategoriesModels { get; set; }
+        public DbSet<CategorieModel> CategoriesModels { get; set; }
         public DbSet<NewsModel> NewsModels { get; set; }
         public DbSet<OrganizationModel> OrganizationModels { get; set; }
         public DbSet<MemberModel> MemberModels { get; set; }
