@@ -2,8 +2,10 @@
 using OngProject.DataAccess;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace OngProject.Repositories
 {
@@ -32,10 +34,17 @@ namespace OngProject.Repositories
         {
             _entities.Update(entity);
         }
-        public void Delete(int id)
+
+        public async Task<T> Delete(int id)
         {
-            T entity = GetById(id);
-            _entities.Remove(entity);
+            T entidad = await _entities.FirstOrDefaultAsync(x => x.Id == id);
+            if (entidad == null)
+            {
+                return entidad;
+            }
+            entidad.SoftDelete = false;
+            entidad.LastModified = DateTime.Now;
+            return entidad;
         }
     }
 }
