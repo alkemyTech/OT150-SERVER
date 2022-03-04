@@ -95,8 +95,8 @@ namespace OngProject.Core.Mapper
             {
                 Name = user.FirstName,
                 LastName = user.LastName,
-                Email = user.Email
-
+                Email = user.Email,
+                RoleId = user.RoleId
             };
         }
         public CategorieDto CategorieListDtoCategorieModel(CategorieModel categorieDto)
