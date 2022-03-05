@@ -10,7 +10,7 @@ namespace OngProject.Core.Mapper
     {
 
 
-
+        
         public UserModel UserRegisterDtoToUserModel(UserRegisterDto userRegisterDTO)
         {
 
@@ -155,6 +155,16 @@ namespace OngProject.Core.Mapper
                 Image = newsModel.Image
             };
         }
+        public ContactsModel ContactPostDtoToContactsModel(ContactPostDto contactPostDto)
+        {
+            return new ContactsModel()
+            { Name=contactPostDto.Name,
+                Email = contactPostDto.Email,
+                Phone = contactPostDto.Phone,
+                Message=contactPostDto.Message
+            };
+        }
+
     }
 
 }
