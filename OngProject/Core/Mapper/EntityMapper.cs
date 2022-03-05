@@ -19,10 +19,11 @@ namespace OngProject.Core.Mapper
                 LastName = userRegisterDTO.LastName,
                 Email = userRegisterDTO.Email,
                 Password = userRegisterDTO.Password,
+                 
                 LastModified = DateTime.Now,
                 SoftDelete = true,
-                RoleId=userRegisterDTO.Role
-             
+                RoleId=userRegisterDTO.RoleId,
+               
             };
         }
 
@@ -37,7 +38,9 @@ namespace OngProject.Core.Mapper
 
                 Name = userRegisterDto.Name,
                 LastName = userRegisterDto.LastName,
-                Email = userRegisterDto.Email
+                Email = userRegisterDto.Email,
+               
+       
             };
 
         }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using OngProject.Core.Helper;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.DataAccess;
 using OngProject.Repositories;
@@ -25,13 +26,15 @@ namespace OngProject.Core.Business
         private readonly IConfiguration _configuration;
         private readonly IEncryptHelper _encryptHelper;
         private readonly EntityMapper entityMapper=new EntityMapper();
-        public UserBusiness(IUnitOfWork unitOfWork, IEmailBusiness emailBusiness, IEncryptHelper encryptHelper, IConfiguration configuration)
+        private readonly IJwtHelper _jwtHelper;
+        public UserBusiness(IUnitOfWork unitOfWork, IEmailBusiness emailBusiness, IEncryptHelper encryptHelper, IConfiguration configuration, IJwtHelper jwtHelper)
         {
             _unitOfWork = unitOfWork;
             _emailBusiness = emailBusiness;
 
             _encryptHelper = encryptHelper;
             _configuration = configuration;
+            _jwtHelper = jwtHelper;
         }
 
        
@@ -59,23 +62,21 @@ namespace OngProject.Core.Business
             var imagesBusiness = new ImagesBusiness(_configuration);
 
             userRegisterDto.Password = _encryptHelper.EncryptPassSha256(userRegisterDto.Password);
+          
 
-            
+
            
 
-            if(userRegisterDto.Role!=1 && userRegisterDto.Role != 2)
+
+            if (userRegisterDto.RoleId!=1 && userRegisterDto.RoleId != 2)
             {
-                userRegisterDto.Role = 2;
+                userRegisterDto.RoleId = 2;
             }
             var user = entityMapper.UserRegisterDtoToUserModel(userRegisterDto);
             if (userRegisterDto.Photo != null)
             {
                 user.Photo = await imagesBusiness.UploadFileAsync(userRegisterDto.Photo);
             }
-
-
-            
-            
 
             _unitOfWork.UserModelRepository.Add(user);
             _unitOfWork.SaveChanges();

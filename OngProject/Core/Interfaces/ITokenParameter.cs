@@ -8,6 +8,6 @@ namespace OngProject.Core.Interfaces
         [EmailAddress]
         string Email { get; set; }
         string Password { get; set; }
-        string Role { get; set; }
+        int RoleId { get; set; }
     }
 }
