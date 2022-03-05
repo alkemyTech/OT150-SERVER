@@ -53,7 +53,21 @@ namespace OngProject.Core.Mapper
                 Name = contactDto.Name,
                 Email = contactDto.Email,
                 Phone = contactDto.Phone,
-                Message = contactDto.Message
+                Message = contactDto.Message,
+               
+
+            };
+        }
+        public ContactsModel ContactPostDtoToContactsModel(ContactPostDto contactPostDto)
+        {
+            return new ContactsModel()
+            {
+                Name = contactPostDto.Name,
+                Email = contactPostDto.Email,
+                Phone = contactPostDto.Phone,
+                Message = contactPostDto.Message,
+                LastModified=DateTime.Now,
+                SoftDelete=true
             };
         }
         public MemberDto MemberListDtoMemberModel(MemberModel memberDto)
@@ -155,15 +169,7 @@ namespace OngProject.Core.Mapper
                 Image = newsModel.Image
             };
         }
-        public ContactsModel ContactPostDtoToContactsModel(ContactPostDto contactPostDto)
-        {
-            return new ContactsModel()
-            { Name=contactPostDto.Name,
-                Email = contactPostDto.Email,
-                Phone = contactPostDto.Phone,
-                Message=contactPostDto.Message
-            };
-        }
+        
 
     }
 
