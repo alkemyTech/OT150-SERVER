@@ -1,16 +1,16 @@
-﻿using Microsoft.Extensions.Configuration;
-using OngProject.Core.Business;
+﻿using AutoMapper;
 using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using System;
-
 namespace OngProject.Core.Mapper
 {
     public class EntityMapper
     {
-
-
-        
+        private readonly IMapper _mapper;
+        public EntityMapper(IMapper mapper)
+        {
+            _mapper=mapper;
+        }
         public UserModel UserRegisterDtoToUserModel(UserRegisterDto userRegisterDTO)
         {
             return new UserModel()
@@ -22,14 +22,9 @@ namespace OngProject.Core.Mapper
                 LastModified = DateTime.Now,
                 SoftDelete = true,
                 RoleId=userRegisterDTO.Role
-             
+
             };
         }
-
-        
-
-
-
         public UserRegisterToDisplayDto UserRegisterDtoToUserRegisterToDisplayDto(UserRegisterDto userRegisterDto)
         {
             return new UserRegisterToDisplayDto()
@@ -39,7 +34,6 @@ namespace OngProject.Core.Mapper
                 LastName = userRegisterDto.LastName,
                 Email = userRegisterDto.Email
             };
-
         }
         public ContactDto ConctactListDtoContactModel(ContactsModel contactDto)
         {
@@ -49,8 +43,6 @@ namespace OngProject.Core.Mapper
                 Email = contactDto.Email,
                 Phone = contactDto.Phone,
                 Message = contactDto.Message,
-               
-
             };
         }
         public ContactsModel ContactPostDtoToContactsModel(ContactPostDto contactPostDto)
@@ -75,7 +67,6 @@ namespace OngProject.Core.Mapper
                 LinkedinUrl = memberDto.LinkedinUrl,
                 FacebookUrl = memberDto.FacebookUrl,
                 Description = memberDto.Description
-
             };
         }
         public UserDto UserListDtoUserModel(UserModel userDto)
@@ -87,7 +78,6 @@ namespace OngProject.Core.Mapper
                 LastName = userDto.LastName
             };
         }
-
         public OrganizationGetDto OrganizationModeltoOrganizationGetDto(OrganizationModel organizationModel)
         {
             return new OrganizationGetDto()
@@ -105,16 +95,13 @@ namespace OngProject.Core.Mapper
                 Name = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email
-
             };
         }
         public CategorieDto CategorieListDtoCategorieModel(CategorieModel categorieDto)
         {
             return new CategorieDto()
             {
-
                 NameCategorie = categorieDto.NameCategorie,
-
             };
 
         }
@@ -124,7 +111,6 @@ namespace OngProject.Core.Mapper
             {
                 Body = comment.Body,
                 User_Id = comment.UserId
-
             };
         }
         public SlideDto SlideModelToSlideDto(SlideModel mono)
@@ -144,7 +130,6 @@ namespace OngProject.Core.Mapper
                 ImageUrl = slideDto.ImageUrl,
                 Order = slideDto.Order
             };
-
         }
         public CategoryGetDto CategorieModelToCategorieGetDto(CategorieModel categorieModel)
         {
@@ -164,8 +149,11 @@ namespace OngProject.Core.Mapper
                 Image = newsModel.Image
             };
         }
-        
 
+        public MemberModel MemberCreateDtoMemberModel(MemberCreateDto memberDto)
+        {
+            return _mapper.Map<MemberModel>(memberDto);
+        }
     }
 
 }

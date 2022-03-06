@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models.DTOs;
 
 namespace OngProject.Controllers
 {
@@ -14,12 +16,19 @@ namespace OngProject.Controllers
 
         }
         
-        //[Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador")]
         [HttpGet("Members")]
         public IActionResult GetMembers()
         {
             return Ok(_members.GetMembers());
         }
 
+        [Authorize(Roles = "Usuario")]
+        [HttpPost("Members")]
+        public IActionResult PostMember(MemberCreateDto memberDto)
+        {
+            var memberToCreate = _members.AddMember(memberDto);
+            return Ok(memberToCreate);
+        }
     }
 }

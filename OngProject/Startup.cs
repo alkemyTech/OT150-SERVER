@@ -55,6 +55,8 @@ namespace OngProject
             services.AddTransient<ISlideBusiness, SlideBusiness>();
             services.AddControllers();
             services.AddDbContext<OngContext>();
+            //services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.Configure<JwtConfig>(Configuration.GetSection("JWT"));
             var key = Encoding.ASCII.GetBytes(Configuration["JWT:Secret"]);
             services
