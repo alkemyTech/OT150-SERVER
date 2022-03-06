@@ -93,6 +93,7 @@ namespace OngProject.Core.Mapper
         {
             return new UserLoginToDisplayDto()
             {
+                Id = user.Id,
                 Name = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
