@@ -13,5 +13,7 @@ namespace OngProject.Core.Interfaces
         List<UserDto> GetUsuarios();
 
         UserLoginToDisplayDto Login(string email, string password);
+
+        Task<bool> DeleteUser(int id);
     }
 }

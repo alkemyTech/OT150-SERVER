@@ -61,6 +61,12 @@ namespace OngProject.Controllers
             return Ok(response);
         }
 
-        
+        [HttpDelete("users/{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var bajaLogica = await _userBusiness.DeleteUser(id);
+            if (bajaLogica == false) return NotFound();
+            else return Ok();
+        }
     }
 }

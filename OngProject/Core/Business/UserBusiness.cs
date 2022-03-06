@@ -9,6 +9,7 @@ using OngProject.DataAccess;
 using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using SendGrid.Helpers.Mail;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -112,6 +113,16 @@ namespace OngProject.Core.Business
            
         }
 
+        public async Task<bool> DeleteUser(int id)
+        {
+            var usuario = _unitOfWork.UserModelRepository.GetById(id);
+            if (usuario == null) return false;
+            usuario.SoftDelete = false;
+            usuario.LastModified = DateTime.Now;
+            _unitOfWork.UserModelRepository.Update(usuario);
+            await _unitOfWork.SaveChangesAsync();
+            return true;
+        }
     }
 
 }
