@@ -80,10 +80,47 @@ namespace OngProject.Core.Business
             }
             intermediate_list.Add("403");
             response.Data = comment;
-            response.Succeeded=false;
+            response.Succeeded = false;
             response.Errors = intermediate_list.ToArray();
             response.Message = "You don't have permission for modificated this comment";
             return response;
+        }
+        public async Task<Response<CommentPostDto>> Post(CommentPostDto commentPost)
+        {
+            var response = new Response<CommentPostDto>();
+            var error = new List<string>();
+            var user = _unitOfWork.UserModelRepository.GetById(commentPost.UserId);
+       
+            var news = _unitOfWork.NewsModelRepository.GetById(commentPost.NewsId);
+            if (user != null && news != null)
+            {
+
+
+                _unitOfWork.CommentModelRepository.Add(_entityMapper.CommentPostDtoToCommentModel(commentPost));
+                await _unitOfWork.SaveChangesAsync();
+                response.Data = commentPost;
+                response.Message = "The comment was added";
+                response.Succeeded = true;
+                return response;
+               
+            }
+            else
+            {
+                if (user == null)
+                {
+                    error.Add("The user does not exist");
+                }
+                if(news == null)
+                {
+                    error.Add("The news does not exist");
+                }
+                response.Data = null;
+                response.Message = "The comment was not added";
+                response.Errors = error.ToArray();
+                response.Succeeded = false;
+                return response;
+            }
+         
         }
     }
 }

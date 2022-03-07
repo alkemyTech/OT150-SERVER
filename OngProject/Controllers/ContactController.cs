@@ -18,12 +18,13 @@ namespace OngProject.Controllers
             _contact = contact;
         }
 
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("Contacts")]
         public IActionResult GetContacts()
         {
             return Ok(_contact.GetContacts());
         }
+        [Authorize]
 
         [HttpPost("Contacts")]
         public async Task<IActionResult> PostContact([FromBody]ContactPostDto contact)

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models.DTOs;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace OngProject.Controllers
             _commentBusiness = commentBusiness;
         }
 
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult GetComments()
         {
@@ -41,6 +42,27 @@ namespace OngProject.Controllers
             var rol = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
             var idUser = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
             return Ok(await _commentBusiness.DeleteComment(id, rol, idUser));
+        }
+       
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> PostComment([FromBody] CommentPostDto comment)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+
+
+                return Ok(await _commentBusiness.Post(comment));
+
+            }
+            else
+            {
+                return BadRequest(ModelState);
+
+
+            }
         }
 
     }
