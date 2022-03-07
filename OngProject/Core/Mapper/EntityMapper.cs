@@ -19,10 +19,11 @@ namespace OngProject.Core.Mapper
                 LastName = userRegisterDTO.LastName,
                 Email = userRegisterDTO.Email,
                 Password = userRegisterDTO.Password,
+                 
                 LastModified = DateTime.Now,
                 SoftDelete = true,
-                RoleId=userRegisterDTO.Role
-             
+                RoleId=userRegisterDTO.RoleId,
+               
             };
         }
 
@@ -37,7 +38,9 @@ namespace OngProject.Core.Mapper
 
                 Name = userRegisterDto.Name,
                 LastName = userRegisterDto.LastName,
-                Email = userRegisterDto.Email
+                Email = userRegisterDto.Email,
+               
+       
             };
 
         }
@@ -137,6 +140,7 @@ namespace OngProject.Core.Mapper
             };
         }
 
+
         public TestimonialsDto TestimonialsModelToTestimonialsDto(TestimonialsModel testimonials)
         {
             return new TestimonialsDto()
@@ -144,6 +148,21 @@ namespace OngProject.Core.Mapper
 
                 Id = testimonials.Id
 
+            };
+        }
+
+
+        public CommentModel CommentPostDtoToCommentModel(CommentPostDto commentPost)
+        {
+            return new CommentModel()
+            {
+                NewsId = commentPost.NewsId,
+                UserId=commentPost.UserId,
+                Body=commentPost.Body,
+                LastModified=DateTime.Now,
+                SoftDelete=true
+
+               
             };
         }
 

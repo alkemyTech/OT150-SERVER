@@ -15,12 +15,13 @@ namespace OngProject.Controllers
 
         }
         
-        //[Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("Members")]
         public IActionResult GetMembers()
         {
             return Ok(_members.GetMembers());
         }
+        [Authorize]
         [HttpDelete("Members/{id:int}")]
 
         public async Task<IActionResult> DeleteMember(int id)
