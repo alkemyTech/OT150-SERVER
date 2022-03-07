@@ -1,7 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace OngProject.Controllers
@@ -34,6 +42,7 @@ namespace OngProject.Controllers
                         return Ok(
                         await _userBusiness.Register(userRegisterDto));
                     }
+
                     else
                     {
                         return BadRequest("Error:The email already exists");
@@ -64,7 +73,7 @@ namespace OngProject.Controllers
                 {
                     Email = user.Email,
                     Id = user.Id,
-                    RoleId = user.RoleId
+                    Role = user.Role
                 };
 
                 var token = _jwtHelper.GenerateJwtToken(tokenParameter);
@@ -77,6 +86,24 @@ namespace OngProject.Controllers
                 return BadRequest(ModelState);
 
             }
+        }
+
+        [HttpGet("Me")]
+        [Authorize]
+        public IActionResult Me()
+        {
+            var claimId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+
+            var id = Int32.Parse(claimId.Value);
+
+            var user = _userBusiness.GetById(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
         }
     }
 }
