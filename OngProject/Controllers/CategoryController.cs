@@ -49,7 +49,7 @@ namespace OngProject.Controllers
             }
         }
 
-        [Authorize/*(Roles = "Admin")*/]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CategoryPost(CategoryPostDto categoryPostDto)
         {
