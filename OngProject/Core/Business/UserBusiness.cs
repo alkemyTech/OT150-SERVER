@@ -6,6 +6,7 @@ using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models.DTOs;
 using OngProject.DataAccess;
+using OngProject.Entities;
 using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using SendGrid.Helpers.Mail;
@@ -34,10 +35,6 @@ namespace OngProject.Core.Business
             _configuration = configuration;
         }
 
-       
-
-
-
         public UserLoginToDisplayDto Login(string email, string password)
         {
             var encrypted = _encryptHelper.EncryptPassSha256(password);
@@ -51,7 +48,13 @@ namespace OngProject.Core.Business
                 return null;
             }
 
-            return entityMapper.UserModelToUserLoginToDisplayDto(user);
+            var roleName = _unitOfWork.RoleModelRepository.GetById(user.RoleId).NameRole;
+
+            var userDto = entityMapper.UserModelToUserLoginToDisplayDto(user);
+
+            userDto.Role = roleName;
+
+            return userDto;
         }
 
         public async Task<UserRegisterToDisplayDto> Register(UserRegisterDto userRegisterDto)
@@ -59,9 +62,6 @@ namespace OngProject.Core.Business
             var imagesBusiness = new ImagesBusiness(_configuration);
 
             userRegisterDto.Password = _encryptHelper.EncryptPassSha256(userRegisterDto.Password);
-
-            
-           
 
             if(userRegisterDto.Role!=1 && userRegisterDto.Role != 2)
             {
@@ -73,19 +73,12 @@ namespace OngProject.Core.Business
                 user.Photo = await imagesBusiness.UploadFileAsync(userRegisterDto.Photo);
             }
 
-
-            
-            
-
             _unitOfWork.UserModelRepository.Add(user);
             _unitOfWork.SaveChanges();
             await _emailBusiness.SendEmailWithTemplateAsync(userRegisterDto.Email,$"Bienvenido a esta gran comunidad",$"Gracias por registrarte {user.FirstName}","Ong Somos Más");
             return entityMapper.UserRegisterDtoToUserRegisterToDisplayDto(userRegisterDto);
         }
 
-       
-        
-       
         public bool ValidationEmail(string emailAddress)
         {
             var users = _unitOfWork.UserModelRepository.GetAll();
@@ -106,10 +99,16 @@ namespace OngProject.Core.Business
                 usuariosDto.Add(entityMapper.UserListDtoUserModel(user));
             }
 
-            return usuariosDto;
-           
-            
-           
+            return usuariosDto;          
+        }
+
+        public UserDto GetById(int id)
+        {
+            var user = _unitOfWork.UserModelRepository.GetById(id);
+
+            var userDto = entityMapper.UserListDtoUserModel(user);
+
+            return userDto;
         }
 
     }

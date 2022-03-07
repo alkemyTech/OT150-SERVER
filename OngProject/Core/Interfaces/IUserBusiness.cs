@@ -1,4 +1,5 @@
 ﻿using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
 using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,6 @@ namespace OngProject.Core.Interfaces
         List<UserDto> GetUsuarios();
 
         UserLoginToDisplayDto Login(string email, string password);
+        UserDto GetById(int id);
     }
 }
