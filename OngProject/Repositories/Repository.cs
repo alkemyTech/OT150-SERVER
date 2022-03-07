@@ -20,11 +20,11 @@ namespace OngProject.Repositories
         }
         public IEnumerable<T> GetAll()
         {
-            return _entities.AsEnumerable();
+            return _entities.AsEnumerable().Where(x => x.SoftDelete == true);
         }
         public T GetById(int id)
         {
-            return _entities.Find(id);
+            return _entities.FirstOrDefault(x => x.Id == id && x.SoftDelete == true);
         }
         public void Add(T entity)
         {
@@ -37,7 +37,7 @@ namespace OngProject.Repositories
 
         public async Task<T> Delete(int id)
         {
-            T entidad = await _entities.FirstOrDefaultAsync(x => x.Id == id);
+            T entidad = await _entities.FirstOrDefaultAsync(x => x.Id == id && x.SoftDelete == true);
             if (entidad == null)
             {
                 return entidad;
