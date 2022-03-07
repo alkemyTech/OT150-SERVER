@@ -39,14 +39,14 @@ namespace OngProject.Core.Business
             Response<MemberDeleteDto> response = new Response<MemberDeleteDto>();
 
             var member = members.FirstOrDefault(x=>x.Id==id);
-
+            var error = new List<string>();
             if (member== null || member.SoftDelete==false)
             {
-                var error = new List<string>();
-                error.Add("The member does not exist");
+                
+                error.Add("404");
                 response.Data = null;
                 response.Succeeded = false;
-                response.Message = "The member has not been successfully deleted";
+                response.Message = "This member not found";
                 response.Errors = error.ToArray();
 
             }
@@ -54,6 +54,8 @@ namespace OngProject.Core.Business
             {
                 var memberDeleted = await _unitOfWork.MemberModelRepository.Delete(id);
                 _unitOfWork.SaveChanges();
+                error.Add("200");
+                response.Errors = error.ToArray();
                 response.Data = entityMapper.MemberModelToMemberDeleteDto(memberDeleted);
                 response.Succeeded = true;
                 response.Message = "The member has been successfully deleted";
