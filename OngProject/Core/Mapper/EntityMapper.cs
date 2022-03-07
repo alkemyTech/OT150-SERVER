@@ -136,6 +136,19 @@ namespace OngProject.Core.Mapper
 
             };
         }
+        public CommentModel CommentPostDtoToCommentModel(CommentPostDto commentPost)
+        {
+            return new CommentModel()
+            {
+                NewsId = commentPost.NewsId,
+                UserId=commentPost.UserId,
+                Body=commentPost.Body,
+                LastModified=DateTime.Now,
+                SoftDelete=true
+
+               
+            };
+        }
         public SlideDto SlideModelToSlideDto(SlideModel mono)
         {
             return new SlideDto()
