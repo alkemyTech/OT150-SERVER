@@ -78,6 +78,15 @@ namespace OngProject.Core.Mapper
 
             };
         }
+        public MemberDeleteDto MemberModelToMemberDeleteDto(MemberModel memberDto)
+        {
+            return new MemberDeleteDto()
+            {
+                Name = memberDto.Name,
+                Description = memberDto.Description,
+                Image = memberDto.Image
+            };
+        }
         public UserDto UserListDtoUserModel(UserModel userDto)
         {
             return new UserDto()

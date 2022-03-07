@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
+using System.Threading.Tasks;
 
 namespace OngProject.Controllers
 {
@@ -20,6 +21,12 @@ namespace OngProject.Controllers
         {
             return Ok(_members.GetMembers());
         }
+        [HttpDelete("Members/{id:int}")]
 
+        public async Task<IActionResult> DeleteMember(int id)
+        {
+
+            return Ok(await _members.Delete(id));
+        }
     }
 }
