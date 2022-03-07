@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using OngProject.Core.Interfaces;
 using OngProject.Core.Models;
 using OngProject.DataAccess;
 using OngProject.Repositories;
@@ -10,15 +12,38 @@ using System.Threading.Tasks;
 
 namespace OngProject.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TestimonialsController : ControllerBase
+    public class TestimonialsController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
 
-        public TestimonialsController(IUnitOfWork unitOfWork)
+
+
+        private readonly ITestimonialsBussines _testimonialsBussines;
+        private readonly IConfiguration _configuration;
+
+        public TestimonialsController(ITestimonialsBussines testimonialsBussines, IConfiguration configuration)
         {
-            _unitOfWork = unitOfWork;
+
+            _testimonialsBussines = testimonialsBussines;
+
+            _configuration = configuration;
+
         }
+
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> Eliminar(int id)
+        {
+            try
+            {
+
+                return Ok(_testimonialsBussines.Delete(id));
+
+            }
+
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
     }
 }

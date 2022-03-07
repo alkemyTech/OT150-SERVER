@@ -136,6 +136,17 @@ namespace OngProject.Core.Mapper
 
             };
         }
+
+        public TestimonialsDto TestimonialsModelToTestimonialsDto(TestimonialsModel testimonials)
+        {
+            return new TestimonialsDto()
+            {
+
+                Id = testimonials.Id
+
+            };
+        }
+
         public SlideDto SlideModelToSlideDto(SlideModel mono)
         {
             return new SlideDto()
