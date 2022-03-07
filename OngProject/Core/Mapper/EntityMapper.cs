@@ -22,7 +22,7 @@ namespace OngProject.Core.Mapper
                  
                 LastModified = DateTime.Now,
                 SoftDelete = true,
-                RoleId=userRegisterDTO.RoleId,
+                Role=userRegisterDTO.Role,
                
             };
         }
