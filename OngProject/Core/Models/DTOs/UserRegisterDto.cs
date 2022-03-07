@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using OngProject.Core.Helper;
+using OngProject.Entities;
 using System.ComponentModel.DataAnnotations;
 
 using System.Text.Json.Serialization;
@@ -26,10 +27,10 @@ namespace OngProject.Core.Models.DTOs
 
         [ExtensionsValidationHelper((new string[] { ".jpg", ".jpeg", ".png" }))]
         public IFormFile Photo { get; set; }
-       
-        
-      
-        
+
+
+
+
         [Required]
         [MaxLength(20, ErrorMessage = "The maximum length is 20 letters")]
         public string Password { get; set; }
@@ -38,8 +39,9 @@ namespace OngProject.Core.Models.DTOs
         [Range(1, 2,
         ErrorMessage = "Value for {0} must be between {1} and {2}.")]
 
-        public int Role{ get; set; }
-
-      
+        public int RoleId{ get; set; }
+       
+        [Key]
+        public int Id { get; set; }
     }
 }
