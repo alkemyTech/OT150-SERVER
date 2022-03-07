@@ -18,7 +18,7 @@ namespace OngProject.DataAccess
 						 new RoleModel
 						 {
 							 Id = 1,
-							 NameRole = "Admin ",
+							 NameRole = "Admin",
 							 DescriptionRole = "Administrador",
 
 							 LastModified = DateTime.Now,
