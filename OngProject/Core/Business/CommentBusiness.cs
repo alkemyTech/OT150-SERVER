@@ -1,8 +1,11 @@
 ﻿using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OngProject.Core.Business
 {
@@ -47,6 +50,40 @@ namespace OngProject.Core.Business
             else listaFiltrada = null;
 
             return listaFiltrada;
+        }
+
+        public async Task<Response<CommentModel>> DeleteComment(int id, string rol, string idUser)
+        {
+            CommentModel comment = _unitOfWork.CommentModelRepository.GetById(id);
+            var response = new Response<CommentModel>();
+            List<string> intermediate_list = new List<string>();
+            if (comment == null)
+            {
+                intermediate_list.Add("404");
+                response.Data = comment;
+                response.Message = "This Comment not Found";
+                response.Succeeded = false;
+                response.Errors = intermediate_list.ToArray();
+                return response;
+
+            }
+            if (rol == "Admin" || idUser == comment.UserId.ToString())
+            {
+                CommentModel entity = await _unitOfWork.CommentModelRepository.Delete(id);
+                await _unitOfWork.SaveChangesAsync();
+                intermediate_list.Add("200");
+                response.Errors = intermediate_list.ToArray();
+                response.Data = entity;
+                response.Succeeded = true;
+                response.Message = "The Comment was Deleted successfully";
+                return response;
+            }
+            intermediate_list.Add("403");
+            response.Data = comment;
+            response.Succeeded=false;
+            response.Errors = intermediate_list.ToArray();
+            response.Message = "You don't have permission for modificated this comment";
+            return response;
         }
     }
 }

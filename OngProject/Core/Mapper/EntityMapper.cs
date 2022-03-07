@@ -10,7 +10,7 @@ namespace OngProject.Core.Mapper
     {
 
 
-
+        
         public UserModel UserRegisterDtoToUserModel(UserRegisterDto userRegisterDTO)
         {
             return new UserModel()
@@ -51,7 +51,21 @@ namespace OngProject.Core.Mapper
                 Name = contactDto.Name,
                 Email = contactDto.Email,
                 Phone = contactDto.Phone,
-                Message = contactDto.Message
+                Message = contactDto.Message,
+               
+
+            };
+        }
+        public ContactsModel ContactPostDtoToContactsModel(ContactPostDto contactPostDto)
+        {
+            return new ContactsModel()
+            {
+                Name = contactPostDto.Name,
+                Email = contactPostDto.Email,
+                Phone = contactPostDto.Phone,
+                Message = contactPostDto.Message,
+                LastModified=DateTime.Now,
+                SoftDelete=true
             };
         }
         public MemberDto MemberListDtoMemberModel(MemberModel memberDto)
@@ -65,6 +79,15 @@ namespace OngProject.Core.Mapper
                 FacebookUrl = memberDto.FacebookUrl,
                 Description = memberDto.Description
 
+            };
+        }
+        public MemberDeleteDto MemberModelToMemberDeleteDto(MemberModel memberDto)
+        {
+            return new MemberDeleteDto()
+            {
+                Name = memberDto.Name,
+                Description = memberDto.Description,
+                Image = memberDto.Image
             };
         }
         public UserDto UserListDtoUserModel(UserModel userDto)
@@ -91,10 +114,10 @@ namespace OngProject.Core.Mapper
         {
             return new UserLoginToDisplayDto()
             {
+                Id = user.Id,
                 Name = user.FirstName,
                 LastName = user.LastName,
-                Email = user.Email
-
+                Email = user.Email,
             };
         }
         public CategorieDto CategorieListDtoCategorieModel(CategorieModel categorieDto)
@@ -153,6 +176,8 @@ namespace OngProject.Core.Mapper
                 Image = newsModel.Image
             };
         }
+        
+
     }
 
 }
