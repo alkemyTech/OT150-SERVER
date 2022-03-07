@@ -22,7 +22,7 @@ namespace OngProject.Core.Mapper
                  
                 LastModified = DateTime.Now,
                 SoftDelete = true,
-                RoleId=userRegisterDTO.RoleId,
+                RoleId=userRegisterDTO.Role,
                
             };
         }
@@ -189,8 +189,25 @@ namespace OngProject.Core.Mapper
                 Image = newsModel.Image
             };
         }
-        
+        public TestimonialsModel TestimonialsPostDtoToTestimonialsModel(TestimonialsPostDto testimonialsPostDto)
+        {
+            return new TestimonialsModel()
+            {
+                Name=testimonialsPostDto.Name,
+                Content=testimonialsPostDto.Content,
+              
+            };
+        }
 
+        public TestimonialsPostToDisplayDto TestimonialsPostDtoToTestimonialsPostToDisplayDto(TestimonialsPostDto testimonialsPostDto)
+        {
+            return new TestimonialsPostToDisplayDto()
+            {
+                Name = testimonialsPostDto.Name,
+                Content = testimonialsPostDto.Content,
+
+            };
+        }
     }
 
 }
