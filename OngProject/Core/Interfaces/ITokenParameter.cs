@@ -7,6 +7,6 @@ namespace OngProject.Core.Interfaces
         int Id { get; set; }
         [EmailAddress]
         string Email { get; set; }
-        int RoleId { get; set; }
+        string Role { get; set; }
     }
 }

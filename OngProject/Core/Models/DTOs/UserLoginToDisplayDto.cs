@@ -18,7 +18,7 @@ namespace OngProject.Core.Models.DTOs
         [MaxLength(320, ErrorMessage = "The maximum length is 320 letters")]
         public string Email { get; set; }
         [Required]
-        public int RoleId { get; set; }
+        public string Role { get; set; }
 
     }
 }
