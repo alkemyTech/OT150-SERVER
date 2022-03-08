@@ -8,9 +8,6 @@ namespace OngProject.Core.Mapper
 {
     public class EntityMapper
     {
-
-
-        
         public UserModel UserRegisterDtoToUserModel(UserRegisterDto userRegisterDTO)
         {
             return new UserModel()
@@ -26,11 +23,6 @@ namespace OngProject.Core.Mapper
                
             };
         }
-
-        
-
-
-
         public UserRegisterToDisplayDto UserRegisterDtoToUserRegisterToDisplayDto(UserRegisterDto userRegisterDto)
         {
             return new UserRegisterToDisplayDto()
@@ -189,10 +181,18 @@ namespace OngProject.Core.Mapper
                 Image = newsModel.Image
             };
         }
-        
-
+        public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
+        {
+            return new CategorieModel()
+            {
+                NameCategorie = categoryPostDto.NameCategory,
+                DescriptionCategorie = categoryPostDto.DescriptionCategory,
+                Image = categoryPostDto.Image,
+                SoftDelete = categoryPostDto.SoftDelete,
+                LastModified = categoryPostDto.LastModified,
+            };
+        }
     }
-
 }
 
 
