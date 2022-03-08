@@ -18,10 +18,11 @@ namespace OngProject.Core.Mapper
                 Email = userRegisterDTO.Email,
                 Password = userRegisterDTO.Password,
 
+
                 LastModified = DateTime.Now,
                 SoftDelete = true,
-                RoleId=userRegisterDTO.Role
 
+                RoleId = userRegisterDTO.RoleId,
 
 
             };
@@ -35,8 +36,8 @@ namespace OngProject.Core.Mapper
                 Name = userRegisterDto.Name,
                 LastName = userRegisterDto.LastName,
                 Email = userRegisterDto.Email,
-               
-       
+
+
             };
 
         }
@@ -49,7 +50,7 @@ namespace OngProject.Core.Mapper
                 Email = contactDto.Email,
                 Phone = contactDto.Phone,
                 Message = contactDto.Message,
-               
+
 
             };
         }
@@ -61,8 +62,8 @@ namespace OngProject.Core.Mapper
                 Email = contactPostDto.Email,
                 Phone = contactPostDto.Phone,
                 Message = contactPostDto.Message,
-                LastModified=DateTime.Now,
-                SoftDelete=true
+                LastModified = DateTime.Now,
+                SoftDelete = true
             };
         }
         public MemberDto MemberListDtoMemberModel(MemberModel memberDto)
@@ -105,7 +106,9 @@ namespace OngProject.Core.Mapper
                 Address = organizationModel.Address,
                 Phone = organizationModel.Phone,
                 Image = organizationModel.Image,
-               
+                FacebooK = organizationModel.FacebooK,
+                Linkedin = organizationModel.Linkedin,
+                Instagram = organizationModel.Instagram
             };
         }
         public UserLoginToDisplayDto UserModelToUserLoginToDisplayDto(UserModel user)
@@ -137,19 +140,34 @@ namespace OngProject.Core.Mapper
 
             };
         }
+
+
+        public TestimonialsDto TestimonialsModelToTestimonialsDto(TestimonialsModel testimonials)
+        {
+            return new TestimonialsDto()
+            {
+
+                Id = testimonials.Id
+
+            };
+        }
+
+
         public CommentModel CommentPostDtoToCommentModel(CommentPostDto commentPost)
         {
             return new CommentModel()
             {
                 NewsId = commentPost.NewsId,
+
                 
                 Body=commentPost.Body,
                 LastModified=DateTime.Now,
                 SoftDelete=true
 
-               
+
             };
         }
+
         public SlideDto SlideModelToSlideDto(SlideModel mono)
         {
             return new SlideDto()
@@ -213,9 +231,9 @@ namespace OngProject.Core.Mapper
         {
             return new TestimonialsModel()
             {
-                Name=testimonialsPostDto.Name,
-                Content=testimonialsPostDto.Content,
-              
+                Name = testimonialsPostDto.Name,
+                Content = testimonialsPostDto.Content,
+
             };
         }
 
@@ -224,25 +242,24 @@ namespace OngProject.Core.Mapper
             return new TestimonialsPostToDisplayDto()
             {
                 Name = testimonialsPostDto.Name,
-                Content = testimonialsPostDto.Content,
+
+                Content = testimonialsPostDto.Content
             };
-
-            }
-
+        }
 
 
-
-        public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
-        {
-            return new CategorieModel()
+            public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
             {
-                NameCategorie = categoryPostDto.NameCategory,
-                DescriptionCategorie = categoryPostDto.DescriptionCategory,
-                Image = categoryPostDto.Image,
-                SoftDelete = categoryPostDto.SoftDelete,
-                LastModified = categoryPostDto.LastModified,
+                return new CategorieModel()
+                {
+                    NameCategorie = categoryPostDto.NameCategory,
+                    DescriptionCategorie = categoryPostDto.DescriptionCategory,
+                    Image = categoryPostDto.Image,
+                    SoftDelete = categoryPostDto.SoftDelete,
+                    LastModified = categoryPostDto.LastModified,
 
-            };
+                };
+            }
         }
         public NewsModel NewsPostDtoToNewsModel(NewsPostDto newsPostDto)
         {
@@ -258,7 +275,6 @@ namespace OngProject.Core.Mapper
         }
 
     }
-}
 
 
 

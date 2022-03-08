@@ -14,6 +14,7 @@ using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.DataAccess;
+using OngProject.Middleware;
 using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System.Linq;
@@ -75,7 +76,9 @@ namespace OngProject
             services.AddScoped<OrganizationBusiness>();
             services.AddTransient<ICommentBusiness, CommentBusiness>();
             services.AddTransient<ISlideBusiness, SlideBusiness>();
+
             services.AddScoped<ITestimonialsBussines, TestimonialsBusiness>();
+
             services.AddControllers();
             services.AddDbContext<OngContext>();
             services.Configure<JwtConfig>(Configuration.GetSection("JWT"));
@@ -99,29 +102,7 @@ namespace OngProject
                 };
             });
 
-            //var key = Encoding.ASCII.GetBytes(Configuration["JWT:Secret"]);
-            //services
-            //.AddAuthentication(x =>
-            //{
-            //    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //})
-            //.AddJwtBearer(x =>
-            //{
-            //    x.RequireHttpsMetadata = false;
-            //    x.SaveToken = true;
-            //    x.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        IssuerSigningKey = new SymmetricSecurityKey(key),
-            //        ValidateAudience = false,
-            //        ValidateIssuerSigningKey = true,
-            //        ValidateIssuer = false
-            //    };
-            //});
-        
-      
-           
-
+         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -137,6 +118,7 @@ namespace OngProject
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseMiddleware<RouteProtection>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

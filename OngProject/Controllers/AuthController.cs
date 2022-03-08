@@ -47,16 +47,18 @@ namespace OngProject.Controllers
 
                 if (_userBusiness.ValidationEmail(userRegisterDto.Email))
                 {
+                    var user = await _userBusiness.Register(userRegisterDto);
+
                     var tokenParameter = new TokenParameter
 
                     {
-                        Email = userRegisterDto.Email,
-                        Id = userRegisterDto.Id,
-                        Role = userRegisterDto.Role
+                        Email = user.Email,
+                        Id = user.Id,
+                        Role = user.Role
                     };
 
                     var token = _jwtHelper.GenerateJwtToken(tokenParameter);
-                    var user = await _userBusiness.Register(userRegisterDto);
+                  
 
                     return Ok(token);
                 }

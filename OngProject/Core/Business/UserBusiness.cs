@@ -67,16 +67,32 @@ namespace OngProject.Core.Business
             return userDto;
         }
 
-        public async Task<UserRegisterToDisplayDto> Register(UserRegisterDto userRegisterDto)
+        public async Task< UserRegisterToDisplayDto> Register(UserRegisterDto userRegisterDto)
         {
             var imagesBusiness = new ImagesBusiness(_configuration);
 
-            userRegisterDto.Password = _encryptHelper.EncryptPassSha256(userRegisterDto.Password);
+
+
+            var roleName = _unitOfWork.RoleModelRepository.GetById(userRegisterDto.RoleId);
+
+            var userDto = entityMapper.UserRegisterDtoToUserRegisterToDisplayDto(userRegisterDto);
+
+            if (roleName != null)
+            {
+                userDto.Role = roleName.NameRole;
+            }
+            else
+            {
+                return null;
+            }
+
+      
           
 
+            userRegisterDto.Password = _encryptHelper.EncryptPassSha256(userRegisterDto.Password);
+         
 
-
-            if(userRegisterDto.Role!=1 && userRegisterDto.Role != 2)
+            if(userRegisterDto.RoleId!=1 && userRegisterDto.RoleId != 2)
 
             {
                 userRegisterDto.RoleId = 2;
@@ -90,7 +106,7 @@ namespace OngProject.Core.Business
             _unitOfWork.UserModelRepository.Add(user);
             _unitOfWork.SaveChanges();
             await _emailBusiness.SendEmailWithTemplateAsync(userRegisterDto.Email,$"Bienvenido a esta gran comunidad",$"Gracias por registrarte {user.FirstName}","Ong Somos Más");
-            return entityMapper.UserRegisterDtoToUserRegisterToDisplayDto(userRegisterDto);
+            return userDto;
         }
 
         public bool ValidationEmail(string emailAddress)
