@@ -26,7 +26,7 @@ namespace OngProject.Controllers
             return Ok(character);
         }
 
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Admin")]
         [HttpGet()]
         public IActionResult GetSlide()
         {
