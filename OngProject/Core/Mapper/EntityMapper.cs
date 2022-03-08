@@ -8,9 +8,6 @@ namespace OngProject.Core.Mapper
 {
     public class EntityMapper
     {
-
-
-        
         public UserModel UserRegisterDtoToUserModel(UserRegisterDto userRegisterDTO)
         {
             return new UserModel()
@@ -22,15 +19,10 @@ namespace OngProject.Core.Mapper
                  
                 LastModified = DateTime.Now,
                 SoftDelete = true,
-                RoleId=userRegisterDTO.RoleId,
+                Role=userRegisterDTO.Role,
                
             };
         }
-
-        
-
-
-
         public UserRegisterToDisplayDto UserRegisterDtoToUserRegisterToDisplayDto(UserRegisterDto userRegisterDto)
         {
             return new UserRegisterToDisplayDto()
@@ -189,6 +181,7 @@ namespace OngProject.Core.Mapper
                 Image = newsModel.Image
             };
         }
+
         public TestimonialsModel TestimonialsPostDtoToTestimonialsModel(TestimonialsPostDto testimonialsPostDto)
         {
             return new TestimonialsModel()
@@ -206,10 +199,20 @@ namespace OngProject.Core.Mapper
                 Name = testimonialsPostDto.Name,
                 Content = testimonialsPostDto.Content,
 
+
+        public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
+        {
+            return new CategorieModel()
+            {
+                NameCategorie = categoryPostDto.NameCategory,
+                DescriptionCategorie = categoryPostDto.DescriptionCategory,
+                Image = categoryPostDto.Image,
+                SoftDelete = categoryPostDto.SoftDelete,
+                LastModified = categoryPostDto.LastModified,
+
             };
         }
     }
-
 }
 
 

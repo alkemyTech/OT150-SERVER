@@ -39,7 +39,7 @@ namespace OngProject.Core.Models.DTOs
         [Range(1, 2,
         ErrorMessage = "Value for {0} must be between {1} and {2}.")]
 
-        public int RoleId{ get; set; }
+        public string Role{ get; set; }
        
         [Key]
         public int Id { get; set; }
