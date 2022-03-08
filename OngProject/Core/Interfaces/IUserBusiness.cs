@@ -1,4 +1,5 @@
-﻿using OngProject.Core.Models.DTOs;
+﻿using OngProject.Core.Models;
+using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using SendGrid.Helpers.Mail;
 using System;
@@ -15,5 +16,6 @@ namespace OngProject.Core.Interfaces
 
         UserLoginToDisplayDto Login(string email, string password);
         UserDto GetById(int id);
+        Task<Response<UserModel>> DeleteUser(int id, string rol, string idUser);
     }
 }
