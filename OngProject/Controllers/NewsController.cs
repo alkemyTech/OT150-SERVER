@@ -4,6 +4,7 @@ using OngProject.Core.Interfaces;
 using OngProject.Core.Models.DTOs;
 using OngProject.Repositories.Interfaces;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OngProject.Controllers
 {
@@ -35,6 +36,13 @@ namespace OngProject.Controllers
         public ActionResult<NewsDto> GetNew(int id)
         {
             return Ok(_newsBusiness.GetNews(id));
+        }
+
+        [Authorize(Roles="Admin")]
+        [HttpPost]
+        public async Task<IActionResult> PostNews(NewsPostDto newsPost)
+        {
+            return Ok(await _newsBusiness.NewsPost(newsPost));
         }
     }
 }

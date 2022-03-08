@@ -3,7 +3,6 @@ using Amazon.S3;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -63,8 +62,9 @@ namespace OngProject
             services.AddAWSService<IAmazonS3>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserBusiness, UserBusiness>();
-            services.AddScoped<ICategorieBussines, CategorieBussines>();
+            services.AddScoped<ICategoryBussines, CategoryBussines>();
             services.AddTransient<IEmailBusiness, EmailBusiness>();
+            services.AddScoped<INewsBusiness, NewsBusiness>();
             services.AddScoped<IEncryptHelper, EncryptHelper>();
             services.AddScoped<IJwtHelper, JwtHelper>();
             services.AddScoped<EntityMapper>();
