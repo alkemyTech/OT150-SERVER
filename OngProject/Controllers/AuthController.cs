@@ -1,7 +1,12 @@
+
+﻿using Microsoft.AspNetCore.Mvc;
+using OngProject.Core.Business;
+
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
+
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
@@ -18,6 +23,8 @@ namespace OngProject.Controllers
     {
         private readonly IUserBusiness _userBusiness;
         private readonly IEmailBusiness _emailBusiness;
+
+        private readonly ImagesBusiness _imagesBusiness;
         private readonly IJwtHelper _jwtHelper;
 
 
@@ -26,34 +33,53 @@ namespace OngProject.Controllers
             this._userBusiness = userBusiness;
             _emailBusiness = emailBusiness;
             _jwtHelper = jwtHelper;
+
         }
 
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromForm]UserRegisterDto userRegisterDto)
         {
-            
 
-                if (ModelState.IsValid)
+
+
+            if (ModelState.IsValid)
+            {
+
+                if (_userBusiness.ValidationEmail(userRegisterDto.Email))
                 {
+                    var tokenParameter = new TokenParameter
 
-                    if (_userBusiness.ValidationEmail(userRegisterDto.Email))
-                    { 
-                        
-                        return Ok(
-                        await _userBusiness.Register(userRegisterDto));
-                    }
-
-                    else
                     {
-                        return BadRequest("Error:The email already exists");
-                    }
-                  
-                }
-                else 
-                {
-                    return BadRequest(ModelState);
+                        Email = userRegisterDto.Email,
+                        Id = userRegisterDto.Id,
+                        Role = userRegisterDto.Role
+                    };
 
+                    var token = _jwtHelper.GenerateJwtToken(tokenParameter);
+                    var user = await _userBusiness.Register(userRegisterDto);
+
+                    return Ok(token);
                 }
+
+                else
+                {
+                    return BadRequest("Error:The email already exists");
+                }
+
+               
+
+
+                
+
+            }
+
+
+            else
+            {
+                return BadRequest(ModelState);
+
+            }
+            
         }
 
         [HttpPost("Login")]

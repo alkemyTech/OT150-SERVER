@@ -17,10 +17,11 @@ namespace OngProject.Core.Mapper
                 LastName = userRegisterDTO.LastName,
                 Email = userRegisterDTO.Email,
                 Password = userRegisterDTO.Password,
+                 
                 LastModified = DateTime.Now,
                 SoftDelete = true,
-                RoleId=userRegisterDTO.Role
-             
+                Role=userRegisterDTO.Role,
+               
             };
         }
 
@@ -31,7 +32,9 @@ namespace OngProject.Core.Mapper
 
                 Name = userRegisterDto.Name,
                 LastName = userRegisterDto.LastName,
-                Email = userRegisterDto.Email
+                Email = userRegisterDto.Email,
+               
+       
             };
 
         }
@@ -131,6 +134,19 @@ namespace OngProject.Core.Mapper
 
             };
         }
+        public CommentModel CommentPostDtoToCommentModel(CommentPostDto commentPost)
+        {
+            return new CommentModel()
+            {
+                NewsId = commentPost.NewsId,
+                UserId=commentPost.UserId,
+                Body=commentPost.Body,
+                LastModified=DateTime.Now,
+                SoftDelete=true
+
+               
+            };
+        }
         public SlideDto SlideModelToSlideDto(SlideModel mono)
         {
             return new SlideDto()
@@ -169,6 +185,7 @@ namespace OngProject.Core.Mapper
             };
         }
 
+
         public ActivityModel ActivityDtoToActivityModel(ActivityDto activityDto)
         {
             return new ActivityModel()
@@ -179,8 +196,38 @@ namespace OngProject.Core.Mapper
             };
         }
 
-    }
 
+        public TestimonialsModel TestimonialsPostDtoToTestimonialsModel(TestimonialsPostDto testimonialsPostDto)
+        {
+            return new TestimonialsModel()
+            {
+                Name=testimonialsPostDto.Name,
+                Content=testimonialsPostDto.Content,
+              
+            };
+        }
+
+        public TestimonialsPostToDisplayDto TestimonialsPostDtoToTestimonialsPostToDisplayDto(TestimonialsPostDto testimonialsPostDto)
+        {
+            return new TestimonialsPostToDisplayDto()
+            {
+                Name = testimonialsPostDto.Name,
+                Content = testimonialsPostDto.Content,
+
+
+        public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
+        {
+            return new CategorieModel()
+            {
+                NameCategorie = categoryPostDto.NameCategory,
+                DescriptionCategorie = categoryPostDto.DescriptionCategory,
+                Image = categoryPostDto.Image,
+                SoftDelete = categoryPostDto.SoftDelete,
+                LastModified = categoryPostDto.LastModified,
+
+            };
+        }
+    }
 }
 
 

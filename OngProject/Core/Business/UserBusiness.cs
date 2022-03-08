@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using OngProject.Core.Helper;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.DataAccess;
 using OngProject.Entities;
@@ -26,13 +27,15 @@ namespace OngProject.Core.Business
         private readonly IConfiguration _configuration;
         private readonly IEncryptHelper _encryptHelper;
         private readonly EntityMapper entityMapper=new EntityMapper();
-        public UserBusiness(IUnitOfWork unitOfWork, IEmailBusiness emailBusiness, IEncryptHelper encryptHelper, IConfiguration configuration)
+        private readonly IJwtHelper _jwtHelper;
+        public UserBusiness(IUnitOfWork unitOfWork, IEmailBusiness emailBusiness, IEncryptHelper encryptHelper, IConfiguration configuration, IJwtHelper jwtHelper)
         {
             _unitOfWork = unitOfWork;
             _emailBusiness = emailBusiness;
 
             _encryptHelper = encryptHelper;
             _configuration = configuration;
+            _jwtHelper = jwtHelper;
         }
 
         public UserLoginToDisplayDto Login(string email, string password)
@@ -69,10 +72,14 @@ namespace OngProject.Core.Business
             var imagesBusiness = new ImagesBusiness(_configuration);
 
             userRegisterDto.Password = _encryptHelper.EncryptPassSha256(userRegisterDto.Password);
+          
+
+
 
             if(userRegisterDto.Role!=1 && userRegisterDto.Role != 2)
+
             {
-                userRegisterDto.Role = 2;
+                userRegisterDto.RoleId = 2;
             }
             var user = entityMapper.UserRegisterDtoToUserModel(userRegisterDto);
             if (userRegisterDto.Photo != null)
@@ -118,6 +125,38 @@ namespace OngProject.Core.Business
             return userDto;
         }
 
+        public async Task<Response<UserModel>> DeleteUser(int id, string rol, string idUser)
+        {
+            UserModel user = _unitOfWork.UserModelRepository.GetById(id);
+            var response = new Response<UserModel>();
+            List<string> intermediate_list = new List<string>();
+            if (user == null)
+            {
+                intermediate_list.Add("404");
+                response.Data = user;
+                response.Message = "This user not found";
+                response.Succeeded = true;
+                response.Errors = intermediate_list.ToArray();
+                return response;
+            }
+            if (rol == "User" && idUser == user.Id.ToString())
+            {
+                UserModel entity = await _unitOfWork.UserModelRepository.Delete(id);
+                await _unitOfWork.SaveChangesAsync();
+                intermediate_list.Add("200");
+                response.Errors = intermediate_list.ToArray();
+                response.Data = entity;
+                response.Succeeded = true;
+                response.Message = "The User was Deleted successfully";
+                return response;
+            }
+            intermediate_list.Add("403");
+            response.Data = null;
+            response.Succeeded = false;
+            response.Errors = intermediate_list.ToArray();
+            response.Message = "You don't have permission for deleted this user";
+            return response;
+        }
     }
 
 }

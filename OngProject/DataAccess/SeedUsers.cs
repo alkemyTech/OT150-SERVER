@@ -24,7 +24,7 @@ namespace OngProject.DataAccess
                         LastName = "Last Name User" + i,
                         Email = "User" + i + "@ong.com",
                         Password = ComputeSha256Hash("Password" + i),
-                        Photo = "Photo" + i,
+                       
                         SoftDelete = false,
                         RoleId = 1,
                         LastModified = DateTime.Now
@@ -42,7 +42,7 @@ namespace OngProject.DataAccess
                         LastName = "Last Name User" + i,
                         Email = "User" + i + "@ong.com",
                         Password = ComputeSha256Hash("Password" + i),
-                        Photo = "Photo" + i,
+                     
                         SoftDelete = false,
                         RoleId = 2,
                         LastModified = DateTime.Now
