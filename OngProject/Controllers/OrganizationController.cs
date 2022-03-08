@@ -20,6 +20,7 @@ namespace OngProject.Controllers
         }
 
         [HttpGet("public")]
+        [Authorize]
         public IActionResult Get()
         {
             return Ok(organizationBusiness.GetOrganization());

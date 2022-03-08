@@ -1,4 +1,5 @@
-﻿using OngProject.Core.Mapper;
+﻿using OngProject.Core.Interfaces;
+using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
@@ -14,26 +15,56 @@ namespace OngProject.Core.Business
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly EntityMapper entityMapper;
+        private readonly ISlideBusiness _slideBusiness;
         
-        public OrganizationBusiness(IUnitOfWork unitOfWork, EntityMapper entityMapper)
+        public OrganizationBusiness(IUnitOfWork unitOfWork, EntityMapper entityMapper, ISlideBusiness slideBusiness)
         {
             this.unitOfWork = unitOfWork;
             this.entityMapper = entityMapper;
+            this._slideBusiness = slideBusiness;
         }
 
-        public OrganizationGetDto GetOrganization()
+        public async Task<IEnumerable<OrganizationGetDto>> GetOrganization()
         {
-            var organizationlist = unitOfWork.OrganizationModelRepository.GetAll();
-            OrganizationModel organization = new OrganizationModel();
-            var organizationDto = new OrganizationGetDto();
-            if (organizationlist.Any()){
-                int max = organizationlist.Max(i => i.Id);
-                organization = organizationlist.First(a => a.Id == max);
-                organizationDto = entityMapper.OrganizationModeltoOrganizationGetDto(organization);
+
+
+            var organizations =  unitOfWork.OrganizationModelRepository.GetAll();
+            
+            if (organizations.Any(x=>x.SoftDelete=true))
+            {
+                var slides = unitOfWork.SlideModelRepository.GetAll().OrderBy(x => x.Order);
+                var slidesDto = new List<SlideDto>();
+                foreach (var slide in slides)
+                {
+                    slidesDto.Add(entityMapper.SlideModelToSlideDto(slide));
+                }
+
+                List<OrganizationGetDto> organizationDtoToDisplay = new();
+
+                foreach (var entity in organizations)
+                {
+                  
+                    var orgDto = entityMapper.OrganizationModeltoOrganizationGetDto(entity);
+                    var slidesAux = slidesDto.Where(x => x.OrganizationId == entity.Id);
+                    var slidesAux2 = new List<SlideDtoToDisplay>();
+                    foreach (var slideAux in slidesAux)
+                    {
+                        slidesAux2.Add(entityMapper.SlideDtoToSlideDtoToDisplay(slideAux));
+                    }
+                    orgDto.Slides= slidesAux2;
+                
+                  
+                    organizationDtoToDisplay.Add(orgDto);
+                }
+
+                return organizationDtoToDisplay;
+
             }
-            return organizationDto;
-	    }
-        
+            else
+            {
+                return null;
+            }
+        }
         public Response<OrganizationModel> PutOrganization(OrganizationPutDto organizationPut)
         {
             Response<OrganizationModel> response = new Response<OrganizationModel>();
@@ -77,5 +108,6 @@ namespace OngProject.Core.Business
             response.Errors = intermediate_list.ToArray();
             return response;
         }
+        
     }
 }
