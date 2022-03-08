@@ -48,11 +48,18 @@ namespace OngProject.Core.Business
                 return null;
             }
 
-            var roleName = _unitOfWork.RoleModelRepository.GetById(user.RoleId).NameRole;
+            var roleName = _unitOfWork.RoleModelRepository.GetById(user.RoleId);
 
             var userDto = entityMapper.UserModelToUserLoginToDisplayDto(user);
 
-            userDto.Role = roleName;
+            if (roleName != null)
+            {
+                userDto.Role = roleName.NameRole;
+            }
+            else
+            {
+                return null;
+            }
 
             return userDto;
         }
