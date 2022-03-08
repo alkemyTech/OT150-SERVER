@@ -19,7 +19,7 @@ namespace OngProject.Core.Mapper
                  
                 LastModified = DateTime.Now,
                 SoftDelete = true,
-                Role=userRegisterDTO.Role,
+               
                
             };
         }
@@ -100,6 +100,7 @@ namespace OngProject.Core.Mapper
                 Address = organizationModel.Address,
                 Phone = organizationModel.Phone,
                 Image = organizationModel.Image,
+               
             };
         }
         public UserLoginToDisplayDto UserModelToUserLoginToDisplayDto(UserModel user)
@@ -151,7 +152,7 @@ namespace OngProject.Core.Mapper
                 ImageUrl = mono.ImageUrl,
                 Text = mono.Text,
                 Order = mono.Order,
-                Organization_Id = mono.OrganizationId
+                OrganizationId = mono.OrganizationId
             };
         }
         public SlideDto SlideListDtoSlideModelImageOrder(SlideModel slideDto)
@@ -159,6 +160,15 @@ namespace OngProject.Core.Mapper
             return new SlideDto()
             {
                 ImageUrl = slideDto.ImageUrl,
+                Order = slideDto.Order
+            };
+
+        }
+        public SlideDtoToDisplay SlideDtoToSlideDtoToDisplay(SlideDto slideDto)
+        {
+            return new SlideDtoToDisplay()
+            {
+                Image = slideDto.ImageUrl,
                 Order = slideDto.Order
             };
 
@@ -198,6 +208,8 @@ namespace OngProject.Core.Mapper
             {
                 Name = testimonialsPostDto.Name,
                 Content = testimonialsPostDto.Content,
+            };
+            }
 
 
         public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
