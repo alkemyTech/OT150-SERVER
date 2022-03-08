@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using OngProject.Core.Helper;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.DataAccess;
 using OngProject.Entities;
@@ -111,6 +112,38 @@ namespace OngProject.Core.Business
             return userDto;
         }
 
+        public async Task<Response<UserModel>> DeleteUser(int id, string rol, string idUser)
+        {
+            UserModel user = _unitOfWork.UserModelRepository.GetById(id);
+            var response = new Response<UserModel>();
+            List<string> intermediate_list = new List<string>();
+            if (user == null)
+            {
+                intermediate_list.Add("404");
+                response.Data = user;
+                response.Message = "This user not found";
+                response.Succeeded = true;
+                response.Errors = intermediate_list.ToArray();
+                return response;
+            }
+            if (rol == "User" && idUser == user.Id.ToString())
+            {
+                UserModel entity = await _unitOfWork.UserModelRepository.Delete(id);
+                await _unitOfWork.SaveChangesAsync();
+                intermediate_list.Add("200");
+                response.Errors = intermediate_list.ToArray();
+                response.Data = entity;
+                response.Succeeded = true;
+                response.Message = "The User was Deleted successfully";
+                return response;
+            }
+            intermediate_list.Add("403");
+            response.Data = null;
+            response.Succeeded = false;
+            response.Errors = intermediate_list.ToArray();
+            response.Message = "You don't have permission for deleted this user";
+            return response;
+        }
     }
 
 }
