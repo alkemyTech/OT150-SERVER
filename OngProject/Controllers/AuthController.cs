@@ -29,7 +29,7 @@ namespace OngProject.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromBody]UserRegisterDto userRegisterDto)
+        public async Task<IActionResult> Register([FromForm]UserRegisterDto userRegisterDto)
         {
             
 
