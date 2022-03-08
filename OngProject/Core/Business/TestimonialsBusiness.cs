@@ -52,6 +52,42 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        
+
+
+        public async Task<Response<TestimonialsModel>> Delete(int id, string UserId, string rol)
+
+        {
+            TestimonialsModel testimonials = _unitOfWork.TestimonialsModelRepository.GetById(id);
+            var response = new Response<TestimonialsModel>();
+            List<string> intermediate_list = new List<string>();
+            if (testimonials == null)
+            {
+                intermediate_list.Add("404");
+                response.Data = testimonials;
+                response.Message = "This Testimonial not Found";
+                response.Succeeded = false;
+                response.Errors = intermediate_list.ToArray();
+                return response;
+
+            }
+            if (rol == "Admin" || UserId == testimonials.Id.ToString())
+            {
+                TestimonialsModel entity = await _unitOfWork.TestimonialsModelRepository.Delete(id);
+                await _unitOfWork.SaveChangesAsync();
+                intermediate_list.Add("200");
+                response.Errors = intermediate_list.ToArray();
+                response.Data = entity;
+                response.Succeeded = true;
+                response.Message = "The Testimonial was Deleted successfully";
+                return response;
+            }
+            intermediate_list.Add("403");
+            response.Data = testimonials;
+            response.Succeeded = false;
+            response.Errors = intermediate_list.ToArray();
+            response.Message = "You don't have permission for modificated this Testimonial";
+            return response;
+        }
+
     }
 }

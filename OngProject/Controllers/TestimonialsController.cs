@@ -10,12 +10,14 @@ using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace OngProject.Controllers
 {
- 
+     
     [ApiController]
+  
     public class TestimonialsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -39,21 +41,16 @@ namespace OngProject.Controllers
             }
         }
 
-        [HttpDelete("Delete")]
-        public async Task<IActionResult> Eliminar(int id)
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("Delete/{id:int}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-
-                return Ok(_testimonialsBussines.Delete(id));
-
-            }
-
-            catch
-            {
-                return BadRequest();
-            }
+            var rol = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
+            var idUser = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            return Ok(await _testimonialsBussines.Delete(id, rol, idUser));
         }
+
 
     }
 }

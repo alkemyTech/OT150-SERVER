@@ -17,11 +17,11 @@ namespace OngProject.Core.Mapper
                 LastName = userRegisterDTO.LastName,
                 Email = userRegisterDTO.Email,
                 Password = userRegisterDTO.Password,
-                 
+
                 LastModified = DateTime.Now,
                 SoftDelete = true,
-                Role=userRegisterDTO.Role,
-               
+                RoleId = userRegisterDTO.RoleId,
+
             };
         }
 
@@ -33,8 +33,8 @@ namespace OngProject.Core.Mapper
                 Name = userRegisterDto.Name,
                 LastName = userRegisterDto.LastName,
                 Email = userRegisterDto.Email,
-               
-       
+
+
             };
 
         }
@@ -47,7 +47,7 @@ namespace OngProject.Core.Mapper
                 Email = contactDto.Email,
                 Phone = contactDto.Phone,
                 Message = contactDto.Message,
-               
+
 
             };
         }
@@ -59,8 +59,8 @@ namespace OngProject.Core.Mapper
                 Email = contactPostDto.Email,
                 Phone = contactPostDto.Phone,
                 Message = contactPostDto.Message,
-                LastModified=DateTime.Now,
-                SoftDelete=true
+                LastModified = DateTime.Now,
+                SoftDelete = true
             };
         }
         public MemberDto MemberListDtoMemberModel(MemberModel memberDto)
@@ -152,12 +152,12 @@ namespace OngProject.Core.Mapper
             return new CommentModel()
             {
                 NewsId = commentPost.NewsId,
-                UserId=commentPost.UserId,
-                Body=commentPost.Body,
-                LastModified=DateTime.Now,
-                SoftDelete=true
+                UserId = commentPost.UserId,
+                Body = commentPost.Body,
+                LastModified = DateTime.Now,
+                SoftDelete = true
 
-               
+
             };
         }
 
@@ -215,9 +215,9 @@ namespace OngProject.Core.Mapper
         {
             return new TestimonialsModel()
             {
-                Name=testimonialsPostDto.Name,
-                Content=testimonialsPostDto.Content,
-              
+                Name = testimonialsPostDto.Name,
+                Content = testimonialsPostDto.Content,
+
             };
         }
 
@@ -226,23 +226,24 @@ namespace OngProject.Core.Mapper
             return new TestimonialsPostToDisplayDto()
             {
                 Name = testimonialsPostDto.Name,
-                Content = testimonialsPostDto.Content,
-
-
-        public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
-        {
-            return new CategorieModel()
-            {
-                NameCategorie = categoryPostDto.NameCategory,
-                DescriptionCategorie = categoryPostDto.DescriptionCategory,
-                Image = categoryPostDto.Image,
-                SoftDelete = categoryPostDto.SoftDelete,
-                LastModified = categoryPostDto.LastModified,
-
+                Content = testimonialsPostDto.Content
             };
         }
+
+            public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
+            {
+                return new CategorieModel()
+                {
+                    NameCategorie = categoryPostDto.NameCategory,
+                    DescriptionCategorie = categoryPostDto.DescriptionCategory,
+                    Image = categoryPostDto.Image,
+                    SoftDelete = categoryPostDto.SoftDelete,
+                    LastModified = categoryPostDto.LastModified,
+
+                };
+            }
+        }
     }
-}
 
 
 
