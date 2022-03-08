@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Business;
+using OngProject.Core.Models.DTOs;
 using OngProject.Repositories.Interfaces;
 
 namespace OngProject.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class OrganizationController : ControllerBase
     {
@@ -21,6 +23,13 @@ namespace OngProject.Controllers
         public IActionResult Get()
         {
             return Ok(organizationBusiness.GetOrganization());
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPut("public")]
+        public IActionResult Put(OrganizationPutDto organizationPutDto)
+        {
+            return Ok(organizationBusiness.PutOrganization(organizationPutDto));
+
         }
     }
 }

@@ -1,21 +1,36 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using OngProject.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using OngProject.Core.Interfaces;
+using OngProject.Core.Models.DTOs;
 
 namespace OngProject.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class ActivityController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IActivityBusiness _activityBusiness;
 
-        public ActivityController(IUnitOfWork unitOfWork)
+        public ActivityController(IActivityBusiness activityBusiness)
         {
-            _unitOfWork = unitOfWork;
+            _activityBusiness = activityBusiness;
+        }
+
+        [HttpPost("Activities")]
+        [Authorize]
+        public IActionResult Activities([FromBody] ActivityDto activityBusiness)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_activityBusiness.Create(activityBusiness));
+
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+
         }
     }
 }

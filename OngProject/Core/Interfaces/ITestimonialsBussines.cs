@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 ﻿using OngProject.Core.Models.DTOs;
+=======
+﻿using OngProject.Core.Models;
+using OngProject.Core.Models.DTOs;
+>>>>>>> dev
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,8 +11,8 @@ using System.Threading.Tasks;
 
 namespace OngProject.Core.Interfaces
 {
-   public interface ITestimonialsBussines
+    public interface ITestimonialsBussines
     {
-        TestimonialsDto Delete(int id);
+        Task<Response<TestimonialsPostToDisplayDto>> Post(TestimonialsPostDto testimonialPostDto);
     }
 }

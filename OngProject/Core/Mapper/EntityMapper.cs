@@ -9,8 +9,6 @@ namespace OngProject.Core.Mapper
     public class EntityMapper
     {
 
-
-        
         public UserModel UserRegisterDtoToUserModel(UserRegisterDto userRegisterDTO)
         {
             return new UserModel()
@@ -22,14 +20,10 @@ namespace OngProject.Core.Mapper
                  
                 LastModified = DateTime.Now,
                 SoftDelete = true,
-                RoleId=userRegisterDTO.RoleId,
+                Role=userRegisterDTO.Role,
                
             };
         }
-
-        
-
-
 
         public UserRegisterToDisplayDto UserRegisterDtoToUserRegisterToDisplayDto(UserRegisterDto userRegisterDto)
         {
@@ -44,6 +38,7 @@ namespace OngProject.Core.Mapper
             };
 
         }
+
         public ContactDto ConctactListDtoContactModel(ContactsModel contactDto)
         {
             return new ContactDto()
@@ -203,10 +198,50 @@ namespace OngProject.Core.Mapper
                 Image = newsModel.Image
             };
         }
-        
 
+
+        public ActivityModel ActivityDtoToActivityModel(ActivityDto activityDto)
+        {
+            return new ActivityModel()
+            {
+                Name = activityDto.Name,
+                Content = activityDto.Content,
+                Image = activityDto.Image
+            };
+        }
+
+
+        public TestimonialsModel TestimonialsPostDtoToTestimonialsModel(TestimonialsPostDto testimonialsPostDto)
+        {
+            return new TestimonialsModel()
+            {
+                Name=testimonialsPostDto.Name,
+                Content=testimonialsPostDto.Content,
+              
+            };
+        }
+
+        public TestimonialsPostToDisplayDto TestimonialsPostDtoToTestimonialsPostToDisplayDto(TestimonialsPostDto testimonialsPostDto)
+        {
+            return new TestimonialsPostToDisplayDto()
+            {
+                Name = testimonialsPostDto.Name,
+                Content = testimonialsPostDto.Content,
+
+
+        public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
+        {
+            return new CategorieModel()
+            {
+                NameCategorie = categoryPostDto.NameCategory,
+                DescriptionCategorie = categoryPostDto.DescriptionCategory,
+                Image = categoryPostDto.Image,
+                SoftDelete = categoryPostDto.SoftDelete,
+                LastModified = categoryPostDto.LastModified,
+
+            };
+        }
     }
-
 }
 
 

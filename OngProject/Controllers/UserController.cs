@@ -10,11 +10,12 @@ using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace OngProject.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
 
@@ -61,6 +62,14 @@ namespace OngProject.Controllers
             return Ok(response);
         }
 
-        
+        [Authorize(Roles = "User")]
+        [HttpDelete("users/{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var rol = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
+            var idUser = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            var bajaLogica = await _userBusiness.DeleteUser(id, rol, idUser);
+            return Ok(bajaLogica);
+        }
     }
 }
