@@ -4,6 +4,7 @@ using OngProject.Core.Interfaces;
 using OngProject.Core.Models.DTOs;
 using OngProject.Repositories.Interfaces;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OngProject.Controllers
 {
@@ -22,7 +23,7 @@ namespace OngProject.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id:int}/comments")]
         public ActionResult<List<CommentDto>> GetCommentFilterByNews(int id)
         {
@@ -30,11 +31,18 @@ namespace OngProject.Controllers
             return Ok(listaComments);
         }
 
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id:int}")]
         public ActionResult<NewsDto> GetNew(int id)
         {
             return Ok(_newsBusiness.GetNews(id));
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult PostNews(NewsPostDto newsPost)
+        {
+            return Ok(_newsBusiness.NewsPost(newsPost));
         }
     }
 }

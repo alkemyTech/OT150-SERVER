@@ -18,9 +18,11 @@ namespace OngProject.Core.Mapper
                 Email = userRegisterDTO.Email,
                 Password = userRegisterDTO.Password,
 
+
                 LastModified = DateTime.Now,
                 SoftDelete = true,
                 RoleId = userRegisterDTO.RoleId,
+
 
             };
         }
@@ -103,6 +105,9 @@ namespace OngProject.Core.Mapper
                 Address = organizationModel.Address,
                 Phone = organizationModel.Phone,
                 Image = organizationModel.Image,
+                FacebooK = organizationModel.FacebooK,
+                Linkedin = organizationModel.Linkedin,
+                Instagram = organizationModel.Instagram
             };
         }
         public UserLoginToDisplayDto UserModelToUserLoginToDisplayDto(UserModel user)
@@ -168,7 +173,7 @@ namespace OngProject.Core.Mapper
                 ImageUrl = mono.ImageUrl,
                 Text = mono.Text,
                 Order = mono.Order,
-                Organization_Id = mono.OrganizationId
+                OrganizationId = mono.OrganizationId
             };
         }
         public SlideDto SlideListDtoSlideModelImageOrder(SlideModel slideDto)
@@ -176,6 +181,15 @@ namespace OngProject.Core.Mapper
             return new SlideDto()
             {
                 ImageUrl = slideDto.ImageUrl,
+                Order = slideDto.Order
+            };
+
+        }
+        public SlideDtoToDisplay SlideDtoToSlideDtoToDisplay(SlideDto slideDto)
+        {
+            return new SlideDtoToDisplay()
+            {
+                Image = slideDto.ImageUrl,
                 Order = slideDto.Order
             };
 
@@ -226,9 +240,11 @@ namespace OngProject.Core.Mapper
             return new TestimonialsPostToDisplayDto()
             {
                 Name = testimonialsPostDto.Name,
+
                 Content = testimonialsPostDto.Content
             };
         }
+
 
             public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
             {
@@ -243,6 +259,19 @@ namespace OngProject.Core.Mapper
                 };
             }
         }
+        public NewsModel NewsPostDtoToNewsModel(NewsPostDto newsPostDto)
+        {
+            return new NewsModel()
+            {
+                Name = newsPostDto.Name,
+                Content = newsPostDto.Content,
+                Image = newsPostDto.Image,
+                CategorieId = newsPostDto.CategorieId,
+                SoftDelete = newsPostDto.SoftDelete,
+                LastModified = newsPostDto.LastModified
+            };
+        }
+
     }
 
 

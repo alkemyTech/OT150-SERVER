@@ -14,6 +14,7 @@ using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.DataAccess;
+using OngProject.Middleware;
 using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 using System.Linq;
@@ -63,6 +64,7 @@ namespace OngProject
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserBusiness, UserBusiness>();
             services.AddScoped<ICategoryBussines, CategoryBussines>();
+            services.AddScoped<INewsBusiness, NewsBusiness>();
             services.AddTransient<IEmailBusiness, EmailBusiness>();
             services.AddScoped<IEncryptHelper, EncryptHelper>();
             services.AddScoped<IJwtHelper, JwtHelper>();
@@ -114,6 +116,7 @@ namespace OngProject
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseMiddleware<RouteProtection>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
