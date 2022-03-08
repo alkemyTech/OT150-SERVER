@@ -17,12 +17,9 @@ namespace OngProject.Core.Mapper
                 LastName = userRegisterDTO.LastName,
                 Email = userRegisterDTO.Email,
                 Password = userRegisterDTO.Password,
-
                 LastModified = DateTime.Now,
                 SoftDelete = true,
-                Role = UserRegisterDTO.Role
-               
-               
+                RoleId = userRegisterDTO.Role,            
             };
         }
 
@@ -104,7 +101,9 @@ namespace OngProject.Core.Mapper
                 Address = organizationModel.Address,
                 Phone = organizationModel.Phone,
                 Image = organizationModel.Image,
-               
+                FacebooK = organizationModel.FacebooK,
+                Linkedin = organizationModel.Linkedin,
+                Instagram = organizationModel.Instagram
             };
         }
         public UserLoginToDisplayDto UserModelToUserLoginToDisplayDto(UserModel user)
