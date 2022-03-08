@@ -63,6 +63,7 @@ namespace OngProject
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserBusiness, UserBusiness>();
             services.AddScoped<ICategoryBussines, CategoryBussines>();
+            services.AddScoped<INewsBusiness, NewsBusiness>();
             services.AddTransient<IEmailBusiness, EmailBusiness>();
             services.AddScoped<IEncryptHelper, EncryptHelper>();
             services.AddScoped<IJwtHelper, JwtHelper>();

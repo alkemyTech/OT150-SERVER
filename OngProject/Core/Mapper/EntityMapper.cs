@@ -8,6 +8,7 @@ namespace OngProject.Core.Mapper
 {
     public class EntityMapper
     {
+
         public UserModel UserRegisterDtoToUserModel(UserRegisterDto userRegisterDTO)
         {
             return new UserModel()
@@ -24,6 +25,7 @@ namespace OngProject.Core.Mapper
                
             };
         }
+
         public UserRegisterToDisplayDto UserRegisterDtoToUserRegisterToDisplayDto(UserRegisterDto userRegisterDto)
         {
             return new UserRegisterToDisplayDto()
@@ -37,6 +39,7 @@ namespace OngProject.Core.Mapper
             };
 
         }
+
         public ContactDto ConctactListDtoContactModel(ContactsModel contactDto)
         {
             return new ContactDto()
@@ -193,6 +196,18 @@ namespace OngProject.Core.Mapper
             };
         }
 
+
+        public ActivityModel ActivityDtoToActivityModel(ActivityDto activityDto)
+        {
+            return new ActivityModel()
+            {
+                Name = activityDto.Name,
+                Content = activityDto.Content,
+                Image = activityDto.Image
+            };
+        }
+
+
         public TestimonialsModel TestimonialsPostDtoToTestimonialsModel(TestimonialsPostDto testimonialsPostDto)
         {
             return new TestimonialsModel()
@@ -210,7 +225,10 @@ namespace OngProject.Core.Mapper
                 Name = testimonialsPostDto.Name,
                 Content = testimonialsPostDto.Content,
             };
+
             }
+
+
 
 
         public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
@@ -225,6 +243,19 @@ namespace OngProject.Core.Mapper
 
             };
         }
+        public NewsModel NewsPostDtoToNewsModel(NewsPostDto newsPostDto)
+        {
+            return new NewsModel()
+            {
+                Name = newsPostDto.Name,
+                Content = newsPostDto.Content,
+                Image = newsPostDto.Image,
+                CategorieId = newsPostDto.CategorieId,
+                SoftDelete = newsPostDto.SoftDelete,
+                LastModified = newsPostDto.LastModified
+            };
+        }
+
     }
 }
 
