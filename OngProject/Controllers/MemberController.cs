@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models.DTOs;
 using System.Threading.Tasks;
 
 namespace OngProject.Controllers
 {
     public class MemberController : ControllerBase
     {
-        private readonly IMembers _members;
+        private readonly IMemberBusiness _members;
 
-        public MemberController(IMembers member)
+        public MemberController(IMemberBusiness member)
         {
             _members = member;
 
@@ -26,8 +27,12 @@ namespace OngProject.Controllers
 
         public async Task<IActionResult> DeleteMember(int id)
         {
-
             return Ok(await _members.Delete(id));
+        }
+        [HttpPost("Members")]
+        public IActionResult PostMember(MemberCreateDto memberDto)
+        {
+            return Ok(_members.PostMember(memberDto));
         }
     }
 }

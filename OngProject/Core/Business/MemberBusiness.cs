@@ -5,12 +5,12 @@ using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
-
+using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 
 namespace OngProject.Core.Business
 {
-    public class MemberBusiness : IMembers
+    public class MemberBusiness : IMemberBusiness
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly EntityMapper entityMapper;
@@ -35,20 +35,16 @@ namespace OngProject.Core.Business
         public async Task<Response<MemberDeleteDto>> Delete(int id)
         {
             var members = _unitOfWork.MemberModelRepository.GetAll();
-   
             Response<MemberDeleteDto> response = new Response<MemberDeleteDto>();
-
             var member = members.FirstOrDefault(x=>x.Id==id);
             var error = new List<string>();
             if (member== null || member.SoftDelete==false)
             {
-                
                 error.Add("404");
                 response.Data = null;
                 response.Succeeded = false;
                 response.Message = "This member not found";
                 response.Errors = error.ToArray();
-
             }
             else
             {
@@ -59,19 +55,23 @@ namespace OngProject.Core.Business
                 response.Data = entityMapper.MemberModelToMemberDeleteDto(memberDeleted);
                 response.Succeeded = true;
                 response.Message = "The member has been successfully deleted";
-
             }
-           
-            
             return response;
-            
-
-
-
-         
-
+        }
+        public Response<MemberModel> PostMember(MemberCreateDto memberDto)
+        {
+            Response<MemberModel> response = new Response<MemberModel>();
+            List<string> intermediate_list = new List<string>();
+            var memberToCreate = entityMapper.MemberPostDtoToMemberModel(memberDto);
+            _unitOfWork.MemberModelRepository.Add(memberToCreate);
+            _unitOfWork.SaveChanges();
+            intermediate_list.Add("200");
+            response.Errors = intermediate_list.ToArray();
+            response.Data = memberToCreate;
+            response.Succeeded = true;
+            response.Message = "The Member was Posted successfully";
+            return response;
 
         }
-
     }
 }

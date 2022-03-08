@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using OngProject.Core.Business;
 using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
@@ -8,6 +9,11 @@ namespace OngProject.Core.Mapper
 {
     public class EntityMapper
     {
+        private readonly IMapper _mapper;
+        public EntityMapper(IMapper mapper)
+        {
+            _mapper=mapper;
+        }
 
         public UserModel UserRegisterDtoToUserModel(UserRegisterDto userRegisterDTO)
         {
@@ -20,7 +26,7 @@ namespace OngProject.Core.Mapper
                  
                 LastModified = DateTime.Now,
                 SoftDelete = true,
-                Role=userRegisterDTO.Role,
+                RoleId=userRegisterDTO.Role,
                
             };
         }
@@ -29,16 +35,12 @@ namespace OngProject.Core.Mapper
         {
             return new UserRegisterToDisplayDto()
             {
-
                 Name = userRegisterDto.Name,
                 LastName = userRegisterDto.LastName,
                 Email = userRegisterDto.Email,
-               
-       
             };
 
         }
-
         public ContactDto ConctactListDtoContactModel(ContactsModel contactDto)
         {
             return new ContactDto()
@@ -47,8 +49,6 @@ namespace OngProject.Core.Mapper
                 Email = contactDto.Email,
                 Phone = contactDto.Phone,
                 Message = contactDto.Message,
-               
-
             };
         }
         public ContactsModel ContactPostDtoToContactsModel(ContactPostDto contactPostDto)
@@ -156,8 +156,7 @@ namespace OngProject.Core.Mapper
                 Order = mono.Order,
                 Organization_Id = mono.OrganizationId
             };
-        }
-        public SlideDto SlideListDtoSlideModelImageOrder(SlideModel slideDto)
+        }        public SlideDto SlideListDtoSlideModelImageOrder(SlideModel slideDto)
         {
             return new SlideDto()
             {
@@ -184,8 +183,6 @@ namespace OngProject.Core.Mapper
                 Image = newsModel.Image
             };
         }
-
-
         public ActivityModel ActivityDtoToActivityModel(ActivityDto activityDto)
         {
             return new ActivityModel()
@@ -195,8 +192,6 @@ namespace OngProject.Core.Mapper
                 Image = activityDto.Image
             };
         }
-
-
         public TestimonialsModel TestimonialsPostDtoToTestimonialsModel(TestimonialsPostDto testimonialsPostDto)
         {
             return new TestimonialsModel()
@@ -206,15 +201,14 @@ namespace OngProject.Core.Mapper
               
             };
         }
-
         public TestimonialsPostToDisplayDto TestimonialsPostDtoToTestimonialsPostToDisplayDto(TestimonialsPostDto testimonialsPostDto)
         {
             return new TestimonialsPostToDisplayDto()
             {
                 Name = testimonialsPostDto.Name,
                 Content = testimonialsPostDto.Content,
-
-
+            };
+        }
         public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
         {
             return new CategorieModel()
@@ -224,8 +218,11 @@ namespace OngProject.Core.Mapper
                 Image = categoryPostDto.Image,
                 SoftDelete = categoryPostDto.SoftDelete,
                 LastModified = categoryPostDto.LastModified,
-
             };
+        }
+        public MemberModel MemberPostDtoToMemberModel(MemberCreateDto memberDto)
+        {
+            return _mapper.Map<MemberModel>(memberDto);
         }
     }
 }
