@@ -181,6 +181,25 @@ namespace OngProject.Core.Mapper
                 Image = newsModel.Image
             };
         }
+
+        public TestimonialsModel TestimonialsPostDtoToTestimonialsModel(TestimonialsPostDto testimonialsPostDto)
+        {
+            return new TestimonialsModel()
+            {
+                Name=testimonialsPostDto.Name,
+                Content=testimonialsPostDto.Content,
+              
+            };
+        }
+
+        public TestimonialsPostToDisplayDto TestimonialsPostDtoToTestimonialsPostToDisplayDto(TestimonialsPostDto testimonialsPostDto)
+        {
+            return new TestimonialsPostToDisplayDto()
+            {
+                Name = testimonialsPostDto.Name,
+                Content = testimonialsPostDto.Content,
+
+
         public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
         {
             return new CategorieModel()
@@ -190,6 +209,7 @@ namespace OngProject.Core.Mapper
                 Image = categoryPostDto.Image,
                 SoftDelete = categoryPostDto.SoftDelete,
                 LastModified = categoryPostDto.LastModified,
+
             };
         }
     }
