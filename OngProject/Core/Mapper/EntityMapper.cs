@@ -213,7 +213,8 @@ namespace OngProject.Core.Mapper
             {
                 Name = testimonialsPostDto.Name,
                 Content = testimonialsPostDto.Content,
-
+            };
+        }
 
         public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
         {
@@ -227,6 +228,19 @@ namespace OngProject.Core.Mapper
 
             };
         }
+        public NewsModel NewsPostDtoToNewsModel(NewsPostDto newsPostDto)
+        {
+            return new NewsModel()
+            {
+                Name = newsPostDto.Name,
+                Content = newsPostDto.Content,
+                Image = newsPostDto.Image,
+                CategorieId = newsPostDto.CategorieId,
+                SoftDelete = newsPostDto.SoftDelete,
+                LastModified = newsPostDto.LastModified
+            };
+        }
+
     }
 }
 
