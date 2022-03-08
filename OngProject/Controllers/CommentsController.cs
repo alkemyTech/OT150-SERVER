@@ -46,15 +46,20 @@ namespace OngProject.Controllers
        
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> PostComment([FromBody] CommentPostDto comment)
+        public async Task<IActionResult> PostComment([FromBody] CommentPostDto commentDto)
         {
 
             if (ModelState.IsValid)
             {
 
-
-
-                return Ok(await _commentBusiness.Post(comment));
+                var claimId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+                var Id = int.Parse(claimId);
+                var comment = (await _commentBusiness.Post(commentDto, Id));
+                if (comment.Errors!=null)
+                {
+                    return StatusCode(404,comment);
+                }
+                return Ok(comment);
 
             }
             else

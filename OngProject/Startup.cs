@@ -75,6 +75,7 @@ namespace OngProject
             services.AddScoped<OrganizationBusiness>();
             services.AddTransient<ICommentBusiness, CommentBusiness>();
             services.AddTransient<ISlideBusiness, SlideBusiness>();
+            services.AddScoped<ITestimonialsBussines, TestimonialsBusiness>();
             services.AddControllers();
             services.AddDbContext<OngContext>();
             services.Configure<JwtConfig>(Configuration.GetSection("JWT"));

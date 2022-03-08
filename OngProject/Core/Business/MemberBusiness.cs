@@ -43,10 +43,10 @@ namespace OngProject.Core.Business
             if (member== null || member.SoftDelete==false)
             {
                 
-                error.Add("404");
+                error.Add("This member not found");
                 response.Data = null;
                 response.Succeeded = false;
-                response.Message = "This member not found";
+                response.Message = "The deletion was not successfully";
                 response.Errors = error.ToArray();
 
             }
@@ -54,8 +54,7 @@ namespace OngProject.Core.Business
             {
                 var memberDeleted = await _unitOfWork.MemberModelRepository.Delete(id);
                 _unitOfWork.SaveChanges();
-                error.Add("200");
-                response.Errors = error.ToArray();
+                
                 response.Data = entityMapper.MemberModelToMemberDeleteDto(memberDeleted);
                 response.Succeeded = true;
                 response.Message = "The member has been successfully deleted";

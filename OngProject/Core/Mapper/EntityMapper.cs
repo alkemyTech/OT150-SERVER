@@ -20,9 +20,10 @@ namespace OngProject.Core.Mapper
 
                 LastModified = DateTime.Now,
                 SoftDelete = true,
-                Role = UserRegisterDTO.Role
-               
-               
+                RoleId=userRegisterDTO.Role
+
+
+
             };
         }
 
@@ -141,7 +142,7 @@ namespace OngProject.Core.Mapper
             return new CommentModel()
             {
                 NewsId = commentPost.NewsId,
-                UserId=commentPost.UserId,
+                
                 Body=commentPost.Body,
                 LastModified=DateTime.Now,
                 SoftDelete=true
