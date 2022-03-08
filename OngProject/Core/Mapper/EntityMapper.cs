@@ -9,8 +9,6 @@ namespace OngProject.Core.Mapper
     public class EntityMapper
     {
 
-
-        
         public UserModel UserRegisterDtoToUserModel(UserRegisterDto userRegisterDTO)
         {
             return new UserModel()
@@ -26,10 +24,6 @@ namespace OngProject.Core.Mapper
             };
         }
 
-        
-
-
-
         public UserRegisterToDisplayDto UserRegisterDtoToUserRegisterToDisplayDto(UserRegisterDto userRegisterDto)
         {
             return new UserRegisterToDisplayDto()
@@ -41,6 +35,7 @@ namespace OngProject.Core.Mapper
             };
 
         }
+
         public ContactDto ConctactListDtoContactModel(ContactsModel contactDto)
         {
             return new ContactDto()
@@ -173,7 +168,16 @@ namespace OngProject.Core.Mapper
                 Image = newsModel.Image
             };
         }
-        
+
+        public ActivityModel ActivityDtoToActivityModel(ActivityDto activityDto)
+        {
+            return new ActivityModel()
+            {
+                Name = activityDto.Name,
+                Content = activityDto.Content,
+                Image = activityDto.Image
+            };
+        }
 
     }
 
