@@ -76,6 +76,7 @@ namespace OngProject
             services.AddScoped<OrganizationBusiness>();
             services.AddTransient<ICommentBusiness, CommentBusiness>();
             services.AddTransient<ISlideBusiness, SlideBusiness>();
+            services.AddTransient<ITestimonialsBussines, TestimonialsBusiness>();
             services.AddControllers();
             services.AddDbContext<OngContext>();
             services.Configure<JwtConfig>(Configuration.GetSection("JWT"));
@@ -99,29 +100,7 @@ namespace OngProject
                 };
             });
 
-            //var key = Encoding.ASCII.GetBytes(Configuration["JWT:Secret"]);
-            //services
-            //.AddAuthentication(x =>
-            //{
-            //    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //})
-            //.AddJwtBearer(x =>
-            //{
-            //    x.RequireHttpsMetadata = false;
-            //    x.SaveToken = true;
-            //    x.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        IssuerSigningKey = new SymmetricSecurityKey(key),
-            //        ValidateAudience = false,
-            //        ValidateIssuerSigningKey = true,
-            //        ValidateIssuer = false
-            //    };
-            //});
-        
-      
-           
-
+         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
