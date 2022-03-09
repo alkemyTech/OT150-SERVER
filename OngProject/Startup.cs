@@ -134,14 +134,17 @@ namespace OngProject
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OngProject v1"));
             }
             app.UseHttpsRedirection();
+
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseMiddleware<RouteProtection>();
+            app.UseOwnershipMiddleware();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+            
         }
     }
 }
