@@ -1,4 +1,5 @@
-﻿using OngProject.Core.Interfaces;
+﻿using Microsoft.AspNetCore.Http;
+using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
@@ -85,18 +86,20 @@ namespace OngProject.Core.Business
             response.Message = "You don't have permission for modificated this comment";
             return response;
         }
-        public async Task<Response<CommentPostDto>> Post(CommentPostDto commentPost)
+        public async Task<Response<CommentPostDto>> Post(CommentPostDto commentPost,int id)
         {
             var response = new Response<CommentPostDto>();
             var error = new List<string>();
-            var user = _unitOfWork.UserModelRepository.GetById(commentPost.UserId);
-       
+            var user = _unitOfWork.UserModelRepository.GetById(id);
+          
             var news = _unitOfWork.NewsModelRepository.GetById(commentPost.NewsId);
-            if (user != null && news != null)
+            
+            if (news != null)
             {
+                var mappedComment = _entityMapper.CommentPostDtoToCommentModel(commentPost);
+                mappedComment.UserId=user.Id;
 
-
-                _unitOfWork.CommentModelRepository.Add(_entityMapper.CommentPostDtoToCommentModel(commentPost));
+                _unitOfWork.CommentModelRepository.Add(mappedComment);
                 await _unitOfWork.SaveChangesAsync();
                 response.Data = commentPost;
                 response.Message = "The comment was added";
@@ -106,10 +109,7 @@ namespace OngProject.Core.Business
             }
             else
             {
-                if (user == null)
-                {
-                    error.Add("The user does not exist");
-                }
+                
                 if(news == null)
                 {
                     error.Add("The news does not exist");

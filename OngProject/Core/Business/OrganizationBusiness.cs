@@ -24,11 +24,11 @@ namespace OngProject.Core.Business
             this._slideBusiness = slideBusiness;
         }
 
-        public async Task<IEnumerable<OrganizationGetDto>> GetOrganization()
+        public IEnumerable<OrganizationGetDto> GetOrganization()
         {
 
 
-            var organizations =  unitOfWork.OrganizationModelRepository.GetAll();
+            var organizations =unitOfWork.OrganizationModelRepository.GetAll();
             
             if (organizations.Any(x=>x.SoftDelete=true))
             {
@@ -45,11 +45,11 @@ namespace OngProject.Core.Business
                 {
                   
                     var orgDto = entityMapper.OrganizationModeltoOrganizationGetDto(entity);
-                    var slidesAux = slidesDto.Where(x => x.OrganizationId == entity.Id);
+                    var slidesAux =slidesDto.Where(x => x.OrganizationId == entity.Id);
                     var slidesAux2 = new List<SlideDtoToDisplay>();
                     foreach (var slideAux in slidesAux)
                     {
-                        slidesAux2.Add(entityMapper.SlideDtoToSlideDtoToDisplay(slideAux));
+                         slidesAux2.Add(entityMapper.SlideDtoToSlideDtoToDisplay(slideAux));
                     }
                     orgDto.Slides= slidesAux2;
                 

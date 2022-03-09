@@ -21,6 +21,7 @@ namespace OngProject.Core.Mapper
 
                 LastModified = DateTime.Now,
                 SoftDelete = true,
+
                 RoleId = userRegisterDTO.RoleId,
 
 
@@ -157,10 +158,11 @@ namespace OngProject.Core.Mapper
             return new CommentModel()
             {
                 NewsId = commentPost.NewsId,
-                UserId = commentPost.UserId,
-                Body = commentPost.Body,
-                LastModified = DateTime.Now,
-                SoftDelete = true
+
+                
+                Body=commentPost.Body,
+                LastModified=DateTime.Now,
+                SoftDelete=true
 
 
             };

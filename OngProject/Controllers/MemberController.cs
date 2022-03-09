@@ -26,8 +26,12 @@ namespace OngProject.Controllers
 
         public async Task<IActionResult> DeleteMember(int id)
         {
-
-            return Ok(await _members.Delete(id));
+            var member = (await _members.Delete(id));
+            if (member.Errors != null)
+            {
+                return StatusCode(404, member);
+            }
+            return Ok(member);
         }
     }
 }

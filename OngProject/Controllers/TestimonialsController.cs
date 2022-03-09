@@ -27,7 +27,7 @@ namespace OngProject.Controllers
             _unitOfWork = unitOfWork;
             _testimonialsBussines = testimonialsBussines;
         }
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles="Admin")]
         [HttpPost("Testimonials")]
         public async Task<IActionResult> Post([FromForm]TestimonialsPostDto testimonialPostDto)
         {
