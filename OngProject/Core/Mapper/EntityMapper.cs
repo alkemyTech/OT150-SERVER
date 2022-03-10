@@ -159,10 +159,10 @@ namespace OngProject.Core.Mapper
             {
                 NewsId = commentPost.NewsId,
 
-                
-                Body=commentPost.Body,
-                LastModified=DateTime.Now,
-                SoftDelete=true
+
+                Body = commentPost.Body,
+                LastModified = DateTime.Now,
+                SoftDelete = true
 
 
             };
@@ -248,19 +248,19 @@ namespace OngProject.Core.Mapper
         }
 
 
-            public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
+        public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
+        {
+            return new CategorieModel()
             {
-                return new CategorieModel()
-                {
-                    NameCategorie = categoryPostDto.NameCategory,
-                    DescriptionCategorie = categoryPostDto.DescriptionCategory,
-                    Image = categoryPostDto.Image,
-                    SoftDelete = categoryPostDto.SoftDelete,
-                    LastModified = categoryPostDto.LastModified,
+                NameCategorie = categoryPostDto.NameCategory,
+                DescriptionCategorie = categoryPostDto.DescriptionCategory,
+                Image = categoryPostDto.Image,
+                SoftDelete = categoryPostDto.SoftDelete,
+                LastModified = categoryPostDto.LastModified,
 
-                };
-            }
+            };
         }
+
         public NewsModel NewsPostDtoToNewsModel(NewsPostDto newsPostDto)
         {
             return new NewsModel()
@@ -273,8 +273,27 @@ namespace OngProject.Core.Mapper
                 LastModified = newsPostDto.LastModified
             };
         }
+        public ActivityDto ActivityModelToActivityDto(ActivityModel activityModel)
+        {
+            return new ActivityDto()
+            { Name = activityModel.Name,
+            Content=activityModel.Content,
+            Image=activityModel.Image
+            
+              
+            };
+        }
+        public ActivityModel ActivityUpdateDtoToActivityModel(ActivityUpdateDto activityUpdateDto)
+        {
+            return new ActivityModel()
+            {
+                Name = activityUpdateDto.Name,
+                Content = activityUpdateDto.Content
 
+
+            };
+        }
     }
-
+}
 
 

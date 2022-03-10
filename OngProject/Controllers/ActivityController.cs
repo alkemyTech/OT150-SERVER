@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models.DTOs;
+using System.Threading.Tasks;
 
 namespace OngProject.Controllers
 {
@@ -31,6 +32,25 @@ namespace OngProject.Controllers
                 return BadRequest(ModelState);
             }
 
+        }
+        [Authorize(Roles="Admin")]
+        [HttpPut("activities/{id}")]
+        public async Task<IActionResult>Update(int id,[FromForm]ActivityUpdateDto activityUpdateDto)
+        {
+            var updatedActivity = await _activityBusiness.Update(id, activityUpdateDto);
+            if (ModelState.IsValid)
+            {
+                if (updatedActivity.Errors != null)
+                {
+                    return StatusCode(404, updatedActivity);
+                }
+                return Ok(updatedActivity);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+          
         }
     }
 }
