@@ -1,19 +1,10 @@
-
-﻿using Microsoft.AspNetCore.Mvc;
-using OngProject.Core.Business;
-
-﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
-
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -22,25 +13,18 @@ namespace OngProject.Controllers
     public class AuthController : Controller
     {
         private readonly IUserBusiness _userBusiness;
-        private readonly IEmailBusiness _emailBusiness;
-
-        private readonly ImagesBusiness _imagesBusiness;
         private readonly IJwtHelper _jwtHelper;
 
 
-        public AuthController(IUserBusiness userBusiness, IEmailBusiness emailBusiness, IJwtHelper jwtHelper)
+        public AuthController(IUserBusiness userBusiness, IJwtHelper jwtHelper)
         {
             this._userBusiness = userBusiness;
-            _emailBusiness = emailBusiness;
             _jwtHelper = jwtHelper;
-
         }
 
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromForm]UserRegisterDto userRegisterDto)
         {
-
-
 
             if (ModelState.IsValid)
             {
@@ -57,8 +41,7 @@ namespace OngProject.Controllers
                         Role = user.Role
                     };
 
-                    var token = _jwtHelper.GenerateJwtToken(tokenParameter);
-                  
+                    var token = _jwtHelper.GenerateJwtToken(tokenParameter);                
 
                     return Ok(token);
                 }
@@ -66,16 +49,9 @@ namespace OngProject.Controllers
                 else
                 {
                     return BadRequest("Error:The email already exists");
-                }
-
-               
-
-
-                
+                } 
 
             }
-
-
             else
             {
                 return BadRequest(ModelState);
