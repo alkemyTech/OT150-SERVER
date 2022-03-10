@@ -31,10 +31,12 @@ namespace OngProject.Controllers
             _imagesBusiness = new ImagesBusiness(configuration);
             _configuration = configuration;
 
-    }
-    
-    [Authorize(Roles = "Admin")]
-    [HttpGet("Lista")]
+
+        }
+
+        [HttpGet("Lista")]
+        [Authorize]
+
         public async Task<IActionResult> Lista()
         {
 
@@ -53,19 +55,22 @@ namespace OngProject.Controllers
 
 
         }
-        [Authorize(Roles = "Admin")]
+      
 
         [HttpPost]
         [Route("image")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Upload(IFormFile image)
         {
             var response = await _imagesBusiness.UploadFileAsync(image);
             return Ok(response);
         }
 
+
         [Authorize]
         [HttpDelete("users")]
         public async Task<ActionResult> Delete()
+
         {
             var idUser = int.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
           
