@@ -9,5 +9,6 @@ namespace OngProject.Core.Interfaces
     {
         NewsDto GetNews(int id);
         Response<NewsModel> NewsPost(NewsPostDto newsPost);
+        Task<Response<NewsDto>> Update(int id, NewsUpdateDto newsUpdate);
     }
 }
