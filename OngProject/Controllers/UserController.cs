@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 
 namespace OngProject.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
 
@@ -35,6 +34,7 @@ namespace OngProject.Controllers
         }
 
         [HttpGet("Lista")]
+        [Authorize]
         public async Task<IActionResult> Lista()
         {
 
@@ -56,14 +56,15 @@ namespace OngProject.Controllers
 
         [HttpPost]
         [Route("image")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Upload(IFormFile image)
         {
             var response = await _imagesBusiness.UploadFileAsync(image);
             return Ok(response);
         }
 
-        [Authorize(Roles = "User")]
         [HttpDelete("users/{id:int}")]
+        [Authorize]
         public async Task<ActionResult> Delete(int id)
         {
             var rol = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
