@@ -1,11 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using OngProject.Core.Helper;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OngProject.Entities
 {
@@ -18,15 +12,9 @@ namespace OngProject.Entities
         [Required]
         public string Email { get; set; }
         [Required]
-        public string Password { get; set; }
-        
-
-  
-      
+        public string Password { get; set; } 
         public string Photo { get; set; }
         [ForeignKey("RoleModel")]
         public int RoleId { get; set; }
-
-
     }
 }
