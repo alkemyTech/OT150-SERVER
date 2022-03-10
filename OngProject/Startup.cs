@@ -76,7 +76,7 @@ namespace OngProject
             services.AddScoped<OrganizationBusiness>();
             services.AddTransient<ICommentBusiness, CommentBusiness>();
             services.AddTransient<ISlideBusiness, SlideBusiness>();
-
+            services.AddScoped<IActivityBusiness, ActivityBusiness>();
             services.AddScoped<ITestimonialsBussines, TestimonialsBusiness>();
 
             services.AddControllers();
