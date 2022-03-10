@@ -159,10 +159,10 @@ namespace OngProject.Core.Mapper
             {
                 NewsId = commentPost.NewsId,
 
-                
-                Body=commentPost.Body,
-                LastModified=DateTime.Now,
-                SoftDelete=true
+
+                Body = commentPost.Body,
+                LastModified = DateTime.Now,
+                SoftDelete = true
 
 
             };
@@ -247,20 +247,31 @@ namespace OngProject.Core.Mapper
             };
         }
 
-
-            public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
+        public TestimonialsModel TestimonialsPutToDisplayDto(TestimonialsPutDto testimonialsPutDto)
+        {
+            return new TestimonialsModel()
             {
-                return new CategorieModel()
-                {
-                    NameCategorie = categoryPostDto.NameCategory,
-                    DescriptionCategorie = categoryPostDto.DescriptionCategory,
-                    Image = categoryPostDto.Image,
-                    SoftDelete = categoryPostDto.SoftDelete,
-                    LastModified = categoryPostDto.LastModified,
+                Name = testimonialsPutDto.Name,
+                Image = testimonialsPutDto.Image,
+                Content = testimonialsPutDto.Content
 
-                };
-            }
+            };
         }
+
+
+        public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
+        {
+            return new CategorieModel()
+            {
+                NameCategorie = categoryPostDto.NameCategory,
+                DescriptionCategorie = categoryPostDto.DescriptionCategory,
+                Image = categoryPostDto.Image,
+                SoftDelete = categoryPostDto.SoftDelete,
+                LastModified = categoryPostDto.LastModified,
+
+            };
+        }
+
         public NewsModel NewsPostDtoToNewsModel(NewsPostDto newsPostDto)
         {
             return new NewsModel()
@@ -273,8 +284,8 @@ namespace OngProject.Core.Mapper
                 LastModified = newsPostDto.LastModified
             };
         }
-
     }
+   }
 
 
 

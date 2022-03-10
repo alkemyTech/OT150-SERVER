@@ -89,5 +89,36 @@ namespace OngProject.Core.Business
             return response;
         }
 
+        public Response<TestimonialsModel> PutTestimonials(TestimonialsPutDto testimonialsDto)
+        {
+            Response<TestimonialsModel> response = new Response<TestimonialsModel>();
+            List<string> intermediate_list = new List<string>();
+            var testimonials = _unitOfWork.TestimonialsModelRepository.GetById(testimonialsDto.Id);
+            if (testimonials == null)
+            {
+                intermediate_list.Add("404");
+                response.Data = testimonials;
+                response.Message = "This OrganizationId not Found";
+                response.Succeeded = false;
+                response.Errors = intermediate_list.ToArray();
+                return response;
+            }
+            if (testimonialsDto.Name != null)
+                testimonials.Name = testimonialsDto.Name;
+            if (testimonialsDto.Image != null)
+                testimonials.Image = testimonialsDto.Image;
+            if (testimonialsDto.Content != null)
+                testimonials.Content = testimonialsDto.Content;
+           
+            testimonials.LastModified = DateTime.Now;
+            testimonials = _unitOfWork.TestimonialsModelRepository.GetById(testimonialsDto.Id);
+            intermediate_list.Add("200");
+            response.Data = testimonials;
+            response.Message = "The Testimonials was successfully Updated";
+            response.Succeeded = true;
+            response.Errors = intermediate_list.ToArray();
+            return response;
+        }
+
     }
 }

@@ -51,6 +51,13 @@ namespace OngProject.Controllers
             return Ok(await _testimonialsBussines.Delete(id, rol, idUser));
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPut("public")]
+        public IActionResult Put(TestimonialsPutDto testimonialsPutDto)
+        {
+            return Ok(_testimonialsBussines.PutTestimonials(testimonialsPutDto));
+
+        } 
 
     }
 }

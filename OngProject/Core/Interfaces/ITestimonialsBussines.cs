@@ -16,5 +16,6 @@ namespace OngProject.Core.Interfaces
     {
         Task<Response<TestimonialsPostToDisplayDto>> Post(TestimonialsPostDto testimonialPostDto);
         Task<Response<TestimonialsModel>> Delete(int id, string rol, string UserId);
+        Response<TestimonialsModel> PutTestimonials(TestimonialsPutDto testimonialsDto);
     }
 }
