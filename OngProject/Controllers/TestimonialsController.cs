@@ -28,7 +28,7 @@ namespace OngProject.Controllers
             _testimonialsBussines = testimonialsBussines;
         }
         [Authorize(Roles="Admin")]
-        [HttpPost("Testimonials")]
+        [HttpPost("Testimonials/Post")]
         public async Task<IActionResult> Post([FromForm]TestimonialsPostDto testimonialPostDto)
         {
             if (ModelState.IsValid)

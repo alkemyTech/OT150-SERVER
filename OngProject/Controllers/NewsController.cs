@@ -44,5 +44,26 @@ namespace OngProject.Controllers
         {
             return Ok(_newsBusiness.NewsPost(newsPost));
         }
+
+
+        [Authorize(Roles ="Admin")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id,[FromForm]NewsUpdateDto newsUpdate)
+        {
+            var updatedNews = await _newsBusiness.Update(id, newsUpdate);
+            if (ModelState.IsValid)
+            {
+                if (updatedNews.Errors != null)
+                {
+                    return StatusCode(404, updatedNews);
+                }
+                return Ok(updatedNews);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+
+        }
     }
 }

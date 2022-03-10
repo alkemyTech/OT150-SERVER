@@ -16,6 +16,6 @@ namespace OngProject.Core.Interfaces
 
         UserLoginToDisplayDto Login(string email, string password);
         UserDto GetById(int id);
-        Task<Response<UserModel>> DeleteUser(int id, string rol, string idUser);
+        Task<Response<UserDto>> DeleteUser(int id);
     }
 }

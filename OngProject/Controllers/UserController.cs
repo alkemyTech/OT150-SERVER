@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 
 namespace OngProject.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
 
@@ -32,9 +31,12 @@ namespace OngProject.Controllers
             _imagesBusiness = new ImagesBusiness(configuration);
             _configuration = configuration;
 
+
         }
 
         [HttpGet("Lista")]
+        [Authorize]
+
         public async Task<IActionResult> Lista()
         {
 
@@ -53,23 +55,31 @@ namespace OngProject.Controllers
 
 
         }
+      
 
         [HttpPost]
         [Route("image")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Upload(IFormFile image)
         {
             var response = await _imagesBusiness.UploadFileAsync(image);
             return Ok(response);
         }
 
-        [Authorize(Roles = "User")]
-        [HttpDelete("users/{id:int}")]
-        public async Task<ActionResult> Delete(int id)
+
+        [Authorize]
+        [HttpDelete("users")]
+        public async Task<ActionResult> Delete()
+
         {
-            var rol = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
-            var idUser = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
-            var bajaLogica = await _userBusiness.DeleteUser(id, rol, idUser);
-            return Ok(bajaLogica);
+            var idUser = int.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+          
+            var response = await _userBusiness.DeleteUser(idUser);
+            if (response.Errors != null)
+            {
+                return StatusCode(404, response);
+            }
+            return Ok(response);
         }
     }
 }

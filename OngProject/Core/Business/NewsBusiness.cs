@@ -1,10 +1,12 @@
-﻿using OngProject.Core.Interfaces;
+﻿using Microsoft.Extensions.Configuration;
+using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OngProject.Core.Business
 {
@@ -12,10 +14,12 @@ namespace OngProject.Core.Business
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly EntityMapper entityMapper = new EntityMapper();
+        private readonly IConfiguration _configuration;
 
-        public NewsBusiness(IUnitOfWork unitOfWork)
+        public NewsBusiness(IUnitOfWork unitOfWork,IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
+            _configuration = configuration;
         }
 
         public NewsDto GetNews(int id)
@@ -48,5 +52,46 @@ namespace OngProject.Core.Business
             return response;
 
         }
+
+        public async Task<Response<NewsDto>> Update(int id, NewsUpdateDto newsUpdate)
+        {
+                var imagesBussines = new ImagesBusiness(_configuration);
+                var response = new Response<NewsDto>();
+                var errorList = new List<string>();
+                string image;
+                var news = _unitOfWork.NewsModelRepository.GetById(id);
+
+                if (news == null)
+                {
+                    errorList.Add("This news not found");
+                    response.Data = null;
+                    response.Errors = errorList.ToArray();
+                    response.Succeeded = false;
+                    return response;
+                }
+                if (newsUpdate.Image != null)
+                {
+                    image = await imagesBussines.UploadFileAsync(newsUpdate.Image);
+                   news.Image = image;
+                }
+                if (newsUpdate.Content != null)
+                {
+                     news.Content = newsUpdate.Content;
+                }
+
+
+                if (newsUpdate.Name != null)
+                {
+                news.Name = newsUpdate.Name;
+                }
+                _unitOfWork.NewsModelRepository.Update(news);
+                await _unitOfWork.SaveChangesAsync();
+
+                var updatedNews = _unitOfWork.NewsModelRepository.GetById(id);
+                response.Data = entityMapper.NewsModeltoNewsDto(updatedNews);
+                response.Succeeded = true;
+                return response;
+            }
+        }
     }
-}
+    

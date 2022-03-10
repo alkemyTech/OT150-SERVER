@@ -22,11 +22,11 @@ namespace OngProject.Core.Business
     public class UserBusiness : IUserBusiness
     {
         private readonly IUnitOfWork _unitOfWork;
-       
+
         private readonly IEmailBusiness _emailBusiness;
         private readonly IConfiguration _configuration;
         private readonly IEncryptHelper _encryptHelper;
-        private readonly EntityMapper entityMapper=new EntityMapper();
+        private readonly EntityMapper entityMapper = new EntityMapper();
         private readonly IJwtHelper _jwtHelper;
         public UserBusiness(IUnitOfWork unitOfWork, IEmailBusiness emailBusiness, IEncryptHelper encryptHelper, IConfiguration configuration, IJwtHelper jwtHelper)
         {
@@ -67,7 +67,7 @@ namespace OngProject.Core.Business
             return userDto;
         }
 
-        public async Task< UserRegisterToDisplayDto> Register(UserRegisterDto userRegisterDto)
+        public async Task<UserRegisterToDisplayDto> Register(UserRegisterDto userRegisterDto)
         {
             var imagesBusiness = new ImagesBusiness(_configuration);
 
@@ -86,13 +86,13 @@ namespace OngProject.Core.Business
                 return null;
             }
 
-      
-          
+
+
 
             userRegisterDto.Password = _encryptHelper.EncryptPassSha256(userRegisterDto.Password);
-         
 
-            if(userRegisterDto.RoleId!=1 && userRegisterDto.RoleId != 2)
+
+            if (userRegisterDto.RoleId != 1 && userRegisterDto.RoleId != 2)
 
             {
                 userRegisterDto.RoleId = 2;
@@ -105,7 +105,7 @@ namespace OngProject.Core.Business
 
             _unitOfWork.UserModelRepository.Add(user);
             _unitOfWork.SaveChanges();
-            await _emailBusiness.SendEmailWithTemplateAsync(userRegisterDto.Email,$"Bienvenido a esta gran comunidad",$"Gracias por registrarte {user.FirstName}","Ong Somos Más");
+            await _emailBusiness.SendEmailWithTemplateAsync(userRegisterDto.Email, $"Bienvenido a esta gran comunidad", $"Gracias por registrarte {user.FirstName}", "Ong Somos Más");
             return userDto;
         }
 
@@ -124,12 +124,12 @@ namespace OngProject.Core.Business
         {
             var usuarios = _unitOfWork.UserModelRepository.GetAll();
             var usuariosDto = new List<UserDto>();
-            foreach (var user in usuarios )
+            foreach (var user in usuarios)
             {
                 usuariosDto.Add(entityMapper.UserListDtoUserModel(user));
             }
 
-            return usuariosDto;          
+            return usuariosDto;
         }
 
         public UserDto GetById(int id)
@@ -140,38 +140,40 @@ namespace OngProject.Core.Business
 
             return userDto;
         }
+     
+        public async Task<Response<UserDto>> DeleteUser(int id)
+        { var users = _unitOfWork.UserModelRepository.GetAll();
+            var response = new Response<UserDto>();
+            if (!users.Any(x=>x.Id==id))
+            {
+                var list = new List<string>();
+                list.Add("This user not found");
+                response.Errors=list.ToArray();
+                response.Data = null;
+               
+                response.Succeeded = false;
+              
+                return response;
 
-        public async Task<Response<UserModel>> DeleteUser(int id, string rol, string idUser)
-        {
-            UserModel user = _unitOfWork.UserModelRepository.GetById(id);
-            var response = new Response<UserModel>();
-            List<string> intermediate_list = new List<string>();
-            if (user == null)
-            {
-                intermediate_list.Add("404");
+            }
+            
+
+            var user = GetById(id);
+           await _unitOfWork.UserModelRepository.Delete(id);
+           await _unitOfWork.SaveChangesAsync();
+
+          
+
+
+       
                 response.Data = user;
-                response.Message = "This user not found";
+              
                 response.Succeeded = true;
-                response.Errors = intermediate_list.ToArray();
+                response.Message = "The user was deleted";
+         
                 return response;
-            }
-            if (rol == "User" && idUser == user.Id.ToString())
-            {
-                UserModel entity = await _unitOfWork.UserModelRepository.Delete(id);
-                await _unitOfWork.SaveChangesAsync();
-                intermediate_list.Add("200");
-                response.Errors = intermediate_list.ToArray();
-                response.Data = entity;
-                response.Succeeded = true;
-                response.Message = "The User was Deleted successfully";
-                return response;
-            }
-            intermediate_list.Add("403");
-            response.Data = null;
-            response.Succeeded = false;
-            response.Errors = intermediate_list.ToArray();
-            response.Message = "You don't have permission for deleted this user";
-            return response;
+          
+           
         }
     }
 

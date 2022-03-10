@@ -255,8 +255,10 @@ namespace OngProject.Core.Mapper
                 Image = testimonialsPutDto.Image,
                 Content = testimonialsPutDto.Content
 
+
             };
         }
+
 
 
         public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
@@ -284,8 +286,29 @@ namespace OngProject.Core.Mapper
                 LastModified = newsPostDto.LastModified
             };
         }
-    }
-   }
 
+        public ActivityDto ActivityModelToActivityDto(ActivityModel activityModel)
+        {
+            return new ActivityDto()
+            { Name = activityModel.Name,
+            Content=activityModel.Content,
+            Image=activityModel.Image
+            
+              
+            };
+        }
+        public ActivityModel ActivityUpdateDtoToActivityModel(ActivityUpdateDto activityUpdateDto)
+        {
+            return new ActivityModel()
+            {
+                Name = activityUpdateDto.Name,
+                Content = activityUpdateDto.Content
+
+
+
+            };
+        }
+    }
+}
 
 
