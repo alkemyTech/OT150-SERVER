@@ -47,7 +47,7 @@ namespace OngProject.Controllers
 
 
         [Authorize(Roles ="Admin")]
-        [HttpPut("news/{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id,[FromForm]NewsUpdateDto newsUpdate)
         {
             var updatedNews = await _newsBusiness.Update(id, newsUpdate);
