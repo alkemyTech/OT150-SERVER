@@ -17,9 +17,12 @@ using OngProject.DataAccess;
 using OngProject.Middleware;
 using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
-using System.Linq;
-using System.Text;
 
+using System.Text;
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 namespace OngProject
 {
     public class Startup
@@ -36,6 +39,10 @@ namespace OngProject
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OngProject", Version = "v1" });
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "JWT Token Bearer",
@@ -112,7 +119,7 @@ namespace OngProject
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OngProject v1"));
+                app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "OngProject v1"); c.RoutePrefix = "api/docs"; });
             }
             app.UseHttpsRedirection();
 
