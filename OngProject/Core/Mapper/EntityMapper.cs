@@ -245,6 +245,19 @@ namespace OngProject.Core.Mapper
             };
         }
 
+        public TestimonialsModel TestimonialsPutToDisplayDto(TestimonialsPutDto testimonialsPutDto)
+        {
+            return new TestimonialsModel()
+            {
+                Name = testimonialsPutDto.Name,
+                Image = testimonialsPutDto.Image,
+                Content = testimonialsPutDto.Content
+
+
+            };
+        }
+
+
 
         public CategorieModel CategoryPostDtoToCategoryModel(CategoryPostDto categoryPostDto)
         {
@@ -271,6 +284,7 @@ namespace OngProject.Core.Mapper
                 LastModified = newsPostDto.LastModified
             };
         }
+
         public ActivityDto ActivityModelToActivityDto(ActivityModel activityModel)
         {
             return new ActivityDto()
@@ -287,6 +301,7 @@ namespace OngProject.Core.Mapper
             {
                 Name = activityUpdateDto.Name,
                 Content = activityUpdateDto.Content
+
             };
         }
     }
