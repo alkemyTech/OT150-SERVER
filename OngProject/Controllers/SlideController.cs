@@ -1,8 +1,8 @@
-
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
-
+using OngProject.Core.Models.DTOs;
+using System.Threading.Tasks;
 
 namespace OngProject.Controllers
 {
@@ -33,5 +33,24 @@ namespace OngProject.Controllers
             return Ok(_slideBusiness.GetSlides());
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id,[FromForm] SlidePutDto slideDto)
+        {
+
+            var updateResult = await _slideBusiness.Update(id, slideDto);
+            if (ModelState.IsValid)
+            {
+                if (updateResult.Errors != null)
+                {
+                    return StatusCode(404, updateResult);
+                }
+                return Ok(updateResult);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+
+        }
     }
 }

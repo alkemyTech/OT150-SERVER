@@ -1,20 +1,11 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using OngProject.Core.Helper;
+﻿using Microsoft.Extensions.Configuration;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
-using OngProject.DataAccess;
-using OngProject.Entities;
-using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
-using SendGrid.Helpers.Mail;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace OngProject.Core.Business
@@ -71,8 +62,6 @@ namespace OngProject.Core.Business
         {
             var imagesBusiness = new ImagesBusiness(_configuration);
 
-
-
             var roleName = _unitOfWork.RoleModelRepository.GetById(userRegisterDto.RoleId);
 
             var userDto = entityMapper.UserRegisterDtoToUserRegisterToDisplayDto(userRegisterDto);
@@ -85,9 +74,6 @@ namespace OngProject.Core.Business
             {
                 return null;
             }
-
-
-
 
             userRegisterDto.Password = _encryptHelper.EncryptPassSha256(userRegisterDto.Password);
 
@@ -140,40 +126,34 @@ namespace OngProject.Core.Business
 
             return userDto;
         }
-     
+
         public async Task<Response<UserDto>> DeleteUser(int id)
-        { var users = _unitOfWork.UserModelRepository.GetAll();
+        {
+            var users = _unitOfWork.UserModelRepository.GetAll();
             var response = new Response<UserDto>();
-            if (!users.Any(x=>x.Id==id))
+            if (!users.Any(x => x.Id == id))
             {
                 var list = new List<string>();
                 list.Add("This user not found");
-                response.Errors=list.ToArray();
+                response.Errors = list.ToArray();
                 response.Data = null;
-               
+
                 response.Succeeded = false;
-              
+
                 return response;
 
             }
-            
 
             var user = GetById(id);
-           await _unitOfWork.UserModelRepository.Delete(id);
-           await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.UserModelRepository.Delete(id);
+            await _unitOfWork.SaveChangesAsync();
 
-          
+            response.Data = user;
 
+            response.Succeeded = true;
+            response.Message = "The user was deleted";
 
-       
-                response.Data = user;
-              
-                response.Succeeded = true;
-                response.Message = "The user was deleted";
-         
-                return response;
-          
-           
+            return response;
         }
     }
 

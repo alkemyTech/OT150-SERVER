@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using OngProject.Core.Business;
-using OngProject.Core.Models.DTOs;
+﻿using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using System;
 
@@ -304,11 +302,7 @@ namespace OngProject.Core.Mapper
                 Name = activityUpdateDto.Name,
                 Content = activityUpdateDto.Content
 
-
-
             };
         }
     }
-}
-
-
+}    

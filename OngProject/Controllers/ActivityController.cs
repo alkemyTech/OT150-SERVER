@@ -18,7 +18,7 @@ namespace OngProject.Controllers
 
         [HttpPost("Activities")]
         [Authorize]
-        public IActionResult Activities([FromBody] ActivityDto activityBusiness)
+        public IActionResult Activities([FromForm] ActivityDto activityBusiness)
         {
 
             if (ModelState.IsValid)
