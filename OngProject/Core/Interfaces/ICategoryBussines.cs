@@ -13,5 +13,6 @@ namespace OngProject.Core.Interfaces
         List<CategorieDto> GetCategories();
         CategoryGetDto GetCategory(int id);
         Response<CategorieModel> PostCategory(CategoryPostDto categoryPostDto);
+        Task<Response<CategorieModel>> DeleteCategory(int id);
     }
 }
