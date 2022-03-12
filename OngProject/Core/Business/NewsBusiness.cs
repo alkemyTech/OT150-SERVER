@@ -16,7 +16,7 @@ namespace OngProject.Core.Business
         private readonly EntityMapper entityMapper = new EntityMapper();
         private readonly IConfiguration _configuration;
 
-        public NewsBusiness(IUnitOfWork unitOfWork,IConfiguration configuration)
+        public NewsBusiness(IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
             _configuration = configuration;
@@ -55,43 +55,68 @@ namespace OngProject.Core.Business
 
         public async Task<Response<NewsDto>> Update(int id, NewsUpdateDto newsUpdate)
         {
-                var imagesBussines = new ImagesBusiness(_configuration);
-                var response = new Response<NewsDto>();
-                var errorList = new List<string>();
-                string image;
-                var news = _unitOfWork.NewsModelRepository.GetById(id);
+            var imagesBussines = new ImagesBusiness(_configuration);
+            var response = new Response<NewsDto>();
+            var errorList = new List<string>();
+            string image;
+            var news = _unitOfWork.NewsModelRepository.GetById(id);
 
-                if (news == null)
-                {
-                    errorList.Add("This news not found");
-                    response.Data = null;
-                    response.Errors = errorList.ToArray();
-                    response.Succeeded = false;
-                    return response;
-                }
-                if (newsUpdate.Image != null)
-                {
-                    image = await imagesBussines.UploadFileAsync(newsUpdate.Image);
-                   news.Image = image;
-                }
-                if (newsUpdate.Content != null)
-                {
-                     news.Content = newsUpdate.Content;
-                }
-
-
-                if (newsUpdate.Name != null)
-                {
-                news.Name = newsUpdate.Name;
-                }
-                _unitOfWork.NewsModelRepository.Update(news);
-                await _unitOfWork.SaveChangesAsync();
-
-                var updatedNews = _unitOfWork.NewsModelRepository.GetById(id);
-                response.Data = entityMapper.NewsModeltoNewsDto(updatedNews);
-                response.Succeeded = true;
+            if (news == null)
+            {
+                errorList.Add("This news not found");
+                response.Data = null;
+                response.Errors = errorList.ToArray();
+                response.Succeeded = false;
                 return response;
             }
+            if (newsUpdate.Image != null)
+            {
+                image = await imagesBussines.UploadFileAsync(newsUpdate.Image);
+                news.Image = image;
+            }
+            if (newsUpdate.Content != null)
+            {
+                news.Content = newsUpdate.Content;
+            }
+
+
+            if (newsUpdate.Name != null)
+            {
+                news.Name = newsUpdate.Name;
+            }
+            _unitOfWork.NewsModelRepository.Update(news);
+            await _unitOfWork.SaveChangesAsync();
+
+            var updatedNews = _unitOfWork.NewsModelRepository.GetById(id);
+            response.Data = entityMapper.NewsModeltoNewsDto(updatedNews);
+            response.Succeeded = true;
+            return response;
+
+        }
+
+        public async Task<Response<NewsModel>> DeleteNews(int id)
+        {
+            var response = new Response<NewsModel>();
+            List<string> intermediate_list = new List<string>();
+            NewsModel existNews = await _unitOfWork.NewsModelRepository.GetByIdAsync(id);
+            if (existNews == null)
+            {
+                intermediate_list.Add("404");
+                response.Errors = intermediate_list.ToArray();
+                response.Data = existNews;
+                response.Succeeded = false;
+                response.Message = "This News not Found";
+                return response;
+            }
+            NewsModel entity = await _unitOfWork.NewsModelRepository.Delete(id);
+            await _unitOfWork.SaveChangesAsync();
+            intermediate_list.Add("200");
+            response.Errors = intermediate_list.ToArray();
+            response.Data = entity;
+            response.Succeeded = true;
+            response.Message = "The News was Deleted successfully";
+            return response;
         }
     }
+}
     
