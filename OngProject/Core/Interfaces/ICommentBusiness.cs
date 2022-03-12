@@ -12,5 +12,6 @@ namespace OngProject.Core.Interfaces
         List<CommentDto> GetComments();
         Task<Response<CommentModel>> DeleteComment(int id, string rol, string idUser);
         Task<Response<CommentPostDto>> Post(CommentPostDto commentPost,int id);
+        Task<Response<CommentDto>> Update(int id, CommentPutDto commentDto);
     }
 }

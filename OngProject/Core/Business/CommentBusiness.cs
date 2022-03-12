@@ -122,5 +122,33 @@ namespace OngProject.Core.Business
             }
          
         }
+
+        public async Task<Response<CommentDto>> Update(int commentId, CommentPutDto commentDto)
+        {
+            var response = new Response<CommentDto>();
+            var errorList = new List<string>();
+            var commentUpdate = _unitOfWork.CommentModelRepository.GetById(commentId);
+
+            if (commentUpdate == null)
+            {
+                errorList.Add("Comment doesn't exist");
+                response.Data = null;
+                response.Errors = errorList.ToArray();
+                response.Succeeded = false;
+                return response;
+            }
+
+
+
+            commentUpdate.Body = commentDto.Body;
+            commentUpdate.UserId = commentDto.User_Id;
+
+            _unitOfWork.CommentModelRepository.Update(commentUpdate);
+            await _unitOfWork.SaveChangesAsync();
+
+            response.Data = _entityMapper.CommentModelToCommentDto(commentUpdate);
+            response.Succeeded = true;
+            return response;
+        }
     }
 }
