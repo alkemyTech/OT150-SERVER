@@ -13,5 +13,6 @@ namespace OngProject.Repositories.Interfaces
         void Add(T entity);
         void Update(T entity);
         Task<T> Delete(int id);
+        Task<T> GetByIdAsync(int id);
     }
 }
