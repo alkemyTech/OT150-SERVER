@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using System.Linq;
 using System.Security.Claims;
@@ -68,6 +69,36 @@ namespace OngProject.Controllers
 
 
             }
+        }
+
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<IActionResult> Update(int id, [FromBody] CommentPutDto commentDto)
+        {
+            var idUser = int.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            var role = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+
+            if (ModelState.IsValid)
+            {
+
+                if (idUser == commentDto.User_Id || role.Value.Equals("Admin"))
+                {
+                    var updateResult = await _commentBusiness.Update(id, commentDto);
+
+                    if (updateResult.Errors != null)
+                    {
+                        return StatusCode(404, updateResult);
+                    }
+                    return Ok(updateResult);
+                }
+
+                return StatusCode(403, new Response<object> { Succeeded = false, Message="You don't own this comment"});
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+
         }
 
     }
