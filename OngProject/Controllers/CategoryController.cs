@@ -56,5 +56,16 @@ namespace OngProject.Controllers
             return Ok(_categoryBusiness.PostCategory(categoryPostDto));
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> CategoryDelete(int id)
+        {
+            var response = await _categoryBusiness.DeleteCategory(id);
+            if (response.Succeeded == true)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
     }
 }
