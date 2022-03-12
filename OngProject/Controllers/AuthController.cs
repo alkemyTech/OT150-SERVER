@@ -85,7 +85,7 @@ namespace OngProject.Controllers
         }
 
         [HttpPost("Login")]
-        public IActionResult Login([FromBody] UserLoginDto login)
+        public IActionResult Login([FromForm] UserLoginDto login)
         {
             if (ModelState.IsValid)
             {
