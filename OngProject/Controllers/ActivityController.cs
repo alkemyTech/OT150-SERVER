@@ -68,8 +68,7 @@ namespace OngProject.Controllers
         /// <response code="200">OK. The activity was updated.</response>        
         /// <response code="404">NotFound. The activity not found.</response>     
         ///<returns></returns>
-        [HttpPost("Activities")]
-        [Authorize]
+        
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ActivityDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ActivityDto), StatusCodes.Status404NotFound)]
