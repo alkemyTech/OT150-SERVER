@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OngProject.Core.Helper;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
-
+using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 
 namespace OngProject.Core.Business
@@ -20,7 +21,7 @@ namespace OngProject.Core.Business
             _unitOfWork = UnitOfWork;
             entityMapper = EntityMapper;
         }
-        public IEnumerable<MemberDto> GetMembers()
+        public PagedList<MemberDto> GetMembers(PaginationParams paginationParams)
         {
             var members = _unitOfWork.MemberModelRepository.GetAll();
             var membersDto = new List<MemberDto>();
@@ -29,8 +30,11 @@ namespace OngProject.Core.Business
             {
                 membersDto.Add(entityMapper.MemberListDtoMemberModel(member));
             }
-            
-            return membersDto;
+
+            var pagedMembers = PagedList<MemberDto>.Create(membersDto, paginationParams.PageNumber, paginationParams.PageSize);
+
+
+            return pagedMembers;
         }
         public async Task<Response<MemberDeleteDto>> Delete(int id)
         {
@@ -59,16 +63,8 @@ namespace OngProject.Core.Business
                 response.Succeeded = true;
                 response.Message = "The member has been successfully deleted";
 
-            }
-           
-            
+            }                    
             return response;
-            
-
-
-
-         
-
 
         }
 
