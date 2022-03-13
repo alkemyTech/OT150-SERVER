@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using System.Threading.Tasks;
 
@@ -36,7 +37,7 @@ namespace OngProject.Controllers
         [HttpPost("Activities")]
         [Authorize]
         [ProducesResponseType(typeof(EmptyResult),StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ActivityDto),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response<ActivityDto>),StatusCodes.Status200OK)]
      
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status500InternalServerError)]
         public IActionResult Activities([FromForm] ActivityDto activityBusiness)
@@ -70,8 +71,8 @@ namespace OngProject.Controllers
         ///<returns></returns>
         
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(ActivityDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ActivityDto), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Response<ActivityDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response<ActivityDto>), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(EmptyResult),StatusCodes.Status403Forbidden)]
         [Authorize(Roles="Admin")]
         [HttpPut("activities/{id}")]
