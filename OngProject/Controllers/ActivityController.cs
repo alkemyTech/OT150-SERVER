@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace OngProject.Controllers
 {
     [ApiController]
-    
+
     public class ActivityController : ControllerBase
     {
         private readonly IActivityBusiness _activityBusiness;
@@ -36,9 +36,9 @@ namespace OngProject.Controllers
         ///<returns></returns>
         [HttpPost("Activities")]
         [Authorize]
-        [ProducesResponseType(typeof(EmptyResult),StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(Response<ActivityDto>),StatusCodes.Status200OK)]
-     
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(Response<ActivityDto>), StatusCodes.Status200OK)]
+
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status500InternalServerError)]
         public IActionResult Activities([FromForm] ActivityDto activityBusiness)
         {
@@ -69,7 +69,7 @@ namespace OngProject.Controllers
         /// <response code="200">OK. The activity was updated.</response>        
         /// <response code="404">NotFound. The activity not found.</response>     
         ///<returns></returns>
-        
+
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(Response<ActivityDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Response<ActivityDto>), StatusCodes.Status404NotFound)]
