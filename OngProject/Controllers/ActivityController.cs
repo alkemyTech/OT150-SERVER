@@ -22,10 +22,10 @@ namespace OngProject.Controllers
 
         /// POST: Activities
         /// <summary>
-        /// Creates new activity
+        /// Create new activity
         /// </summary>
         /// <remarks>
-        /// Creates new activity
+        /// Create new activity
         /// </remarks>
         /// <param name="activityBusiness">Activity data transfer object.</param>
         /// <response code="401">Unauthorized.Invalid Token or it wasn't provided.</response>  
@@ -56,10 +56,10 @@ namespace OngProject.Controllers
         }
         /// POST: Activities
         /// <summary>
-        /// Actualizamos una actividad.
+        /// Update activity
         /// </summary>
         /// <remarks>
-        /// Actualizamos una actividad, la validamos y la almacenamos en la base de datos
+        /// Ask activity id, if it exists,  the activity is updated with the new data. 
         /// </remarks>
         /// <param name="id">Activity Id to update.</param>
         /// <param name="activityUpdateDto"></param>
