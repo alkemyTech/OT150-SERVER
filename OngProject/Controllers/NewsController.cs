@@ -65,5 +65,17 @@ namespace OngProject.Controllers
             }
 
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> NewsDelete(int id)
+        {
+            var response = await _newsBusiness.DeleteNews(id);
+            if (response.Succeeded == true)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
     }
 }

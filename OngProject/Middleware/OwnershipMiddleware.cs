@@ -23,13 +23,13 @@ namespace OngProject.Middleware
                 var role = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
                 var claimId = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
                 var paramId = context.Request.Path.Value.Split("/");
-                if (paramId != null && paramId[2] != "")
+                if (paramId != null && paramId[1] != "")
                 {
                     var excludePaths = new List<string>() { "/users" };
                     var currentPath = context.Request.Path.ToString();
                     if (excludePaths.Contains(currentPath.Substring(0, currentPath.LastIndexOf("/"))))
                     {
-                        if (Int32.Parse(claimId.Value) != Int32.Parse(paramId[2]) && !role.Value.Equals("Admin"))
+                        if (Int32.Parse(claimId.Value) != Int32.Parse(paramId[1]) && !role.Value.Equals("Admin"))
                         {
                             context.Response.StatusCode = 403;
                             return;

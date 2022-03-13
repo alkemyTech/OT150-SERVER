@@ -27,6 +27,10 @@ namespace OngProject.Repositories
         {
             return _entities.FirstOrDefault(x => x.Id == id && x.SoftDelete == true);
         }
+        public async Task<T> GetByIdAsync(int id)
+        {
+            return await _entities.FirstOrDefaultAsync(x => x.Id == id && x.SoftDelete == true);
+        }
         public void Add(T entity)
         {
             _entities.AddAsync(entity);

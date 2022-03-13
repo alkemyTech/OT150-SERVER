@@ -91,7 +91,31 @@ namespace OngProject.Core.Business
                 response.Data = entityMapper.NewsModeltoNewsDto(updatedNews);
                 response.Succeeded = true;
                 return response;
+        }
+
+        public async Task<Response<NewsModel>> DeleteNews(int id)
+        {
+            var response = new Response<NewsModel>();
+            List<string> intermediate_list = new List<string>();
+            NewsModel existNews = await _unitOfWork.NewsModelRepository.GetByIdAsync(id);
+            if (existNews == null)
+            {
+                intermediate_list.Add("404");
+                response.Errors = intermediate_list.ToArray();
+                response.Data = existNews;
+                response.Succeeded = false;
+                response.Message = "This News not Found";
+                return response;
             }
+            NewsModel entity = await _unitOfWork.NewsModelRepository.Delete(id);
+            await _unitOfWork.SaveChangesAsync();
+            intermediate_list.Add("200");
+            response.Errors = intermediate_list.ToArray();
+            response.Data = entity;
+            response.Succeeded = true;
+            response.Message = "The News was Deleted successfully";
+            return response;
         }
     }
+}
     

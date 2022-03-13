@@ -53,5 +53,29 @@ namespace OngProject.Core.Business
             response.Message = "The Category was Posted successfully";
             return response;
         }
+
+        public async Task<Response<CategorieModel>> DeleteCategory(int id)
+        {
+            var response = new Response<CategorieModel>();
+            List<string> intermediate_list = new List<string>();
+            CategorieModel existCategory = await _unitOfWork.CategorieModelRepository.GetByIdAsync(id);
+            if (existCategory == null)
+            {
+                intermediate_list.Add("404");
+                response.Errors = intermediate_list.ToArray();
+                response.Data = existCategory;
+                response.Succeeded = false;
+                response.Message = "This Category not Found";
+                return response;
+            }
+            CategorieModel entity = await _unitOfWork.CategorieModelRepository.Delete(id);
+            await _unitOfWork.SaveChangesAsync();
+            intermediate_list.Add("200");
+            response.Errors = intermediate_list.ToArray();
+            response.Data = entity;
+            response.Succeeded = true;
+            response.Message = "The Comment was Deleted successfully";
+            return response;
+        }
     }
 }

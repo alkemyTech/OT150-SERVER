@@ -21,5 +21,6 @@ namespace OngProject.Repositories.Interfaces
              int? page = null,
              int? pageSize = null);
         Task<int> Count();
+        Task<T> GetByIdAsync(int id);
     }
 }
