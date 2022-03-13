@@ -37,7 +37,7 @@ namespace OngProject.Controllers
         [Authorize]
         [ProducesResponseType(typeof(EmptyResult),StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ActivityDto),StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ActivityDto),StatusCodes.Status404NotFound)]
+     
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status500InternalServerError)]
         public IActionResult Activities([FromForm] ActivityDto activityBusiness)
         {
