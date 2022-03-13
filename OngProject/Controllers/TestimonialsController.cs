@@ -27,6 +27,20 @@ namespace OngProject.Controllers
             _unitOfWork = unitOfWork;
             _testimonialsBussines = testimonialsBussines;
         }
+
+        /// POST: Testimonials
+        /// <summary>
+        /// Creates new testimonial
+        /// </summary>
+        /// <remarks>
+        /// Creates new testimonial
+        /// </remarks>
+        /// <param name="testimonialsBussines">Testimonials data transfer object.</param>
+        /// <response code="401">Unauthorized.Invalid Token or it wasn't provided.</response>  
+        /// <response code="500">Server Error.</response>  
+        /// <response code="200">OK. The activity was created.</response>        
+
+        ///<returns></returns>
         [Authorize(Roles="Admin")]
         [HttpPost("Testimonials/Post")]
         public async Task<IActionResult> Post([FromForm]TestimonialsPostDto testimonialPostDto)
@@ -41,7 +55,19 @@ namespace OngProject.Controllers
             }
         }
 
-
+        /// DELETE: Testimonials
+        /// <summary>
+        /// Deletes a testimonial
+        /// </summary>
+        /// <remarks>
+        /// Validates the existence of the member and deletes it 
+        /// </remarks>
+        /// <param name="id">Testimonial Id to delete.</param>
+        /// <param name="testimonialsPutDto"></param>
+        /// <response code="401">Unauthorized. Invalid Token or it wasn't provided.</response>  
+        ///<response code="403">Unauthorized. Your role doesn't allow you to update testimonials.</response>
+        /// <response code="200">OK. The testimonial was deleted.</response>        
+        /// <response code="404">NotFound. The testimonial was not found.</response>     
         [Authorize(Roles = "Admin")]
         [HttpDelete("Delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
@@ -51,6 +77,20 @@ namespace OngProject.Controllers
             return Ok(await _testimonialsBussines.Delete(id, rol, idUser));
         }
 
+        /// PUT: Testimonials
+        /// <summary>
+        /// Updates a testimonial
+        /// </summary>
+        /// <remarks>
+        /// Update testimonial, validate and store in the database
+        /// </remarks>
+        /// <param name="id">Testimonial Id to update.</param>
+        /// <param name="testimonialsPutDto"></param>
+        /// <response code="401">Unauthorized. Invalid Token or it wasn't provided.</response>  
+        ///<response code="403">Unauthorized. Your role doesn't allow you to update testimonials.</response>
+        /// <response code="200">OK. The testimonial was updated.</response>        
+        /// <response code="404">NotFound. The testimonial was not found.</response>     
+        ///<returns></returns>
         [Authorize(Roles = "Admin")]
         [HttpPut("public")]
         public IActionResult Put(TestimonialsPutDto testimonialsPutDto)
