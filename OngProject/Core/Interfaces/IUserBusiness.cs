@@ -17,5 +17,6 @@ namespace OngProject.Core.Interfaces
         UserLoginToDisplayDto Login(string email, string password);
         UserDto GetById(int id);
         Task<Response<UserDto>> DeleteUser(int id);
+        Task<Response<UserDto>> UpdateUser(int id, UserUpdateDto userUpdate);
     }
 }
