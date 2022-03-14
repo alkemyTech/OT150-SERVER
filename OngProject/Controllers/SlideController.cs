@@ -18,6 +18,7 @@ namespace OngProject.Controllers
         }
 
 
+        
         [HttpGet("{id:int}")]
         public ActionResult Get(int id)
         {
@@ -32,6 +33,31 @@ namespace OngProject.Controllers
         {
             return Ok(_slideBusiness.GetSlides());
         }
+        [HttpPost]
+        [Authorize(Roles="Admin")]
+        public async Task<IActionResult> Post([FromForm] SlidePostDto slidePostDto)
+        {
+
+           
+            if (ModelState.IsValid)
+            {
+                var response = await _slideBusiness.Post(slidePostDto);
+                if (response.Errors != null)
+                {
+                    if (response.Errors[0].Equals("The organization not found"))
+                    {
+                        return StatusCode(404, response);
+                    }
+                    return StatusCode(400, response);
+                }
+                return Ok(response);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+        }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id,[FromForm] SlidePutDto slideDto)
