@@ -37,7 +37,9 @@ namespace OngProject.Repositories
         }
         public void Update(T entity)
         {
+            entity.LastModified = DateTime.Now;
             _entities.Update(entity);
+          
         }
 
         public async Task<T> Delete(int id)

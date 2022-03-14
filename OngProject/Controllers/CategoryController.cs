@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.Repositories.Interfaces;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace OngProject.Controllers
@@ -12,28 +15,44 @@ namespace OngProject.Controllers
     public class CategoryController : Controller
     {
         private readonly ICategoryBussines _categoryBusiness;
-
-        public CategoryController(ICategoryBussines categoryBussines)
+ 
+        private readonly IUriService _uriService;
+        public CategoryController(ICategoryBussines categoryBussines, IUriService uriService)
         {
             _categoryBusiness = categoryBussines;
+     
+            _uriService = uriService;
+
         }
 
         [HttpGet("ListaCategorias")]
-        public IActionResult ListaCategorias()
+        [Authorize(Roles ="Admin")]
+        public IActionResult ListaCategorias([FromQuery] PaginationParams paginationParams)
         {
+            var category = _categoryBusiness.GetCategories(paginationParams);
 
-            try
+            var metadata = new Metadata
             {
+                TotalCount = category.TotalCount,
+                PageSize = category.PageSize,
+                CurrentPage = category.CurrentPage,
+                TotalPages = category.TotalPages,
+                HasNextPage = category.HasNextPage,
+                HasPreviousPage = category.HasPreviousPage,
+                NextPageUrl = _uriService.GetNextPage(paginationParams, "Categories").ToString(),
+                PreviousPageUrl = _uriService.GetPreviousPage(paginationParams, "Categories").ToString()
+            };
 
-                return Ok(_categoryBusiness.GetCategories());
-
-            }
-
-            catch
+            var response = new PaginationResponse<IEnumerable<CategorieDto>>(category)
             {
-                return BadRequest();
-            }
+                Meta = metadata
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+
+            return Ok(response);
         }
+
 
         [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
