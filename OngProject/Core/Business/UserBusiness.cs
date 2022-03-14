@@ -155,6 +155,50 @@ namespace OngProject.Core.Business
 
             return response;
         }
+
+        public async Task<Response<UserDto>> UpdateUser(int id, UserUpdateDto userUpdate)
+        {
+            var imagesBussines = new ImagesBusiness(_configuration);
+            var response = new Response<UserDto>();
+            var errorList = new List<string>();
+            string photo;
+            var User = await _unitOfWork.UserModelRepository.GetByIdAsync(id);
+
+            if (User == null)
+            {
+                errorList.Add("404");
+                response.Data = null;
+                response.Errors = errorList.ToArray();
+                response.Succeeded = false;
+                return response;
+            }
+            if (userUpdate.Photo != null)
+            {
+                photo = await imagesBussines.UploadFileAsync(userUpdate.Photo);
+                User.Photo = photo;
+            }
+            if (userUpdate.FirstName != null)
+            {
+                User.FirstName = userUpdate.FirstName;
+            }
+            if (userUpdate.LastName != null)
+            {
+                User.LastName = userUpdate.LastName;
+            }
+            if (userUpdate.Password != null)
+            {
+                var encrypted = _encryptHelper.EncryptPassSha256(userUpdate.Password);
+                User.Password = encrypted;
+            }
+            _unitOfWork.UserModelRepository.Update(User);
+            await _unitOfWork.SaveChangesAsync();
+
+            var user = await _unitOfWork.UserModelRepository.GetByIdAsync(id);
+            var userDto = entityMapper.UserListDtoUserModel(user);
+            response.Data = userDto;
+            response.Succeeded = true;
+            return response;
+        }
     }
 
 }

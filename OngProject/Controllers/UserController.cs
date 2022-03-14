@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using OngProject.Core.Business;
 using OngProject.Core.Interfaces;
+using OngProject.Core.Models;
+using OngProject.Core.Models.DTOs;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -39,21 +41,14 @@ namespace OngProject.Controllers
 
         public async Task<IActionResult> Lista()
         {
-
             try
             {
-
                 return Ok(_userBusiness.GetUsuarios());
-
             }
-
             catch
             {
                 return BadRequest();
             }
-
-
-
         }
       
 
@@ -80,6 +75,32 @@ namespace OngProject.Controllers
                 return StatusCode(404, response);
             }
             return Ok(response);
+        }
+
+        [Authorize]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromForm] UserUpdateDto userUpdateDto)
+        {
+            var idUser = int.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            var role = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+            if (ModelState.IsValid)
+            {
+                if (idUser == id || role.Value.Equals("Admin"))
+                {
+                    var updateResult = await _userBusiness.UpdateUser(id, userUpdateDto);
+
+                    if (updateResult.Succeeded != true)
+                    {
+                        return StatusCode(404, updateResult);
+                    }
+                    return Ok(updateResult);
+                }
+                return StatusCode(403, new Response<object> { Succeeded = false, Message = "You can't edit this User" });
+                }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
     }
 }
