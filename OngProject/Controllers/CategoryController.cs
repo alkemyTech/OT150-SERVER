@@ -65,7 +65,27 @@ namespace OngProject.Controllers
             {
                 return Ok(response);
             }
-            return BadRequest(response);
+            return StatusCode(404, response);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromForm] CategoryUpdateDto categoryUpdateDto)
+        {
+            var updatedCategory = await _categoryBusiness.UpdateCategory(id, categoryUpdateDto);
+            if (ModelState.IsValid)
+            {
+                if (updatedCategory.Succeeded == true)
+                {
+                    return Ok(updatedCategory);
+                }
+                return StatusCode(404, updatedCategory);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+
         }
     }
 }
