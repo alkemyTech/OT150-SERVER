@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using OngProject.Core.Helper;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
@@ -24,7 +25,7 @@ namespace OngProject.Core.Business
             _configuration = configuration;
         }
 
-        public List<CategorieDto> GetCategories()
+        public PagedList<CategorieDto> GetCategories(PaginationParams paginationParams)
         {
             var categorias = _unitOfWork.CategorieModelRepository.GetAll();
             var categoriasDto = new List<CategorieDto>();
@@ -33,7 +34,10 @@ namespace OngProject.Core.Business
                 categoriasDto.Add(entityMapper.CategorieListDtoCategorieModel(c));
             }
 
-            return categoriasDto;
+            var pagedCategories = PagedList<CategorieDto>.Create(categoriasDto, paginationParams.PageNumber, paginationParams.PageSize);
+
+
+            return pagedCategories;
         }
 
         public CategoryGetDto GetCategory(int id)

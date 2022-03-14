@@ -78,11 +78,7 @@ namespace OngProject.Core.Business
             userRegisterDto.Password = _encryptHelper.EncryptPassSha256(userRegisterDto.Password);
 
 
-            if (userRegisterDto.RoleId != 1 && userRegisterDto.RoleId != 2)
-
-            {
-                userRegisterDto.RoleId = 2;
-            }
+           
             var user = entityMapper.UserRegisterDtoToUserModel(userRegisterDto);
             if (userRegisterDto.Photo != null)
             {

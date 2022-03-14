@@ -23,6 +23,9 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+
 namespace OngProject
 {
     public class Startup
@@ -69,6 +72,15 @@ namespace OngProject
 
             services.AddAWSService<IAmazonS3>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IUriService>(provider =>
+            {
+                var accesor = provider.GetRequiredService<IHttpContextAccessor>();
+                var request = accesor.HttpContext.Request;
+                var absoluteUri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
+                return new UriService(absoluteUri);
+            });
+
             services.AddScoped<IUserBusiness, UserBusiness>();
             services.AddScoped<ICategoryBussines, CategoryBussines>();
             services.AddScoped<INewsBusiness, NewsBusiness>();
@@ -85,7 +97,7 @@ namespace OngProject
             services.AddTransient<ISlideBusiness, SlideBusiness>();
             services.AddScoped<IActivityBusiness, ActivityBusiness>();
             services.AddScoped<ITestimonialsBussines, TestimonialsBusiness>();
-
+         
             services.AddControllers();
             services.AddDbContext<OngContext>();
             services.Configure<JwtConfig>(Configuration.GetSection("JWT"));

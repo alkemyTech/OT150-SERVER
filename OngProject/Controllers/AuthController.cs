@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
+using OngProject.Repositories.Interfaces;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -14,12 +15,14 @@ namespace OngProject.Controllers
     {
         private readonly IUserBusiness _userBusiness;
         private readonly IJwtHelper _jwtHelper;
+        private readonly IUnitOfWork _unitOfWork;
 
 
-        public AuthController(IUserBusiness userBusiness, IJwtHelper jwtHelper)
+        public AuthController(IUserBusiness userBusiness, IJwtHelper jwtHelper, IUnitOfWork unitOfWork)
         {
             this._userBusiness = userBusiness;
             _jwtHelper = jwtHelper;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPost("Register")]
@@ -31,14 +34,16 @@ namespace OngProject.Controllers
 
                 if (_userBusiness.ValidationEmail(userRegisterDto.Email))
                 {
-                    var user = await _userBusiness.Register(userRegisterDto);
+                    var userDto = await _userBusiness.Register(userRegisterDto);
 
+                    var users = await _unitOfWork.UserModelRepository.FindAllAsync();
+                    var user = users.Where(x => x.Email == userDto.Email).FirstOrDefault();
                     var tokenParameter = new TokenParameter
 
                     {
                         Email = user.Email,
                         Id = user.Id,
-                        Role = user.Role
+                        Role = userDto.Role
                     };
 
                     var token = _jwtHelper.GenerateJwtToken(tokenParameter);                

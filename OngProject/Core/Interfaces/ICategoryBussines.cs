@@ -1,4 +1,5 @@
-﻿using OngProject.Core.Models;
+﻿using OngProject.Core.Helper;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using System;
@@ -10,7 +11,7 @@ namespace OngProject.Core.Interfaces
 {
     public interface ICategoryBussines
     {
-        List<CategorieDto> GetCategories();
+        public PagedList<CategorieDto> GetCategories(PaginationParams paginationParams);
         CategoryGetDto GetCategory(int id);
         Response<CategorieModel> PostCategory(CategoryPostDto categoryPostDto);
         Task<Response<CategorieModel>> DeleteCategory(int id);
