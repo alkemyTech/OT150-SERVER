@@ -1,4 +1,5 @@
-﻿using OngProject.Core.Interfaces;
+﻿using Microsoft.Extensions.Configuration;
+using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
@@ -15,10 +16,12 @@ namespace OngProject.Core.Business
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly EntityMapper entityMapper = new EntityMapper();
+        private readonly IConfiguration _configuration;
 
-        public CategoryBussines(IUnitOfWork unitOfWork)
+        public CategoryBussines(IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
+            _configuration = configuration;
         }
 
         public List<CategorieDto> GetCategories()
@@ -75,6 +78,45 @@ namespace OngProject.Core.Business
             response.Data = entity;
             response.Succeeded = true;
             response.Message = "The Comment was Deleted successfully";
+            return response;
+        }
+
+        public async Task<Response<CategorieModel>> UpdateCategory(int id, CategoryUpdateDto categoryUpdate)
+        {
+            var imagesBussines = new ImagesBusiness(_configuration);
+            var response = new Response<CategorieModel>();
+            var errorList = new List<string>();
+            string image;
+            var category = await _unitOfWork.CategorieModelRepository.GetByIdAsync(id);
+
+            if (category == null)
+            {
+                errorList.Add("404");
+                response.Data = null;
+                response.Errors = errorList.ToArray();
+                response.Succeeded = false;
+                return response;
+            }
+            if (categoryUpdate.Image != null)
+            {
+                image = await imagesBussines.UploadFileAsync(categoryUpdate.Image);
+                category.Image = image;
+            }
+            if (categoryUpdate.NameCategorie != null)
+            {
+                category.NameCategorie = categoryUpdate.NameCategorie;
+            }
+
+            if (categoryUpdate.DescriptionCategorie != null)
+            {
+                category.DescriptionCategorie = categoryUpdate.DescriptionCategorie;
+            }
+            _unitOfWork.CategorieModelRepository.Update(category);
+            await _unitOfWork.SaveChangesAsync();
+
+            var updatedCategory = await _unitOfWork.CategorieModelRepository.GetByIdAsync(id);
+            response.Data = updatedCategory;
+            response.Succeeded = true;
             return response;
         }
     }
