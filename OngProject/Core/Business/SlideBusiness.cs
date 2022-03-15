@@ -23,7 +23,7 @@ namespace OngProject.Core.Business
         private readonly EntityMapper _entityMapper;
         private readonly IConfiguration _configuration;
         private readonly ImagesBusiness _imagesBusiness;
-        
+
 
         public SlideBusiness(IUnitOfWork unitOfWork, EntityMapper entityMapper, IConfiguration configuration, ImagesBusiness imagesBusiness)
         {
@@ -31,7 +31,7 @@ namespace OngProject.Core.Business
             _entityMapper = entityMapper;
             _configuration = configuration;
             _imagesBusiness = imagesBusiness;
-           
+
         }
 
 
@@ -54,11 +54,11 @@ namespace OngProject.Core.Business
             }
             return slidesDto;
         }
-        public async Task<Response<SlideDtoToDisplay>>Post(SlidePostDto slidePostDto)
+        public async Task<Response<SlideDtoToDisplay>> Post(SlidePostDto slidePostDto)
         {
             var slide = new SlideModel();
             var response = new Response<SlideDtoToDisplay>();
-        
+
             var errores = new List<string>();
             var organizations = _unitOfWork.OrganizationModelRepository.GetAll();
 
@@ -73,17 +73,17 @@ namespace OngProject.Core.Business
 
             }
             slide = _entityMapper.SlidePostDtoToSlideModel(slidePostDto);
-            if (slidePostDto.Order == 0 || slidePostDto.Order==null)
+            if (slidePostDto.Order == 0 || slidePostDto.Order == null)
             {
-                var last=_unitOfWork.SlideModelRepository.GetAll().Last();
-              
+                var last = _unitOfWork.SlideModelRepository.GetAll().Last();
+
                 slide.Order = last.Order + 1;
             }
 
-        
-            
-           
-            
+
+
+
+
             try
             {
                 if (slidePostDto.Image != null)
@@ -102,7 +102,7 @@ namespace OngProject.Core.Business
                 return response;
             }
             _unitOfWork.SlideModelRepository.Add(slide);
-           await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
             response.Data = _entityMapper.SlideModelToSlideDtoToDisplay(slide);
             response.Succeeded = true;
             response.Message = "The slide was created";
@@ -138,7 +138,7 @@ namespace OngProject.Core.Business
 
             _unitOfWork.SlideModelRepository.Update(slideUpdate);
             await _unitOfWork.SaveChangesAsync();
-            
+
             response.Data = _entityMapper.SlideModelToSlideDto(slideUpdate);
             response.Succeeded = true;
             return response;
@@ -174,6 +174,8 @@ namespace OngProject.Core.Business
             }
             return response;
 
+            
+        }
         private async Task<string> UploadBase64ImageToBucket(string base64)
         {
             string newName = $"{Guid.NewGuid()}_user";
@@ -191,18 +193,17 @@ namespace OngProject.Core.Business
                 Name = newName
             };
             byte[] imageBinaryFile = Convert.FromBase64String(fileContents);
-    
+
             MemoryStream stream = new MemoryStream(imageBinaryFile);
-            
+
             IFormFile file = new FormFile(stream, 0, imageBinaryFile.Length, formFileModel.Name, formFileModel.FileName)
             {
                 Headers = new HeaderDictionary(),
                 ContentType = formFileModel.ContentType
             };
-           
+
             return await _imagesBusiness.UploadFileAsync(file);
 
         }
     }
 }
-
