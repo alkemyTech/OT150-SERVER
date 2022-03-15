@@ -57,13 +57,9 @@ namespace OngProject.Core.Business
         {
             var slide = new SlideModel();
             var response = new Response<SlideDtoToDisplay>();
+        
             var errores = new List<string>();
             var organizations = _unitOfWork.OrganizationModelRepository.GetAll();
-            if (slidePostDto.Order == 0)
-            {
-                var last=_unitOfWork.SlideModelRepository.GetAll().Last();
-                slidePostDto.Order = last.Id+1;
-            }
 
             if (!organizations.Any(x => x.Id == slidePostDto.OrganizationId))
             {
@@ -75,9 +71,18 @@ namespace OngProject.Core.Business
                 return response;
 
             }
-            
             slide = _entityMapper.SlidePostDtoToSlideModel(slidePostDto);
-            slide.Order = slidePostDto.Order;
+            if (slidePostDto.Order == 0 || slidePostDto.Order==null)
+            {
+                var last=_unitOfWork.SlideModelRepository.GetAll().Last();
+              
+                slide.Order = last.Order + 1;
+            }
+
+        
+            
+           
+            
             try
             {
                 if (slidePostDto.Image != null)
