@@ -1,13 +1,19 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
+
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace OngProject.Core.Business
 {
@@ -16,11 +22,16 @@ namespace OngProject.Core.Business
         private readonly IUnitOfWork _unitOfWork;
         private readonly EntityMapper _entityMapper;
         private readonly IConfiguration _configuration;
-        public SlideBusiness(IUnitOfWork unitOfWork, EntityMapper entityMapper, IConfiguration configuration)
+        private readonly ImagesBusiness _imagesBusiness;
+        
+
+        public SlideBusiness(IUnitOfWork unitOfWork, EntityMapper entityMapper, IConfiguration configuration, ImagesBusiness imagesBusiness)
         {
             _unitOfWork = unitOfWork;
             _entityMapper = entityMapper;
             _configuration = configuration;
+            _imagesBusiness = imagesBusiness;
+           
         }
 
 
@@ -43,7 +54,57 @@ namespace OngProject.Core.Business
             }
             return slidesDto;
         }
+        public async Task<Response<SlideDtoToDisplay>>Post(SlidePostDto slidePostDto)
+        {
+            var slide = new SlideModel();
+            var response = new Response<SlideDtoToDisplay>();
+            var errores = new List<string>();
+            var organizations = _unitOfWork.OrganizationModelRepository.GetAll();
+            if (slidePostDto.Order == 0)
+            {
+                var last=_unitOfWork.SlideModelRepository.GetAll().Last();
+                slidePostDto.Order = last.Id+1;
+            }
 
+            if (!organizations.Any(x => x.Id == slidePostDto.OrganizationId))
+            {
+                errores.Add("The organization not found");
+                response.Errors = errores.ToArray();
+                response.Succeeded = false;
+                response.Message = "The slide was not created";
+                response.Data = null;
+                return response;
+
+            }
+            
+            slide = _entityMapper.SlidePostDtoToSlideModel(slidePostDto);
+            slide.Order = slidePostDto.Order;
+            try
+            {
+                if (slidePostDto.Image != null)
+                {
+                    slide.ImageUrl = await UploadBase64ImageToBucket(slidePostDto.Image);
+                }
+            }
+            catch (Exception ex)
+            {
+                errores.Add(ex.ToString());
+                response.Data = null;
+                response.Errors = errores.ToArray();
+                response.Succeeded = false;
+                response.Message = "The slide was not created.";
+
+                return response;
+            }
+            _unitOfWork.SlideModelRepository.Add(slide);
+           await _unitOfWork.SaveChangesAsync();
+            response.Data = _entityMapper.SlideModelToSlideDtoToDisplay(slide);
+            response.Succeeded = true;
+            response.Message = "The slide was created";
+            response.Errors = null;
+            return response;
+
+        }
         public async Task<Response<SlideDto>> Update(int id, SlidePutDto slideDto)
         {
             var imagesBussines = new ImagesBusiness(_configuration);
@@ -77,6 +138,7 @@ namespace OngProject.Core.Business
             response.Succeeded = true;
             return response;
         }
+
         public async Task<Response<SlideDtoToDisplay>> Delete(int id)
         {
             var slides = _unitOfWork.SlideModelRepository.GetAll();
@@ -106,6 +168,35 @@ namespace OngProject.Core.Business
 
             }
             return response;
+
+        private async Task<string> UploadBase64ImageToBucket(string base64)
+        {
+            string newName = $"{Guid.NewGuid()}_user";
+
+            int indexOfSemiColon = base64.IndexOf(";", StringComparison.OrdinalIgnoreCase);
+            string dataLabel = base64.Substring(0, indexOfSemiColon);
+            string contentType = dataLabel.Split(':').Last();
+            var startIndex = base64.IndexOf("base64,", StringComparison.OrdinalIgnoreCase) + 7;
+            var fileContents = base64.Substring(startIndex);
+
+            var formFileModel = new FormFileModel()
+            {
+                FileName = newName,
+                ContentType = contentType,
+                Name = newName
+            };
+            byte[] imageBinaryFile = Convert.FromBase64String(fileContents);
+    
+            MemoryStream stream = new MemoryStream(imageBinaryFile);
+            
+            IFormFile file = new FormFile(stream, 0, imageBinaryFile.Length, formFileModel.Name, formFileModel.FileName)
+            {
+                Headers = new HeaderDictionary(),
+                ContentType = formFileModel.ContentType
+            };
+           
+            return await _imagesBusiness.UploadFileAsync(file);
+
         }
     }
 }

@@ -90,14 +90,14 @@ namespace OngProject
             services.AddScoped<EntityMapper>();
             services.AddScoped<IContact, ContactBusiness>();
             services.AddScoped<IMembers, MemberBusiness>();
-            services.AddScoped<EntityMapper>();
-            services.AddScoped<EntityMapper>();
+            services.AddScoped<ImagesBusiness>();
+          
             services.AddScoped<OrganizationBusiness>();
             services.AddTransient<ICommentBusiness, CommentBusiness>();
-            services.AddTransient<ISlideBusiness, SlideBusiness>();
+            services.AddScoped<ISlideBusiness, SlideBusiness>();
             services.AddScoped<IActivityBusiness, ActivityBusiness>();
             services.AddScoped<ITestimonialsBussines, TestimonialsBusiness>();
-         
+           
             services.AddControllers();
             services.AddDbContext<OngContext>();
             services.Configure<JwtConfig>(Configuration.GetSection("JWT"));
