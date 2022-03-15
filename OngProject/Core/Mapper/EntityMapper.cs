@@ -77,6 +77,19 @@ namespace OngProject.Core.Mapper
 
             };
         }
+
+        public MemberModel MemberDtoToMemberModel(MemberDto memberDto)
+        {
+            return new MemberModel()
+            {
+                Name = memberDto.Name,
+                FacebookUrl = memberDto.FacebookUrl,
+                InstagramUrl = memberDto.InstagramUrl,
+                LinkedinUrl = memberDto.LinkedinUrl,
+                Description = memberDto.Description
+            };
+        }
+
         public MemberDeleteDto MemberModelToMemberDeleteDto(MemberModel memberDto)
         {
             return new MemberDeleteDto()
