@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Business;
 using OngProject.Core.Interfaces;
@@ -39,8 +40,10 @@ namespace OngProject.Controllers
         /// <response code="401">Unauthorized.Invalid Token or it wasn't provided.</response>  
         /// <response code="500">Server Error.</response>  
         /// <response code="200">OK. The activity was created.</response>        
-
         ///<returns></returns>
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(Response<ActivityDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status500InternalServerError)]
         [Authorize(Roles="Admin")]
         [HttpPost("Testimonials/Post")]
         public async Task<IActionResult> Post([FromForm]TestimonialsPostDto testimonialPostDto)
@@ -91,6 +94,10 @@ namespace OngProject.Controllers
         /// <response code="200">OK. The testimonial was updated.</response>        
         /// <response code="404">NotFound. The testimonial was not found.</response>     
         ///<returns></returns>
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(Response<ActivityDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response<ActivityDto>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status403Forbidden)]
         [Authorize(Roles = "Admin")]
         [HttpPut("public")]
         public IActionResult Put(TestimonialsPutDto testimonialsPutDto)
