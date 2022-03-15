@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
+using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -25,8 +27,17 @@ namespace OngProject.Controllers
 
         }
 
+        /// GET: Category
+        /// <summary>
+        /// Get a category List.
+        /// </summary>
+        /// <remarks>
+        /// Get a category List
+        /// </remarks>
+        /// <response code="200">OK. The Category was created.</response>
         [HttpGet("ListaCategorias")]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(List<CategorieDto>), StatusCodes.Status200OK)]
         public IActionResult ListaCategorias([FromQuery] PaginationParams paginationParams)
         {
             var category = _categoryBusiness.GetCategories(paginationParams);
@@ -53,9 +64,24 @@ namespace OngProject.Controllers
             return Ok(response);
         }
 
-
+        /// GET: Category/5
+        /// <summary>
+        /// Get a category by its ID
+        /// </summary>
+        /// <remarks>
+        /// Get a category by its ID
+        /// </remarks>
+        /// <param name="id">Id of the category to get</param>
+        /// <response code="401">Unauthorized.Invalid Token or it wasn't provided.</response>
+        /// <response code="403">Unauthorized. Your role doesn't allow you to get the category.</response>
+        /// <response code="200">OK. The Category was created.</response>        
+        /// <response code="404">NotFound. The category not found.</response> 
         [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(CategoryGetDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status404NotFound)]
         public IActionResult GetCategory(int id)
         {
             try
@@ -68,13 +94,49 @@ namespace OngProject.Controllers
             }
         }
 
+        /// POST: Category
+        /// <summary>
+        /// Create new category
+        /// </summary>
+        /// <remarks>
+        /// Create new category
+        /// </remarks>
+        /// <param name="CategoryPostDto">Category data transfer object.</param>
+        /// <response code="401">Unauthorized.Invalid Token or it wasn't provided.</response>
+        /// <response code="403">Unauthorized. Your role doesn't allow you to update categories.</response>
+        /// <response code="500">Server Error.</response>  
+        /// <response code="200">OK. The Category was created.</response>
+        ///<returns></returns>
         [Authorize(Roles = "Admin")]
         [HttpPost]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(Response<CategorieModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status500InternalServerError)]
         public IActionResult CategoryPost(CategoryPostDto categoryPostDto)
         {
             return Ok(_categoryBusiness.PostCategory(categoryPostDto));
         }
 
+        /// DELETE: Category/5
+        /// <summary>
+        /// Delete category
+        /// </summary>
+        /// <remarks>
+        /// Ask category id, if it exists,  the category is deleted. 
+        /// </remarks>
+        /// <param name="id">Category Id to delete.</param>
+        /// <response code="401">Unauthorized. Invalid Token or it wasn't provided.</response>  
+        /// <response code="403">Unauthorized. Your role doesn't allow you to delete categories.</response>
+        /// <response code="200">OK. The category was deleted.</response>        
+        /// <response code="404">NotFound. The delete not found.</response>     
+        /// <response code="500">Server Error.</response>
+        ///<returns></returns>
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(Response<CategorieModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response<CategorieModel>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status500InternalServerError)]
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> CategoryDelete(int id)
@@ -87,6 +149,26 @@ namespace OngProject.Controllers
             return StatusCode(404, response);
         }
 
+        /// PUT: Category/5
+        /// <summary>
+        /// Update category
+        /// </summary>
+        /// <remarks>
+        /// Ask category id, if it exists,  the category is updated with the new data. 
+        /// </remarks>
+        /// <param name="id">Category Id to update.</param>
+        /// <param name="categoryUpdateDto"></param>
+        /// <response code="401">Unauthorized. Invalid Token or it wasn't provided.</response>  
+        /// <response code="403">Unauthorized. Your role doesn't allow you to update categories.</response>
+        /// <response code="200">OK. The category was updated.</response>        
+        /// <response code="404">NotFound. The category not found.</response>     
+        /// <response code="500">Server Error.</response>
+        ///<returns></returns>
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(Response<CategorieModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response<CategorieModel>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status500InternalServerError)]
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromForm] CategoryUpdateDto categoryUpdateDto)
