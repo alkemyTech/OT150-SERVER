@@ -20,14 +20,14 @@ namespace OngProject.Middleware
             var method = context.Request.Method;
             List<string> paths = new List<string>();
             paths.Add("/activities");
-            paths.Add("/categories");
+            paths.Add("/category");
             paths.Add("/news");
-            paths.Add("/organizations");
+            paths.Add("/organization");
             paths.Add("/testimonials");
             string path = context.Request.Path;
             if (methods.Contains(method.ToLower()) && paths.Contains(path.ToLower()))
             {
-                if (!context.User.IsInRole("Administrator"))
+                if (!context.User.IsInRole("Admin"))
                 {
                     context.Response.StatusCode = 401;
                     return;
