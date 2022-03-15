@@ -185,6 +185,27 @@ namespace OngProject.Core.Mapper
             };
 
         }
+        public SlideModel SlidePostDtoToSlideModel(SlidePostDto slidePostDto)
+        {
+            return new SlideModel()
+            {
+                Text=slidePostDto.Text,
+           
+                LastModified= DateTime.Now,
+                OrganizationId=slidePostDto.OrganizationId,
+                SoftDelete=true
+            };
+
+        }
+        public SlideDtoToDisplay SlideModelToSlideDtoToDisplay(SlideModel slideModel)
+        {
+            return new SlideDtoToDisplay()
+            {
+                Image=slideModel.ImageUrl,
+                Order=slideModel.Order
+            };
+
+        }
         public SlideDtoToDisplay SlideDtoToSlideDtoToDisplay(SlideDto slideDto)
         {
             return new SlideDtoToDisplay()
