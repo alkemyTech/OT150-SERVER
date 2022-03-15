@@ -32,7 +32,6 @@ namespace OngProject.Controllers
         /// <response code="401">Unauthorized.Invalid Token or it wasn't provided.</response>  
         /// <response code="500">Server Error.</response>  
         /// <response code="200">OK. The activity was created.</response>        
-
         ///<returns></returns>
         [HttpPost("Activities")]
         [Authorize]
@@ -55,6 +54,7 @@ namespace OngProject.Controllers
             }
 
         }
+
         /// POST: Activities
         /// <summary>
         /// Update activity
@@ -69,7 +69,6 @@ namespace OngProject.Controllers
         /// <response code="200">OK. The activity was updated.</response>        
         /// <response code="404">NotFound. The activity not found.</response>     
         ///<returns></returns>
-
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(Response<ActivityDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Response<ActivityDto>), StatusCodes.Status404NotFound)]

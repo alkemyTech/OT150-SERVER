@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OngProject.Core.Interfaces;
@@ -21,7 +22,28 @@ namespace OngProject.Controllers
             _uriService = uriService;
 
         }
-        
+
+        [HttpPost("Members")]
+        [Authorize]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(Response<ActivityDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status500InternalServerError)]
+        public IActionResult Members([FromForm] MemberDto memberDto)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                return Ok(_members.Create(memberDto));
+
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+
+        }
+
         [Authorize(Roles = "Admin")]
         [HttpGet("Members")]
         public IActionResult GetMembers([FromQuery] PaginationParams paginationParams)
