@@ -1,4 +1,5 @@
-﻿using OngProject.Core.Helper;
+﻿using Microsoft.Extensions.Configuration;
+using OngProject.Core.Helper;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
@@ -14,11 +15,15 @@ namespace OngProject.Core.Business
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly EntityMapper entityMapper;
+        private readonly IConfiguration _configuration;
+        private readonly ImagesBusiness _imagesBusiness;
 
-        public MemberBusiness(IUnitOfWork UnitOfWork, EntityMapper EntityMapper)
+        public MemberBusiness(IUnitOfWork UnitOfWork, EntityMapper EntityMapper, ImagesBusiness imagesBusiness, IConfiguration configuration)
         {
             _unitOfWork = UnitOfWork;
             entityMapper = EntityMapper;
+            _imagesBusiness = imagesBusiness;
+            _configuration = configuration;
         }
 
         public Response<MemberDto> Create(MemberDto memberDto)
@@ -52,6 +57,43 @@ namespace OngProject.Core.Business
 
             return pagedMembers;
         }
+
+        public async Task<Response<MemberDto>> Update(int id, MemberPutDto memberPutDto)
+        {
+            var imagesBussines = new ImagesBusiness(_configuration);
+            var response = new Response<MemberDto>();
+            var errorList = new List<string>();
+            string image;
+            var memberUpdate = _unitOfWork.MemberModelRepository.GetById(id);
+
+            if (memberUpdate == null)
+            {
+                errorList.Add("Member not found");
+                response.Data = null;
+                response.Errors = errorList.ToArray();
+                response.Succeeded = false;
+                return response;
+            }
+            if (memberPutDto.Image != null)
+            {
+                image = await imagesBussines.UploadFileAsync(memberPutDto.Image);
+                memberUpdate.Image = image;
+            }
+
+            memberUpdate.Name = memberPutDto.Name;
+            memberUpdate.FacebookUrl = memberPutDto.FacebookUrl;
+            memberUpdate.InstagramUrl = memberPutDto.InstagramUrl;
+            memberUpdate.LinkedinUrl = memberPutDto.LinkedinUrl;
+            memberUpdate.Description = memberPutDto.Description;
+
+            _unitOfWork.MemberModelRepository.Update(memberUpdate);
+            await _unitOfWork.SaveChangesAsync();
+
+            response.Data = entityMapper.MemberModelToMemberPutDto(memberUpdate);
+            response.Succeeded = true;
+            return response;
+        }
+
         public async Task<Response<MemberDeleteDto>> Delete(int id)
         {
             var members = _unitOfWork.MemberModelRepository.GetAll();

@@ -9,6 +9,7 @@ namespace OngProject.Core.Interfaces
     {
         Response<MemberDto> Create(MemberDto memberDto);
         PagedList<MemberDto> GetMembers(PaginationParams paginationParams);
+        Task<Response<MemberDto>> Update(int id, MemberPutDto memberPutDto);
         Task<Response<MemberDeleteDto>> Delete(int id);
     }
 }
