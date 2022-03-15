@@ -1,5 +1,4 @@
-﻿
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 
 namespace OngProject.Core.Models
 {
@@ -10,8 +9,8 @@ namespace OngProject.Core.Models
             Data = data;
         }
 
+        public Metadata Meta { get; set; }
         public T Data { get; set; }
 
-        public Metadata Meta { get; set; }
     }
 }
