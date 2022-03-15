@@ -1,14 +1,7 @@
-
-﻿using OngProject.Core.Models.DTOs;
-
-﻿using OngProject.Core.Models;
+using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using OngProject.Entities;
+using System.Threading.Tasks;
 
 namespace OngProject.Core.Interfaces
 {
