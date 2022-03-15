@@ -10,5 +10,6 @@ namespace OngProject.Core.Interfaces
         SlideDto showDetailSlide(int id);
         IEnumerable<SlideDto> GetSlides();
         Task<Response<SlideDto>> Update(int id, SlidePutDto slide);
+        Task<Response<SlideDtoToDisplay>> Delete(int id);
     }
 }

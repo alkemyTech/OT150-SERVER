@@ -6,6 +6,7 @@ using OngProject.Core.Models.DTOs;
 using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OngProject.Core.Business
@@ -74,6 +75,36 @@ namespace OngProject.Core.Business
             
             response.Data = _entityMapper.SlideModelToSlideDto(slideUpdate);
             response.Succeeded = true;
+            return response;
+        }
+        public async Task<Response<SlideDtoToDisplay>> Delete(int id)
+        {
+            var slides = _unitOfWork.SlideModelRepository.GetAll();
+
+            Response<SlideDtoToDisplay> response = new Response<SlideDtoToDisplay>();
+
+            var slide = slides.FirstOrDefault(x => x.Id == id);
+            var error = new List<string>();
+            if (slide == null || slide.SoftDelete == false)
+            {
+
+                error.Add("This slide not found");
+                response.Data = null;
+                response.Succeeded = false;
+                response.Message = "The deletion was not successfully";
+                response.Errors = error.ToArray();
+
+            }
+            else
+            {
+                var slideDeleted = await _unitOfWork.SlideModelRepository.Delete(id);
+                _unitOfWork.SaveChanges();
+                var slideAux = _entityMapper.SlideModelToSlideDto(slideDeleted);
+                response.Data = _entityMapper.SlideDtoToSlideDtoToDisplay(slideAux);
+                response.Succeeded = true;
+                response.Message = "The slide has been successfully deleted";
+
+            }
             return response;
         }
     }
