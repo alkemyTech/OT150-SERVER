@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using OngProject.Core.Helper;
+﻿using OngProject.Core.Helper;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
-using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace OngProject.Core.Business
 {
@@ -21,6 +20,23 @@ namespace OngProject.Core.Business
             _unitOfWork = UnitOfWork;
             entityMapper = EntityMapper;
         }
+
+        public Response<MemberDto> Create(MemberDto memberDto)
+        {
+
+            var response = new Response<MemberDto>();
+            var member = entityMapper.MemberDtoToMemberModel(memberDto);
+
+            _unitOfWork.MemberModelRepository.Add(member);
+            _unitOfWork.SaveChanges();
+
+            response.Data = memberDto;
+            response.Succeeded = true;
+            response.Message = "The member was successfully added";
+            return response;
+
+        }
+
         public PagedList<MemberDto> GetMembers(PaginationParams paginationParams)
         {
             var members = _unitOfWork.MemberModelRepository.GetAll();

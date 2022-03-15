@@ -7,6 +7,7 @@ namespace OngProject.Core.Interfaces
 {
     public interface IMembers
     {
+        Response<MemberDto> Create(MemberDto memberDto);
         PagedList<MemberDto> GetMembers(PaginationParams paginationParams);
         Task<Response<MemberDeleteDto>> Delete(int id);
     }
