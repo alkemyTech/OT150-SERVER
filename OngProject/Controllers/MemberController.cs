@@ -72,6 +72,26 @@ namespace OngProject.Controllers
             return Ok(response);
         }
 
+        [HttpPut("Members/{id}")]
+        public async Task<IActionResult> Update(int id, [FromForm] MemberPutDto memberPutDto)
+        {
+
+            var updateResult = await _members.Update(id, memberPutDto);
+            if (ModelState.IsValid)
+            {
+                if (updateResult.Errors != null)
+                {
+                    return StatusCode(404, updateResult);
+                }
+                return Ok(updateResult);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+
+        }
+
         [Authorize]
         [HttpDelete("Members/{id:int}")]
 
