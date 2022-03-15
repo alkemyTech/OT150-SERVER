@@ -15,7 +15,7 @@ namespace OngProject.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:Challenge"]);
+            optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:Challenge"]);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
