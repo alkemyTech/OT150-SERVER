@@ -27,7 +27,7 @@ namespace OngProject.Controllers
 
         }
 
-        /// GET: Category/5
+        /// GET: Category
         /// <summary>
         /// Get a category List.
         /// </summary>
@@ -118,7 +118,7 @@ namespace OngProject.Controllers
             return Ok(_categoryBusiness.PostCategory(categoryPostDto));
         }
 
-        /// DELETE: Category
+        /// DELETE: Category/5
         /// <summary>
         /// Delete category
         /// </summary>
@@ -149,7 +149,7 @@ namespace OngProject.Controllers
             return StatusCode(404, response);
         }
 
-        /// POST: Category
+        /// PUT: Category/5
         /// <summary>
         /// Update category
         /// </summary>
