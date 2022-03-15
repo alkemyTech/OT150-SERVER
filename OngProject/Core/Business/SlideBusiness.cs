@@ -9,6 +9,7 @@ using OngProject.Entities;
 using OngProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
+
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -137,6 +138,37 @@ namespace OngProject.Core.Business
             response.Succeeded = true;
             return response;
         }
+
+        public async Task<Response<SlideDtoToDisplay>> Delete(int id)
+        {
+            var slides = _unitOfWork.SlideModelRepository.GetAll();
+
+            Response<SlideDtoToDisplay> response = new Response<SlideDtoToDisplay>();
+
+            var slide = slides.FirstOrDefault(x => x.Id == id);
+            var error = new List<string>();
+            if (slide == null || slide.SoftDelete == false)
+            {
+
+                error.Add("This slide not found");
+                response.Data = null;
+                response.Succeeded = false;
+                response.Message = "The deletion was not successfully";
+                response.Errors = error.ToArray();
+
+            }
+            else
+            {
+                var slideDeleted = await _unitOfWork.SlideModelRepository.Delete(id);
+                _unitOfWork.SaveChanges();
+                var slideAux = _entityMapper.SlideModelToSlideDto(slideDeleted);
+                response.Data = _entityMapper.SlideDtoToSlideDtoToDisplay(slideAux);
+                response.Succeeded = true;
+                response.Message = "The slide has been successfully deleted";
+
+            }
+            return response;
+
         private async Task<string> UploadBase64ImageToBucket(string base64)
         {
             string newName = $"{Guid.NewGuid()}_user";
@@ -164,6 +196,7 @@ namespace OngProject.Core.Business
             };
            
             return await _imagesBusiness.UploadFileAsync(file);
+
         }
     }
 }

@@ -78,5 +78,17 @@ namespace OngProject.Controllers
             }
 
         }
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id:int}")]
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var slide = (await _slideBusiness.Delete(id));
+            if (slide.Errors != null)
+            {
+                return StatusCode(404, slide);
+            }
+            return Ok(slide);
+        }
     }
 }
