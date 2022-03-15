@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using OngProject.Core.Helper;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
@@ -21,6 +22,20 @@ namespace OngProject.Core.Business
             _unitOfWork = unitOfWork;
             _configuration = configuration;
         }
+
+        public PagedList<NewsDto> GetAllNews(PaginationParams paginationParams)
+        {
+            var news = _unitOfWork.NewsModelRepository.GetAll();
+            var newsDto = new List<NewsDto>();
+            foreach (var c in news)
+            {
+                newsDto.Add(entityMapper.NewsModeltoNewsDto(c));
+            }
+
+            var pagedNews = PagedList<NewsDto>.Create(newsDto, paginationParams.PageNumber, paginationParams.PageSize);
+            return pagedNews;
+        }
+    
 
         public NewsDto GetNews(int id)
         {
