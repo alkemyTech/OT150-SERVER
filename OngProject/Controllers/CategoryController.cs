@@ -36,6 +36,7 @@ namespace OngProject.Controllers
         /// </remarks>
         /// <response code="200">OK. The Category was created.</response>
         [HttpGet("ListaCategorias")]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(List<CategorieDto>), StatusCodes.Status200OK)]
         public IActionResult ListaCategorias([FromQuery] PaginationParams paginationParams)
         {
