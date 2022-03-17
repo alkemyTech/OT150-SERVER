@@ -170,9 +170,10 @@ namespace OngProject.Core.Mapper
         {
             return new TestimonialsDto()
             {
-
-                Id = testimonials.Id
-
+                Name = testimonials.Name,
+                Content = testimonials.Content,
+                Image = testimonials.Image
+                
             };
         }
 
