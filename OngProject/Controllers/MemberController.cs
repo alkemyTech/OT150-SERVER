@@ -23,7 +23,6 @@ namespace OngProject.Controllers
 
         }
 
-
         /// POST: Members
         /// <summary>
         /// Create new member
@@ -59,10 +58,10 @@ namespace OngProject.Controllers
 
         /// GET: Members
         /// <summary>
-        /// Get a member list.
+        /// Get a member list
         /// </summary>
         /// <remarks>
-        /// Get a member list.
+        /// Get a member list
         /// </remarks>
         /// <response code="200">OK. These are the members.</response>
         [Authorize(Roles = "Admin")]
