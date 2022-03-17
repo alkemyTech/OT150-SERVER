@@ -25,6 +25,16 @@ namespace OngProject.Controllers
             _configuration = configuration;
         }
 
+
+        /// GET: Users
+        /// <summary>
+        /// Get a list of users
+        /// </summary>
+        /// <remarks>
+        /// Get a member list.
+        /// </remarks>
+        /// <response code="200">OK. These are the users.</response>
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status200OK)]
         [HttpGet("Lista")]
         [Authorize]
 
@@ -38,8 +48,22 @@ namespace OngProject.Controllers
             {
                 return BadRequest();
             }
-        }      
+        }
 
+        /// POST: Users
+        /// <summary>
+        /// Create new user
+        /// </summary>
+        /// <remarks>
+        /// Create new user
+        /// </remarks>
+        /// <response code="401">Unauthorized.Invalid Token or it wasn't provided.</response>  
+        /// <response code="500">Server Error.</response>  
+        /// <response code="200">OK. The user was created.</response>        
+        ///<returns></returns>
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status500InternalServerError)]
         [HttpPost]
         [Route("image")]
         [Authorize(Roles = "Admin")]
@@ -49,6 +73,23 @@ namespace OngProject.Controllers
             return Ok(response);
         }
 
+        /// DELETE: Users
+        /// <summary>
+        /// Deletes a user
+        /// </summary>
+        /// <remarks>
+        /// Validates that the id of the user making the request is equal to the id to delete, and deletes it 
+        /// </remarks>
+        /// <param name="id">User Id to delete.</param>
+        /// <response code="401">Unauthorized. Invalid Token or it wasn't provided.</response>  
+        ///<response code="403">Unauthorized. Your role doesn't allow you to update testimonials.</response>
+        /// <response code="200">OK. The user was deleted.</response>        
+        /// <response code="404">NotFound. The user was not found.</response>     
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status500InternalServerError)]
         [Authorize]
         [HttpDelete("users")]
         public async Task<ActionResult> Delete()
@@ -64,6 +105,24 @@ namespace OngProject.Controllers
             return Ok(response);
         }
 
+        /// PUT: Users
+        /// <summary>
+        /// Updates a user
+        /// </summary>
+        /// <remarks>
+        /// Validate, update and store in the database
+        /// </remarks>
+        /// <param name="id">User Id to update.</param>
+        /// <param name="memberPutDto"></param>
+        /// <response code="401">Unauthorized. Invalid Token or it wasn't provided.</response>  
+        ///<response code="403">Unauthorized. Your role doesn't allow you to update testimonials.</response>
+        /// <response code="200">OK. The user was updated.</response>        
+        /// <response code="404">NotFound. The user was not found.</response>     
+        ///<returns></returns>
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(Response<MemberPutDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response<MemberPutDto>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status403Forbidden)]
         [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromForm] UserUpdateDto userUpdateDto)
