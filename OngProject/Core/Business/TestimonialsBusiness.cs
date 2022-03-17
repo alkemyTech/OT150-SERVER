@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using OngProject.Core.Helper;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.Core.Models;
@@ -25,6 +26,19 @@ namespace OngProject.Core.Business
         {
             _unitOfWork = unitOfWork;
             _configuration = configuration;
+        }
+
+        public PagedList<TestimonialsDto> GetAllTestimonials(PaginationParams paginationParams)
+        {
+            var testimonials = _unitOfWork.TestimonialsModelRepository.GetAll();
+            var testimonialsDto = new List<TestimonialsDto>();
+            foreach (var c in testimonials)
+            {
+                testimonialsDto.Add(entityMapper.TestimonialsModelToTestimonialsDto(c));
+            }
+
+            var pagedNews = PagedList<TestimonialsDto>.Create(testimonialsDto, paginationParams.PageNumber, paginationParams.PageSize);
+            return pagedNews;
         }
 
         public async Task<Response<TestimonialsPostToDisplayDto>> Post(TestimonialsPostDto testimonialPostDto)

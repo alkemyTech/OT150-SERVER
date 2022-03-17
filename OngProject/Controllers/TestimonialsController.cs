@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OngProject.Core.Helper;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
 using OngProject.Repositories.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -13,15 +15,54 @@ namespace OngProject.Controllers
 {
 
     [ApiController]
-  
     public class TestimonialsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ITestimonialsBussines _testimonialsBussines;
-        public TestimonialsController(IUnitOfWork unitOfWork, ITestimonialsBussines testimonialsBussines)
+        private readonly IUriService _uriService;
+        public TestimonialsController(IUnitOfWork unitOfWork, ITestimonialsBussines testimonialsBussines, IUriService uriService)
         {
             _unitOfWork = unitOfWork;
             _testimonialsBussines = testimonialsBussines;
+            _uriService = uriService;
+        }
+
+        /// GET: Testimonials
+        /// <summary>
+        /// Get all testimonials
+        /// </summary>
+        /// <remarks>
+        /// Get all testimonials
+        /// </remarks>
+        /// <param name="testimonialsBusiness">Testimonials data transfer object.</param>
+        /// <response code="401">Unauthorized.Invalid Token or it wasn't provided.</response>  
+        /// <response code="500">Server Error.</response>  
+        /// <response code="200">OK. The activity was created.</response>        
+        ///<returns></returns>
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(PagedList<TestimonialsDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status500InternalServerError)]
+        [Authorize]
+        [HttpGet("Testimonials")]
+        public IActionResult GetTestimonials([FromQuery] PaginationParams paginationParams)
+        {
+            var testimonials = _testimonialsBussines.GetAllTestimonials(paginationParams);
+            var metadata = new Metadata
+            {
+                TotalCount = testimonials.TotalCount,
+                PageSize = testimonials.PageSize,
+                CurrentPage = testimonials.CurrentPage,
+                TotalPages = testimonials.TotalPages,
+                HasNextPage = testimonials.HasNextPage,
+                HasPreviousPage = testimonials.HasPreviousPage,
+                NextPageUrl = _uriService.GetNextPage(paginationParams, "Testimonials").ToString(),
+                PreviousPageUrl = _uriService.GetPreviousPage(paginationParams, "Testimonials").ToString()
+            };
+            var response = new PaginationResponse<IEnumerable<TestimonialsDto>>(testimonials)
+            {
+                Meta = metadata
+            };
+            return Ok(response);
         }
 
         /// POST: Testimonials
