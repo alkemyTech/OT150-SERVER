@@ -19,8 +19,6 @@ namespace OngProject.Controllers
             _activityBusiness = activityBusiness;
         }
 
-
-
         /// POST: Activities
         /// <summary>
         /// Create new activity
@@ -37,7 +35,6 @@ namespace OngProject.Controllers
         [Authorize]
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(Response<ActivityDto>), StatusCodes.Status200OK)]
-
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status500InternalServerError)]
         public IActionResult Activities([FromForm] ActivityDto activityBusiness)
         {
@@ -55,7 +52,7 @@ namespace OngProject.Controllers
 
         }
 
-        /// POST: Activities
+        /// PUT: Activities
         /// <summary>
         /// Update activity
         /// </summary>
@@ -67,7 +64,7 @@ namespace OngProject.Controllers
         /// <response code="401">Unauthorized. Invalid Token or it wasn't provided.</response>  
         ///<response code="403">Unauthorized. Your role doesn't allow you to update activities.</response>
         /// <response code="200">OK. The activity was updated.</response>        
-        /// <response code="404">NotFound. The activity not found.</response>     
+        /// <response code="404">NotFound. The activity was not found.</response>     
         ///<returns></returns>
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(Response<ActivityDto>), StatusCodes.Status200OK)]

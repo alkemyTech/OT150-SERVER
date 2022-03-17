@@ -23,10 +23,23 @@ namespace OngProject.Controllers
 
         }
 
+
+        /// POST: Members
+        /// <summary>
+        /// Create new member
+        /// </summary>
+        /// <remarks>
+        /// Create new member
+        /// </remarks>
+        /// <param name="membersBusiness">Member data transfer object.</param>
+        /// <response code="401">Unauthorized.Invalid Token or it wasn't provided.</response>  
+        /// <response code="500">Server Error.</response>  
+        /// <response code="200">OK. The member was created.</response>        
+        ///<returns></returns>
         [HttpPost("Members")]
         [Authorize]
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(Response<ActivityDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response<MemberDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status500InternalServerError)]
         public IActionResult Members([FromForm] MemberDto memberDto)
         {
@@ -44,8 +57,17 @@ namespace OngProject.Controllers
 
         }
 
+        /// GET: Members
+        /// <summary>
+        /// Get a member list.
+        /// </summary>
+        /// <remarks>
+        /// Get a member list.
+        /// </remarks>
+        /// <response code="200">OK. These are the members.</response>
         [Authorize(Roles = "Admin")]
         [HttpGet("Members")]
+        [ProducesResponseType(typeof(List<MemberDto>), StatusCodes.Status200OK)]
         public IActionResult GetMembers([FromQuery] PaginationParams paginationParams)
         {
             var member = _members.GetMembers(paginationParams);
@@ -72,7 +94,25 @@ namespace OngProject.Controllers
             return Ok(response);
         }
 
+        /// PUT: Members
+        /// <summary>
+        /// Updates a member
+        /// </summary>
+        /// <remarks>
+        /// Update a member, validate and store in the database
+        /// </remarks>
+        /// <param name="id">Member Id to update.</param>
+        /// <param name="memberPutDto"></param>
+        /// <response code="401">Unauthorized. Invalid Token or it wasn't provided.</response>  
+        ///<response code="403">Unauthorized. Your role doesn't allow you to update testimonials.</response>
+        /// <response code="200">OK. The member was updated.</response>        
+        /// <response code="404">NotFound. The member was not found.</response>     
+        ///<returns></returns>
         [HttpPut("Members/{id}")]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(Response<MemberPutDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response<MemberPutDto>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Update(int id, [FromForm] MemberPutDto memberPutDto)
         {
 
@@ -92,6 +132,23 @@ namespace OngProject.Controllers
 
         }
 
+        /// DELETE: Members
+        /// <summary>
+        /// Deletes a memeber
+        /// </summary>
+        /// <remarks>
+        /// Validates the existence of the member and deletes it 
+        /// </remarks>
+        /// <param name="id">Member Id to delete.</param>
+        /// <response code="401">Unauthorized. Invalid Token or it wasn't provided.</response>  
+        ///<response code="403">Unauthorized. Your role doesn't allow you to update testimonials.</response>
+        /// <response code="200">OK. The member was deleted.</response>        
+        /// <response code="404">NotFound. The member was not found.</response>     
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status500InternalServerError)]
         [Authorize]
         [HttpDelete("Members/{id:int}")]
 

@@ -34,7 +34,7 @@ namespace OngProject.Controllers
         /// <remarks>
         /// Get a category List
         /// </remarks>
-        /// <response code="200">OK. The Category was created.</response>
+        /// <response code="200">OK. These are the categories.</response>
         [HttpGet("ListaCategorias")]
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(List<CategorieDto>), StatusCodes.Status200OK)]
@@ -129,7 +129,7 @@ namespace OngProject.Controllers
         /// <response code="401">Unauthorized. Invalid Token or it wasn't provided.</response>  
         /// <response code="403">Unauthorized. Your role doesn't allow you to delete categories.</response>
         /// <response code="200">OK. The category was deleted.</response>        
-        /// <response code="404">NotFound. The delete not found.</response>     
+        /// <response code="404">NotFound. The category was not deleted.</response>     
         /// <response code="500">Server Error.</response>
         ///<returns></returns>
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
