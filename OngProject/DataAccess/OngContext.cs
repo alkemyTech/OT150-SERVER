@@ -6,17 +6,12 @@ namespace OngProject.DataAccess
 {
     public class OngContext : DbContext
     {
-        private readonly IConfiguration _configuration;
+       
 
-        public OngContext(IConfiguration configuration)
+        public OngContext(DbContextOptions<OngContext> options) : base(options)
         {
-            _configuration = configuration;
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:Challenge"]);
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
