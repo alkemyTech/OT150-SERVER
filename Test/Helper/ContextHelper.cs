@@ -5,6 +5,7 @@ using OngProject.Core.Helper;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Mapper;
 using OngProject.DataAccess;
+using OngProject.Repositories;
 using OngProject.Repositories.Interfaces;
 
 namespace Test.Helper
@@ -26,6 +27,11 @@ namespace Test.Helper
             jwtHelper = new JwtHelper(configuration);
             httpContext = new HttpContextAccessor();
 
+        }
+        public static void MakeDbContext()
+        {
+            DbContext = OngContextInMemory.MakeDbContext();
+            unitOfWork = new UnitOfWork(DbContext);
         }
     }
 }
