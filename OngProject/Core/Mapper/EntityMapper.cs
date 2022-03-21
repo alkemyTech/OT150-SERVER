@@ -298,7 +298,7 @@ namespace OngProject.Core.Mapper
             return new TestimonialsModel()
             {
                 Name = testimonialsPutDto.Name,
-                Image = testimonialsPutDto.Image,
+              
                 Content = testimonialsPutDto.Content
 
 

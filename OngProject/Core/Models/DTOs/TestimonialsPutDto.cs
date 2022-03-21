@@ -10,15 +10,14 @@ namespace OngProject.Core.Models.DTOs
 {
     public class TestimonialsPutDto
     {
-        [Required]
-        public int Id { get; set; }
+        
         [MaxLength(255)]
         [Required]
         public string Name { get; set; }
         [Required]
         [MaxLength(65535)]
         public string Content { get; set; }
-        [MaxLength(255)]
-        public string Image { get; set; }
+        [ExtensionsValidationHelper((new string[] { ".jpg", ".jpeg", ".png" }))]
+        public IFormFile Image { get; set; }
     }
 }

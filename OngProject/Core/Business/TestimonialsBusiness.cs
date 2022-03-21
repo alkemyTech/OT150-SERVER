@@ -36,8 +36,9 @@ namespace OngProject.Core.Business
             {
                 testimonialsDto.Add(entityMapper.TestimonialsModelToTestimonialsDto(c));
             }
-
+            
             var pagedNews = PagedList<TestimonialsDto>.Create(testimonialsDto, paginationParams.PageNumber, paginationParams.PageSize);
+          
             return pagedNews;
         }
 
@@ -103,16 +104,17 @@ namespace OngProject.Core.Business
             return response;
         }
 
-        public Response<TestimonialsModel> PutTestimonials(TestimonialsPutDto testimonialsDto)
+        public async Task<Response<TestimonialsModel>> PutTestimonials(int id,TestimonialsPutDto testimonialsDto)
         {
+            ImagesBusiness images=new ImagesBusiness(_configuration);
             Response<TestimonialsModel> response = new Response<TestimonialsModel>();
             List<string> intermediate_list = new List<string>();
-            var testimonials = _unitOfWork.TestimonialsModelRepository.GetById(testimonialsDto.Id);
+            var testimonials = _unitOfWork.TestimonialsModelRepository.GetById(id);
             if (testimonials == null)
             {
                 intermediate_list.Add("404");
                 response.Data = testimonials;
-                response.Message = "This OrganizationId not Found";
+                response.Message = "This testimonial not Found";
                 response.Succeeded = false;
                 response.Errors = intermediate_list.ToArray();
                 return response;
@@ -120,17 +122,17 @@ namespace OngProject.Core.Business
             if (testimonialsDto.Name != null)
                 testimonials.Name = testimonialsDto.Name;
             if (testimonialsDto.Image != null)
-                testimonials.Image = testimonialsDto.Image;
+                testimonials.Image = await images.UploadFileAsync(testimonialsDto.Image);
             if (testimonialsDto.Content != null)
                 testimonials.Content = testimonialsDto.Content;
            
             testimonials.LastModified = DateTime.Now;
-            testimonials = _unitOfWork.TestimonialsModelRepository.GetById(testimonialsDto.Id);
-            intermediate_list.Add("200");
+            _unitOfWork.TestimonialsModelRepository.Update(testimonials);
+            
             response.Data = testimonials;
             response.Message = "The Testimonials was successfully Updated";
             response.Succeeded = true;
-            response.Errors = intermediate_list.ToArray();
+            response.Errors = null;
             return response;
         }
 
