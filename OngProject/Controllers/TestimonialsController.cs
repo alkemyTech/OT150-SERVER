@@ -34,7 +34,7 @@ namespace OngProject.Controllers
         /// <remarks>
         /// Get all testimonials
         /// </remarks>
-        /// <param name="testimonialsBusiness">Testimonials data transfer object.</param>
+        /// <param name="paginationParams">Testimonials data transfer object.</param>
         /// <response code="401">Unauthorized.Invalid Token or it wasn't provided.</response>  
         /// <response code="500">Server Error.</response>  
         /// <response code="200">OK. The activity was created.</response>        
@@ -72,7 +72,7 @@ namespace OngProject.Controllers
         /// <remarks>
         /// Creates new testimonial
         /// </remarks>
-        /// <param name="testimonialsBussines">Testimonials data transfer object.</param>
+        /// <param name="testimonialPostDto">Testimonials data transfer object.</param>
         /// <response code="401">Unauthorized.Invalid Token or it wasn't provided.</response>  
         /// <response code="500">Server Error.</response>  
         /// <response code="200">OK. The Testimonial was created.</response>        
@@ -102,7 +102,7 @@ namespace OngProject.Controllers
         /// Validates the existence of the member and deletes it 
         /// </remarks>
         /// <param name="id">Testimonial Id to delete.</param>
-        /// <param name="testimonialsPutDto"></param>
+       
         /// <response code="401">Unauthorized. Invalid Token or it wasn't provided.</response>  
         ///<response code="403">Unauthorized. Your role doesn't allow you to update testimonials.</response>
         /// <response code="200">OK. The testimonial was deleted.</response>        
@@ -111,9 +111,19 @@ namespace OngProject.Controllers
         [HttpDelete("Delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var rol = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
-            var idUser = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
-            return Ok(await _testimonialsBussines.Delete(id, rol, idUser));
+            var deletedTestimonials = await _testimonialsBussines.Delete(id);
+            if (ModelState.IsValid)
+            {
+                if (deletedTestimonials.Errors != null)
+                {
+                    return StatusCode(404, deletedTestimonials);
+                }
+                return Ok(deletedTestimonials);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
         /// PUT: Testimonials

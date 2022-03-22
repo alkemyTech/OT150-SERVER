@@ -131,6 +131,41 @@ namespace Test
             Assert.AreEqual(404, result.StatusCode);
         
         }
-      
+        [TestMethod]
+        public async Task DeleteTestimonialSuccessfullyTest()
+        {
+            // Arrange
+
+
+            var id = 1;
+            // Act
+            var response = await testimonialsController.Delete(id);
+            var result = response as ObjectResult;
+            var checkDelete = await testimonialsController.Delete(id);
+            var result1 = checkDelete as ObjectResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(200, result.StatusCode);
+            Assert.AreEqual(404, result1.StatusCode);
+
+
+        }
+        [TestMethod]
+        public async Task DeleteTestimonialUnSuccessfullyTest()
+        {
+            // Arrange
+
+
+            var id = -5;
+
+            // Act
+            var response = await testimonialsController.Delete(id);
+            var result = response as ObjectResult;
+
+            // Assert
+
+            Assert.AreEqual(404, result.StatusCode);
+        }
     }
 }
