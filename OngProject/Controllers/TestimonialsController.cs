@@ -111,9 +111,19 @@ namespace OngProject.Controllers
         [HttpDelete("Delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var rol = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
-            var idUser = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
-            return Ok(await _testimonialsBussines.Delete(id, rol, idUser));
+            var deletedTestimonials = await _testimonialsBussines.Delete(id);
+            if (ModelState.IsValid)
+            {
+                if (deletedTestimonials.Errors != null)
+                {
+                    return StatusCode(404, deletedTestimonials);
+                }
+                return Ok(deletedTestimonials);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
         /// PUT: Testimonials

@@ -69,7 +69,7 @@ namespace OngProject.Core.Business
 
 
 
-        public async Task<Response<TestimonialsModel>> Delete(int id, string UserId, string rol)
+        public async Task<Response<TestimonialsModel>> Delete(int id)
 
         {
             TestimonialsModel testimonials = _unitOfWork.TestimonialsModelRepository.GetById(id);
@@ -85,23 +85,19 @@ namespace OngProject.Core.Business
                 return response;
 
             }
-            if (rol == "Admin" || UserId == testimonials.Id.ToString())
-            {
+            
+           
                 TestimonialsModel entity = await _unitOfWork.TestimonialsModelRepository.Delete(id);
                 await _unitOfWork.SaveChangesAsync();
-                intermediate_list.Add("200");
-                response.Errors = intermediate_list.ToArray();
+              
+                response.Errors = null;
                 response.Data = entity;
                 response.Succeeded = true;
                 response.Message = "The Testimonial was Deleted successfully";
                 return response;
-            }
-            intermediate_list.Add("403");
-            response.Data = testimonials;
-            response.Succeeded = false;
-            response.Errors = intermediate_list.ToArray();
-            response.Message = "You don't have permission for modificated this Testimonial";
-            return response;
+            
+            
+           
         }
 
         public async Task<Response<TestimonialsModel>> PutTestimonials(int id,TestimonialsPutDto testimonialsDto)
