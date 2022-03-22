@@ -135,10 +135,22 @@ namespace OngProject.Controllers
         [ProducesResponseType(typeof(Response<TestimonialsPutDto>), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status403Forbidden)]
         [Authorize(Roles = "Admin")]
-        [HttpPut("public")]
-        public IActionResult Put(TestimonialsPutDto testimonialsPutDto)
+        [HttpPut("Testimonials/{id:int}")]
+        public async Task<IActionResult> Put(int id,[FromForm]TestimonialsPutDto testimonialsPutDto)
         {
-            return Ok(_testimonialsBussines.PutTestimonials(testimonialsPutDto));
+            var updatedTestimonials = await _testimonialsBussines.PutTestimonials(id, testimonialsPutDto);
+            if (ModelState.IsValid)
+            {
+                if (updatedTestimonials.Errors != null)
+                {
+                    return StatusCode(404, updatedTestimonials);
+                }
+                return Ok(updatedTestimonials);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
 
         } 
 

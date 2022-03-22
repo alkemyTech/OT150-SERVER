@@ -8,17 +8,25 @@ namespace Test.Helper
     public class OngContextInMemory
     {
 
+        private static OngContext _context;
         public static OngContext MakeDbContext()
         {
             var options = new DbContextOptionsBuilder<OngContext>().UseInMemoryDatabase(databaseName: "Ong").Options;
+            _context = new OngContext(options);
+            _context.Database.EnsureDeleted();
+            
+            
+               
+                SeedActivitiesMemory();
+                SeedTestimonialsMemory();
+                _context.SaveChanges();
+            
+         
 
-            var dbcontext = new OngContext(options);
-
-            SeedActivitiesMemory(dbcontext);
-            return dbcontext;
+            return _context;
         }
 
-        private static void SeedActivitiesMemory(OngContext context)
+        private static void SeedActivitiesMemory()
         {
             var activity = new ActivityModel
             {
@@ -30,8 +38,24 @@ namespace Test.Helper
                 LastModified = DateTime.Now
             };
 
-            context.Add(activity);
-            context.SaveChanges();
+            _context.Add(activity);
+           
+        }
+        private static void SeedTestimonialsMemory()
+        {
+            var testimonial = new TestimonialsModel
+            {
+                Id = 1,
+                Name = "Testimonial",
+                Content = "Content from testimonial",
+                Image = "TestimonialImage.jpg",
+                SoftDelete = true,
+                LastModified = DateTime.Now
+            };
+
+            _context.Add(testimonial);
+            
+
         }
     }
 }
