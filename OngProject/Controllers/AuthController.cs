@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models;
@@ -25,6 +26,24 @@ namespace OngProject.Controllers
             _unitOfWork = unitOfWork;
         }
 
+
+
+
+        /// Register: User
+        /// <summary>
+        /// Register User
+        /// </summary>
+        /// <remarks>
+        /// Create user. If email already exists, returns 400. 
+        /// </remarks>
+
+        /// <param name="userRegisterDto"></param>
+        /// <response code="200">OK. The user was created.</response>        
+        /// <response code="400">Bad Request.The email already exists.</response>     
+        ///<returns></returns>
+
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(EmptyResult),StatusCodes.Status400BadRequest)]
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromForm]UserRegisterDto userRegisterDto)
         {
@@ -64,7 +83,21 @@ namespace OngProject.Controllers
             }
             
         }
+        /// Log: User
+        /// <summary>
+        /// Log user
+        /// </summary>
+        /// <remarks>
+        /// Log user. Validate email and password, if there is error, returns 400.
+        /// </remarks>
 
+        /// <param name="login"></param>
+        /// <response code="200">OK. The user was logged.</response>        
+        /// <response code="400">Bad Request. Email or password are incorrect.</response>     
+        ///<returns></returns>
+
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(EmptyResult),StatusCodes.Status400BadRequest)]
         [HttpPost("Login")]
         public IActionResult Login([FromForm] UserLoginDto login)
         {
@@ -96,6 +129,23 @@ namespace OngProject.Controllers
 
             }
         }
+        /// Check: User
+        /// <summary>
+        /// Check user
+        /// </summary>
+        /// <remarks>
+        /// Check user. 
+        /// </remarks>
+
+
+        /// <response code="200">OK. The user exists.</response>        
+        /// <response code="404">NotFound. The user does not exist.</response> 
+        /// <response code="401">Unauthorized. Invalid Token or it wasn't provided.</response>  
+        ///<returns></returns>
+
+        [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(EmptyResult),StatusCodes.Status404NotFound)]
 
         [HttpGet("Me")]
         [Authorize]
