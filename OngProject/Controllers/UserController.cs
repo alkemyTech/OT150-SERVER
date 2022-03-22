@@ -6,8 +6,6 @@ using OngProject.Core.Business;
 using OngProject.Core.Interfaces;
 using OngProject.Core.Models;
 using OngProject.Core.Models.DTOs;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace OngProject.Controllers
@@ -35,7 +33,7 @@ namespace OngProject.Controllers
         /// </remarks>
         /// <response code="200">OK. These are the users.</response>
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status200OK)]
-        [HttpGet("Lista")]
+        [HttpGet("Users")]
         [Authorize]
 
         public async Task<IActionResult> Lista()
@@ -48,29 +46,6 @@ namespace OngProject.Controllers
             {
                 return BadRequest();
             }
-        }
-
-        /// POST: Users
-        /// <summary>
-        /// Create new user
-        /// </summary>
-        /// <remarks>
-        /// Create new user
-        /// </remarks>
-        /// <response code="401">Unauthorized.Invalid Token or it wasn't provided.</response>  
-        /// <response code="500">Server Error.</response>  
-        /// <response code="200">OK. The user was created.</response>        
-        ///<returns></returns>
-        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status500InternalServerError)]
-        [HttpPost]
-        [Route("image")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Upload(IFormFile image)
-        {
-            var response = await _imagesBusiness.UploadFileAsync(image);
-            return Ok(response);
         }
 
         /// DELETE: Users
@@ -91,13 +66,12 @@ namespace OngProject.Controllers
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status500InternalServerError)]
         [Authorize]
-        [HttpDelete("users")]
-        public async Task<ActionResult> Delete()
+        [HttpDelete("Users/{id}")]
+        public async Task<ActionResult> Delete(int id)
 
         {
-            var idUser = int.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
-          
-            var response = await _userBusiness.DeleteUser(idUser);
+
+            var response = await _userBusiness.DeleteUser(id);
             if (response.Errors != null)
             {
                 return StatusCode(404, response);
@@ -124,25 +98,20 @@ namespace OngProject.Controllers
         [ProducesResponseType(typeof(Response<MemberPutDto>), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status403Forbidden)]
         [Authorize]
-        [HttpPut("{id}")]
+        [HttpPut("Users/{id}")]
         public async Task<IActionResult> Update(int id, [FromForm] UserUpdateDto userUpdateDto)
         {
-            var idUser = int.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
-            var role = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+
             if (ModelState.IsValid)
             {
-                if (idUser == id || role.Value.Equals("Admin"))
-                {
-                    var updateResult = await _userBusiness.UpdateUser(id, userUpdateDto);
+                var updateResult = await _userBusiness.UpdateUser(id, userUpdateDto);
 
-                    if (updateResult.Succeeded != true)
-                    {
-                        return StatusCode(404, updateResult);
-                    }
-                    return Ok(updateResult);
+                if (updateResult.Succeeded != true)
+                {
+                    return StatusCode(404, updateResult);
                 }
-                return StatusCode(403, new Response<object> { Succeeded = false, Message = "You can't edit this User" });
-                }
+                return Ok(updateResult);
+            }
             else
             {
                 return BadRequest(ModelState);
