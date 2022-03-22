@@ -26,6 +26,7 @@ namespace Test.Helper
             configuration = new ConfigurationHelper().configuration;
             jwtHelper = new JwtHelper(configuration);
             httpContext = new HttpContextAccessor();
+            var Context = LoginHelper.LoginHelperJwt(jwtHelper);
 
         }
         public static void MakeDbContext()
