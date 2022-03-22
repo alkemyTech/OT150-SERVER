@@ -19,6 +19,8 @@ namespace Test.Helper
         public static IJwtHelper jwtHelper;
         public static IHttpContextAccessor httpContext;
         public static ImagesBusiness imagesBusiness;
+        public static EmailBusiness emailBusiness;
+        public static EncryptHelper encryptHelper;
 
         public static void MakeContext()
         {
@@ -26,6 +28,8 @@ namespace Test.Helper
             configuration = new ConfigurationHelper().configuration;
             jwtHelper = new JwtHelper(configuration);
             httpContext = new HttpContextAccessor();
+            emailBusiness = new EmailBusiness(configuration);
+            encryptHelper = new EncryptHelper();
             var Context = LoginHelper.LoginHelperJwt(jwtHelper);
 
         }

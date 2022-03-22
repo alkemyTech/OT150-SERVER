@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OngProject.Core.Helper;
+using OngProject.Core.Interfaces;
 using OngProject.DataAccess;
 using OngProject.Entities;
 using System;
@@ -14,16 +16,34 @@ namespace Test.Helper
             var options = new DbContextOptionsBuilder<OngContext>().UseInMemoryDatabase(databaseName: "Ong").Options;
             _context = new OngContext(options);
             _context.Database.EnsureDeleted();
-            
-            
-               
-                SeedActivitiesMemory();
-                SeedTestimonialsMemory();
-                _context.SaveChanges();
-            
-         
+
+
+            SeedUsersMemory();
+            SeedActivitiesMemory();
+            SeedTestimonialsMemory();
+            _context.SaveChanges();
+
+
 
             return _context;
+        }
+
+        private static void SeedUsersMemory()
+        {
+            IEncryptHelper encryptHelper = new EncryptHelper();
+            var user = new UserModel
+            {
+                FirstName = "First Name User",
+                LastName = "Last Name User",
+                Email = "User@ong.com",
+                Password = encryptHelper.EncryptPassSha256("Password"),
+                Photo = "Photo",
+                RoleId = 1,
+                SoftDelete = true,
+                LastModified = DateTime.Now
+            };
+
+            _context.Add(user);
         }
 
         private static void SeedActivitiesMemory()
@@ -39,7 +59,7 @@ namespace Test.Helper
             };
 
             _context.Add(activity);
-           
+
         }
         private static void SeedTestimonialsMemory()
         {
@@ -54,7 +74,7 @@ namespace Test.Helper
             };
 
             _context.Add(testimonial);
-            
+
 
         }
     }
