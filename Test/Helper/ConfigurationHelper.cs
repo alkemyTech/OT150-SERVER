@@ -16,7 +16,7 @@ namespace Test.Helper
             {
                 {"JWT:secret", "fhdsakfhsjkfhksdhfshfkjshzfkjszhfjkhsfvhxzfggbfhdsakfhsjkfhksdhfshfkjshzfkjszhfjkhsfvhxzfggb"},
                 {"ConnectionStrings", "Server=localhost;Initial Catalog=AceleracionOng ;Trusted_Connection=True;"},
-                {"MailParams:SendGridKey", "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"},
+                {"MailParams:SendGridKey", ""},
                 {"MailParams:FromMail", "ongsomosmas4@gmail.com"},
                 {"MailParams:FromMailDescription", "ONG Somos Mas"},
                 {"MailParams:PathTemplate", "Templates/htmlpage.html"},
@@ -26,7 +26,10 @@ namespace Test.Helper
                 {"MailParams:WelcomeMailTitle", "Bienvenido a Ong Somos Mas!"},
                 {"MailParams:WelcomeMailBody", "<p>¡Te damos la bienvenida a Ong Somos Mas!</p><p>Ahora puedes acceder a nuestro sitio, conocer nuestro trabajo, actividades y a nuestros colaboradores.</p>"},
                 {"MailParams:WelcomeMailContact", "NUESTROEMAIL@gmail.com"},
-                {"SendGridAPIKey","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"}
+                {"SendGridAPIKey",""},
+                {"S3Config:BucketName", ""},
+                {"S3Config:AccessKey", ""},
+                {"S3Config:SecretKey", ""},
             };
 
             configuration = new ConfigurationBuilder()
