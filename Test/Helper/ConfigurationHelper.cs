@@ -13,11 +13,8 @@ namespace Test.Helper
         public ConfigurationHelper()
         {
             var myConfiguration = new Dictionary<string, string>
-            { 
-                {"S3Config:BucketName", "cohorte-febrero-b35bfd02"},
-                {"S3Config:AccessKey", "AKIAS2JWQJCDIGZRCIJY"},
-                { "S3Config:SecretKey", "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"},
-                { "JWT:secret", "fhdsakfhsjkfhksdhfshfkjshzfkjszhfjkhsfvhxzfggbfhdsakfhsjkfhksdhfshfkjshzfkjszhfjkhsfvhxzfggb"},
+            {
+                {"JWT:secret", "fhdsakfhsjkfhksdhfshfkjshzfkjszhfjkhsfvhxzfggbfhdsakfhsjkfhksdhfshfkjshzfkjszhfjkhsfvhxzfggb"},
                 {"ConnectionStrings", "Server=localhost;Initial Catalog=AceleracionOng ;Trusted_Connection=True;"},
                 {"MailParams:SendGridKey", "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"},
                 {"MailParams:FromMail", "ongsomosmas4@gmail.com"},

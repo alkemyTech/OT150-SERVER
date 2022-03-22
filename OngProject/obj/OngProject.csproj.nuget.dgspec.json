@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Usuario\\Desktop\\OT150-SERVER\\OngProject\\OngProject.csproj": {}
+    "C:\\Users\\Emmanuel\\Source\\Repos\\OT150-SERVER\\OngProject\\OngProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Usuario\\Desktop\\OT150-SERVER\\OngProject\\OngProject.csproj": {
+    "C:\\Users\\Emmanuel\\Source\\Repos\\OT150-SERVER\\OngProject\\OngProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\OT150-SERVER\\OngProject\\OngProject.csproj",
+        "projectUniqueName": "C:\\Users\\Emmanuel\\Source\\Repos\\OT150-SERVER\\OngProject\\OngProject.csproj",
         "projectName": "OngProject",
-        "projectPath": "C:\\Users\\Usuario\\Desktop\\OT150-SERVER\\OngProject\\OngProject.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Desktop\\OT150-SERVER\\OngProject\\obj\\",
+        "projectPath": "C:\\Users\\Emmanuel\\Source\\Repos\\OT150-SERVER\\OngProject\\OngProject.csproj",
+        "packagesPath": "C:\\Users\\Emmanuel\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Emmanuel\\Source\\Repos\\OT150-SERVER\\OngProject\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Emmanuel\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,30 +43,6 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
-            "AWSSDK.Extensions.NETCore.Setup": {
-              "target": "Package",
-              "version": "[3.7.2, )"
-            },
-            "AWSSDK.S3": {
-              "target": "Package",
-              "version": "[3.7.8.10, )"
-            },
-            "Microsoft.AspNetCore.Authentication.JwtBearer": {
-              "target": "Package",
-              "version": "[5.0.0, )"
-            },
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[5.0.14, )"
-            },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[5.0.0, )"
-            },
-            "SendGrid": {
-              "target": "Package",
-              "version": "[9.26.0, )"
-            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.6.3, )"
@@ -87,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.303\\RuntimeIdentifierGraph.json"
         }
       }
     }
