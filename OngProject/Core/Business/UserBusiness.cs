@@ -18,15 +18,13 @@ namespace OngProject.Core.Business
         private readonly IConfiguration _configuration;
         private readonly IEncryptHelper _encryptHelper;
         private readonly EntityMapper entityMapper = new EntityMapper();
-        private readonly IJwtHelper _jwtHelper;
-        public UserBusiness(IUnitOfWork unitOfWork, IEmailBusiness emailBusiness, IEncryptHelper encryptHelper, IConfiguration configuration, IJwtHelper jwtHelper)
+        public UserBusiness(IUnitOfWork unitOfWork, IEmailBusiness emailBusiness, IEncryptHelper encryptHelper, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
             _emailBusiness = emailBusiness;
 
             _encryptHelper = encryptHelper;
             _configuration = configuration;
-            _jwtHelper = jwtHelper;
         }
 
         public UserLoginToDisplayDto Login(string email, string password)
