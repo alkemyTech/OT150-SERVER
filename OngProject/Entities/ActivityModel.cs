@@ -12,6 +12,6 @@ namespace OngProject.Entities
         public string Content { get; set; }
         [Required]
         [MaxLength(255)]
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
     }
 }

@@ -12,6 +12,9 @@ namespace OngProject.Core.Helper
     public class JwtHelper : IJwtHelper
     {
         private readonly IConfiguration _configuration;
+
+       
+
         public JwtHelper(IConfiguration _configuration)
         {
             this._configuration = _configuration;
@@ -24,7 +27,9 @@ namespace OngProject.Core.Helper
                 {
                     new Claim(ClaimTypes.NameIdentifier, tokenParameter.Id.ToString()),
                     new Claim(ClaimTypes.Email, tokenParameter.Email),
-                    new Claim(ClaimTypes.Role, tokenParameter.Role.ToString())
+
+                    new Claim(ClaimTypes.Role, tokenParameter.Role)
+
                 };
             var authSigningKey = new SymmetricSecurityKey(key);
             var token = new JwtSecurityToken(

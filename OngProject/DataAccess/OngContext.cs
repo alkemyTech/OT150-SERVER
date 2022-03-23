@@ -6,16 +6,26 @@ namespace OngProject.DataAccess
 {
     public class OngContext : DbContext
     {
-        private readonly IConfiguration _configuration;
+       
 
-        public OngContext(IConfiguration configuration)
+        public OngContext(DbContextOptions<OngContext> options) : base(options)
         {
-            _configuration = configuration;
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:Challenge"]);
+            modelBuilder.ApplyConfiguration(new SeedTestimonials());
+            modelBuilder.ApplyConfiguration(new SeedActivities());
+            modelBuilder.ApplyConfiguration(new SeedCategories());
+            modelBuilder.ApplyConfiguration(new SeedMembers());
+            modelBuilder.ApplyConfiguration(new SeedNews());
+            modelBuilder.ApplyConfiguration(new SeedOrganization());
+            modelBuilder.ApplyConfiguration(new SeedContacts());
+            modelBuilder.ApplyConfiguration(new SeedSlides());
+            modelBuilder.ApplyConfiguration(new SeedRoles());
+            modelBuilder.ApplyConfiguration(new SeedUsers());
+            modelBuilder.ApplyConfiguration(new SeedComments());//
         }
 
         public DbSet<ContactsModel> ContactsModel { get; set; }

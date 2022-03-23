@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OngProject.Entities
 {
@@ -13,7 +9,7 @@ namespace OngProject.Entities
         public int Order { get; set; }
         
         [ForeignKey("OrganizationModel")]
-        public int Organization_Id { get; set; }
+        public int OrganizationId { get; set; }
         public virtual OrganizationModel Organization { get; set; }
 
     }
