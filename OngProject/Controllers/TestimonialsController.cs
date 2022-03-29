@@ -64,6 +64,33 @@ namespace OngProject.Controllers
             };
             return Ok(response);
         }
+        /// GET: Testimonials
+        /// <summary>
+        /// Get the testimonial by its ID
+        /// </summary>
+        /// <remarks>
+        /// Get the testimonial by its ID
+        /// </remarks>
+        /// <param name="id">Id of the testimonial to get</param>
+        /// <response code="401">Unauthorized.Invalid Token or it wasn't provided.</response>
+        /// <response code="403">Unauthorized. Your role doesn't allow you to get the category.</response>
+        /// <response code="200">OK. This is the testimonial to this id.</response>        
+        /// <response code="404">NotFound. Testimonial not found.</response> 
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(Response<TestimonialsDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(EmptyResult), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(Response<TestimonialsDto>), StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "Admin")]
+        [HttpGet("Testimonials/{id:int}")]
+        public async Task<ActionResult> GetTestimonial(int id)
+        {
+            var testimonialResponse = await _testimonialsBussines.GetTestimonials(id);
+            if (testimonialResponse.Errors != null)
+            {
+                return StatusCode(404, testimonialResponse);
+            }
+            return Ok(testimonialResponse);
+        }
 
         /// POST: Testimonials
         /// <summary>
