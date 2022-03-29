@@ -56,7 +56,7 @@ namespace OngProject.Core.Business
                 TestimonialsModel.Image = image;
                 TestimonialDisplay.Image = image;
             }
-         
+             TestimonialsModel.SoftDelete = true;
             _unitOfWork.TestimonialsModelRepository.Add(TestimonialsModel);
             await _unitOfWork.SaveChangesAsync();
             response.Succeeded = true;
