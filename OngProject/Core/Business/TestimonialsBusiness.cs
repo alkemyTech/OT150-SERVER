@@ -67,7 +67,25 @@ namespace OngProject.Core.Business
             return response;
         }
 
+        public async Task<Response<TestimonialsDto>> GetTestimonials(int id)
+        {
+            var response = new Response<TestimonialsDto>();
+            var errors = new List<string>();
+            var testimonials = await _unitOfWork.TestimonialsModelRepository.GetByIdAsync(id);
+            if (testimonials == null)
+            {
 
+                errors.Add("Not Found");
+                response.Errors = errors.ToArray();
+                response.Succeeded = false;
+                response.Data = null;
+                return response;
+            }
+            response.Data = entityMapper.TestimonialsModelToTestimonialsDto(testimonials);
+            response.Succeeded = true;
+            response.Errors = null;
+            return response;
+        }
 
         public async Task<Response<TestimonialsModel>> Delete(int id)
 
